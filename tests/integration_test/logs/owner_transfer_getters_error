@@ -1,0 +1,3 @@
+Error: Command failed: /Users/alextowle/blockarray-bol-dapp/node_modules/.bin/newman run /Users/alextowle/blockarray-bol-dapp/tests/integration_test/postman/BlockArrayIntegrationTests.postman_collection.json --folder owner_transfer_getters -d /Users/alextowle/blockarray-bol-dapp/tests/integration_test/postman/nft_integration_data.csv
+error: Number of columns on line 2 does not match header
+

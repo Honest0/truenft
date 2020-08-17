@@ -1,0 +1,29 @@
+newman
+
+BlockArray Integration Tests
+
+❏ proxy / check_master
+↳ getMaster
+  GET localhost:3000/proxy/getMaster [200 OK, 267B, 339ms]
+  ✓  Response status is 200
+  ✓  Master address was changed correctly
+
+┌─────────────────────────┬──────────┬──────────┐
+│                         │ executed │   failed │
+├─────────────────────────┼──────────┼──────────┤
+│              iterations │        1 │        0 │
+├─────────────────────────┼──────────┼──────────┤
+│                requests │        1 │        0 │
+├─────────────────────────┼──────────┼──────────┤
+│            test-scripts │        1 │        0 │
+├─────────────────────────┼──────────┼──────────┤
+│      prerequest-scripts │        0 │        0 │
+├─────────────────────────┼──────────┼──────────┤
+│              assertions │        2 │        0 │
+├─────────────────────────┴──────────┴──────────┤
+│ total run duration: 447ms                     │
+├───────────────────────────────────────────────┤
+│ total data received: 55B (approx)             │
+├───────────────────────────────────────────────┤
+│ average response time: 339ms                  │
+└───────────────────────────────────────────────┘

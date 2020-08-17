@@ -1,0 +1,901 @@
+swagger: "2.0"
+info:
+  description: "API reference for the Freight Trust dApp which allows recording, transfering and signing of EDI-based documents such as bills of lading or warehouse receipts."
+  version: "1.0.0"
+  title: "Freight Trust - TrueNFT dApp API"
+  termsOfService: "https://github.com/freight-trust/legal/blob/master/src/terms-of-service.md"
+  contact:
+    email: "corporate@freighttrust.com"
+  license:
+    name: "Mozzila Public License 2.0"
+    url: "https://mozilla.org/MPL/2.0/"
+host: "api.truenft.com"
+basePath: "/"
+tags:
+  - name: "Proxy and Upgrade"
+    description: "Allows Freight Trust to Control the App"
+  - name: "ERC721 Token"
+    description: "Exposes the Freight Trust nonfungible token methods"
+schemes:
+  - "https"
+paths:
+  /getNonce:
+    get:
+      summary: "Returns the current message Freight Trust needs to sign to verify their next post request"
+      operationId: "getNonce"
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "Successful query"
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        428:
+          description: "Request Timeout"
+  /nft/name:
+    get:
+      tags:
+        - "ERC721 Token"
+      summary: "Returns the token contract's name"
+      operationId: "name"
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "Successful query"
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        428:
+          description: "Request Timeout"
+
+  /nft/symbol:
+    get:
+      tags:
+        - "ERC721 Token"
+      summary: "Returns the token contract's symbol"
+      operationId: "symbol"
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "Successful query"
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        428:
+          description: "Request Timeout"
+
+  /nft/totalSupply:
+    get:
+      tags:
+        - "ERC721 Token"
+      summary: "An API endpoint to get the total supply of tokens in the ERC721 contract"
+      description: "Returns the total supply of Non fungible tokens"
+      operationId: "totalSupply"
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "Successful query"
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        428:
+          description: "Request Timeout"
+
+  /nft/tokenURI/:
+    get:
+      tags:
+        - "ERC721 Token"
+      summary: "Enumerate NFTs assigned to an owner"
+      operationId: "tokenURIById"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "tokenId"
+          in: "query"
+          description: ""
+          required: true
+          type: "integer"
+          minimum: 0
+          maximum: 115792089237316195423570985008687907853269984665642564239457584207913129639935
+      responses:
+        200:
+          description: "Successful Query"
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        420:
+          description: "Bad Request"
+        428:
+          description: "Request Timeout"
+
+  /nft/supportsInterface/:
+    get:
+      tags:
+        - "ERC721 Token"
+      summary: "Returns an interface's support status"
+      operationId: "supportsInterfaceById"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "interfaceId"
+          in: "query"
+          description: "The Id of the interface to check"
+          required: true
+          type: "integer"
+          minimum: 0
+          maximum: 4294967295
+      responses:
+        200:
+          description: "Successful Query"
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        420:
+          description: "Bad Request"
+        428:
+          description: "Request Timeout"
+
+  /nft/tokenByIndex/:
+    get:
+      tags:
+        - "ERC721 Token"
+      summary: "Returns the token identifier of the `index`-th nft tracked by the contract"
+      operationId: "tokenByIndex"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "index"
+          in: "query"
+          description: "A counter less than `totalSupply()`"
+          required: true
+          type: "integer"
+          minimum: 0
+          maximum: 115792089237316195423570985008687907853269984665642564239457584207913129639935
+      responses:
+        200:
+          description: "Successful Query"
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        420:
+          description: "Bad Request"
+        428:
+          description: "Request Timeout"
+
+  /nft/tokenOfOwnerByIndex/:
+    get:
+      tags:
+        - "ERC721 Token"
+      summary: "Returns the token identifier of the `index`-th nft assigned to the `owner`"
+      operationId: "tokenOfOwnerByIndex"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "owner"
+          in: "query"
+          description: "The address of the owner"
+          required: true
+          type: "string"
+          minLength: 42
+          maxLength: 42
+        - name: "index"
+          in: "query"
+          description: "The index of the nft assigned to the owner"
+          required: true
+          type: "integer"
+          minimum: 0
+          maximum: 115792089237316195423570985008687907853269984665642564239457584207913129639935
+      responses:
+        200:
+          description: "Successful Query"
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        420:
+          description: "Bad Request"
+        428:
+          description: "Request Timeout"
+
+  /nft/balanceOf/:
+    get:
+      tags:
+        - "ERC721 Token"
+      summary: "Count all NFTs assigned to an owner"
+      operationId: "balanceOf"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "owner"
+          in: "query"
+          description: "The address of the owner"
+          required: true
+          type: "string"
+          minLength: 42
+          maxLength: 42
+      responses:
+        200:
+          description: "Successful Query"
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        420:
+          description: "Bad Request"
+        428:
+          description: "Request Timeout"
+
+  /nft/ownerOf/:
+    get:
+      tags:
+        - "ERC721 Token"
+      summary: "Find the owner of an NFT"
+      operationId: "ownerOf"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "tokenId"
+          in: "query"
+          description: "The Id of the token in question"
+          required: true
+          type: "integer"
+          minimum: 0
+          maximum: 115792089237316195423570985008687907853269984665642564239457584207913129639935
+      responses:
+        200:
+          description: "Successful Query"
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        420:
+          description: "Bad Request"
+        428:
+          description: "Request Timeout"
+
+  /nft/safeTransferFrom/:
+    post:
+      tags:
+        - "ERC721 Token"
+      summary: "Transfers the ownership of an NFT from one address to another address"
+      operationId: "safeTransferFrom"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "from"
+          in: "query"
+          description: "The sender of the transfer"
+          required: true
+          type: "string"
+          minLength: 42
+          maxLength: 42
+        - name: "to"
+          in: "query"
+          description: "The recipient of the transfer"
+          required: true
+          type: "string"
+          minLength: 42
+          maxLength: 42
+        - name: "tokenId"
+          in: "query"
+          description: "The id of the token to be transferred"
+          required: true
+          type: "integer"
+          minimum: 0
+          maximum: 115792089237316195423570985008687907853269984665642564239457584207913129639935
+        - name: "extraData"
+          in: "query"
+          description: "Optional data to be sent with the transaction"
+          required: false
+          type: "string"
+        - in: "body"
+          name: "auth"
+          description: "The Freight Trust signature of the nonce"
+          required: true
+          schema:
+            $ref: "#/definitions/auth"
+      responses:
+        200:
+          description: "Successful Transfer"
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        420:
+          description: "Bad Request"
+        428:
+          description: "Request Timeout"
+
+  /nft/transferFrom/:
+    post:
+      tags:
+        - "ERC721 Token"
+      summary: "Transfer ownership of an NFT without safety checks"
+      description: "Allows Freight Trust to tranfer tokens unsafely -- THE CALLER IS RESPONSIBLE TO CONFIRM THAT `_to` IS CAPABLE OF RECEIVING NFTS OR ELSE THEY MAY BE PERMANENTLY LOST"
+      operationId: "transferFrom"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "from"
+          in: "query"
+          description: "The sender of the transfer"
+          required: true
+          type: "string"
+          minLength: 42
+          maxLength: 42
+        - name: "to"
+          in: "query"
+          description: "The recipient of the transfer"
+          required: true
+          type: "string"
+          minLength: 42
+          maxLength: 42
+        - name: "tokenId"
+          in: "query"
+          description: "The id of the token to be transferred"
+          required: true
+          type: "integer"
+          minimum: 0
+          maximum: 115792089237316195423570985008687907853269984665642564239457584207913129639935
+        - in: "body"
+          name: "auth"
+          description: "The Freight Trust signature of the nonce"
+          required: true
+          schema:
+            $ref: "#/definitions/auth"
+      responses:
+        200:
+          description: "Successful Transfer"
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        420:
+          description: "Bad Request"
+        428:
+          description: "Request Timeout"
+
+  /nft/approve/:
+    post:
+      tags:
+        - "ERC721 Token"
+      summary: "Change or reaffirm the approved address for an NFT"
+      operationId: "approve"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "approved"
+          in: "query"
+          description: "The address being approved"
+          required: true
+          type: "string"
+          minLength: 42
+          maxLength: 42
+        - name: "tokenId"
+          in: "query"
+          description: "The id of the token to be approved"
+          required: true
+          type: "integer"
+          minimum: 0
+          maximum: 115792089237316195423570985008687907853269984665642564239457584207913129639935
+        - in: "body"
+          name: "auth"
+          description: "The Freight Trust signature of the nonce"
+          required: true
+          schema:
+            $ref: "#/definitions/auth"
+      responses:
+        200:
+          description: "Successful Approve"
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        420:
+          description: "Bad Request"
+        428:
+          description: "Request Timeout"
+
+  /nft/setApprovalForAll/:
+    post:
+      tags:
+        - "ERC721 Token"
+      summary: "Allows Freight Trust to issue univeral approval"
+      description: "Enable or disable approval for a third party (`operator`) to manage all of Freight Trust's assets"
+      operationId: "setApprovalForAll"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "operator"
+          in: "query"
+          description: "Address to add to the set of authorized operators"
+          required: true
+          type: "string"
+          minLength: 42
+          maxLength: 42
+        - name: "approved"
+          in: "query"
+          description: "True if the operator is approved, false to revoke approval"
+          required: true
+          type: "boolean"
+        - in: "body"
+          name: "auth"
+          description: "The Freight Trust signature of the nonce"
+          required: true
+          schema:
+            $ref: "#/definitions/auth"
+      responses:
+        200:
+          description: "Successful Approve"
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        420:
+          description: "Bad Request"
+        428:
+          description: "Request Timeout"
+
+  /nft/getApproved/:
+    get:
+      tags:
+        - "ERC721 Token"
+      summary: "Get the approved address for a single NFT"
+      description: "The approved address for this NFT, or the zero address if there is none"
+      operationId: "getApprovedById"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "tokenId"
+          in: "query"
+          description: "The NFT to find the approved address for"
+          required: true
+          type: "integer"
+          minimum: 0
+          maximum: 115792089237316195423570985008687907853269984665642564239457584207913129639935
+      responses:
+        200:
+          description: "Successful Query"
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        420:
+          description: "Bad Request"
+        428:
+          description: "Request Timeout"
+
+  /nft/isApprovedForAll/:
+    get:
+      tags:
+        - "ERC721 Token"
+      summary: "Query if an address is an authorized operator for another address"
+      description: "True if `operator` is an approved operator for `owner`, false otherwise"
+      operationId: "isApprovedForAll"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "owner"
+          in: "query"
+          description: "The address that owns the NFTs"
+          required: true
+          type: "string"
+          minLength: 42
+          maxLength: 42
+        - name: "operator"
+          in: "query"
+          description: "The address that acts on behalf of the owner"
+          required: true
+          type: "string"
+          minLength: 42
+          maxLength: 42
+      responses:
+        200:
+          description: "Successful Query"
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        420:
+          description: "Bad Request"
+        428:
+          description: "Request Timeout"
+  /nft/signedTransfer/:
+    post:
+      tags:
+        - "ERC721 Token"
+      summary: "Signed Transfer"
+      description: "Allows Freight Trust to sign and transfer a ERC721 token on the behalf of its holder"
+      operationId: "signedTransfer"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "from"
+          in: "query"
+          description: "The sender of the transfer"
+          required: true
+          type: "string"
+          minLength: 42
+          maxLength: 42
+        - name: "to"
+          in: "query"
+          description: "The recipient of the transfer"
+          required: true
+          type: "string"
+          minLength: 42
+          maxLength: 42
+        - name: "tokenId"
+          in: "query"
+          description: "The id of the token to be transferred"
+          required: true
+          type: "integer"
+          minimum: 0
+          maximum: 115792089237316195423570985008687907853269984665642564239457584207913129639935
+        - name: "data"
+          in: "query"
+          description: "Optional data to be sent with the transaction"
+          required: false
+          type: "string"
+        - in: "body"
+          name: "auth"
+          description: "The Freight Trust authorization signature followed by the signature of the sender of the transfer."
+          required: true
+          schema:
+            type: "object"
+            properties:
+              freightTrustAuth:
+                $ref: "#/definitions/auth"
+              senderAuth:
+                $ref: "#/definitions/auth"
+
+      responses:
+        200:
+          description: "Successful Transfer"
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        420:
+          description: "Bad Request"
+        428:
+          description: "Request Timeout"
+  /nft/createRecord/:
+    post:
+      tags:
+        - "ERC721 Token"
+      summary: "Creates a new record"
+      description: "Allows Freight Trust to create a record with the signature of the owner and of the participant."
+      operationId: "createRecord"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "recordID"
+          in: "query"
+          description: "The identifying hash of the record"
+          required: true
+          type: "string"
+          minLength: 66
+          maxLength: 66
+        - name: "owner"
+          in: "query"
+          description: "The owner of the record"
+          required: true
+          type: "string"
+          minLength: 42
+          maxLength: 42
+        - name: "participant"
+          in: "query"
+          description: "The address of the participant in the record"
+          required: true
+          type: "string"
+          minLength: 42
+          maxLength: 42
+        - in: "body"
+          name: "auth"
+          description: "The Freight Trust nonce signature, followed by the owner's signature and the participant's signature"
+          required: true
+          schema:
+            type: "object"
+            properties:
+              freightTrustAuth:
+                $ref: "#/definitions/auth"
+              ownerAuth:
+                $ref: "#/definitions/auth"
+              partAuth:
+                $ref: "#/definitions/auth"
+
+      responses:
+        200:
+          description: "Successful Creation"
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        420:
+          description: "Bad Request"
+        428:
+          description: "Request Timeout"
+  /nft/versionRecord/:
+    post:
+      tags:
+        - "ERC721 Token"
+      summary: "Versions a record for Freight Trust"
+      description: "Allows Freight Trust to version one of the records they own."
+      operationId: "versionRecord"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "current"
+          in: "query"
+          description: "The identifying hash of the record"
+          required: true
+          type: "string"
+          minLength: 66
+          maxLength: 66
+        - name: "new"
+          in: "query"
+          description: "The new identifying hash of the record"
+          required: true
+          type: "string"
+          minLength: 66
+          maxLength: 66
+        - in: "body"
+          name: "auth"
+          description: "The Freight Trust nonce signature to verify this action"
+          required: true
+          schema:
+            $ref: "#/definitions/auth"
+
+      responses:
+        200:
+          description: "Successful Edit"
+        420:
+          description: "Bad Request"
+        428:
+          description: "Request Timeout"
+  /nft/versionRecord/signed/:
+    post:
+      tags:
+        - "ERC721 Token"
+      summary: "Versions a record for the owner"
+      description: "Allows Freight Trust to version a record for the owner using the owner's signature."
+      operationId: "versionRecordSigned"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "current"
+          in: "query"
+          description: "The identifying hash of the record"
+          required: true
+          type: "string"
+          minLength: 66
+          maxLength: 66
+        - name: "new"
+          in: "query"
+          description: "The new identifying hash of the record"
+          required: true
+          type: "string"
+          minLength: 66
+          maxLength: 66
+        - name: "owner"
+          in: "query"
+          description: "The owner of the record which will be updated"
+          type: "string"
+          minLength: 42
+          maxLength: 42
+        - in: "body"
+          name: "auth"
+          description: "The Freight Trust nonce signature followed by the owner's signature"
+          required: true
+          schema:
+            type: "object"
+            properties:
+              freightTrustAuth:
+                $ref: "#/definitions/auth"
+              ownerAuth:
+                $ref: "#/definitions/auth"
+
+      responses:
+        200:
+          description: "Successful Editing"
+        420:
+          description: "Bad Request"
+        428:
+          description: "Request Timeout"
+  /proxy/getTarget/:
+    get:
+      tags:
+        - "Proxy and Upgrade"
+      summary: "Gets address of Function"
+      description: "Gets address that is delegate called to run a function's logic."
+      operationId: "getTarget"
+      parameters:
+        - name: "id"
+          in: "query"
+          description: "The function selector the return the target of"
+          required: true
+          type: "string"
+          maxLength: 10
+          minLength: 10
+      produces:
+        - "application/xml"
+        - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        425:
+          description: "Invalid Input"
+
+  /proxy/getMaster:
+    get:
+      tags:
+        - "Proxy and Upgrade"
+      summary: "Gets address of the Master Contract"
+      description: "Gets the address of the master contract."
+      operationId: "getMaster"
+      produces:
+        - "application/xml"
+        - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/ApiResponse"
+
+  /proxy/getControler:
+    get:
+      tags:
+        - "Proxy and Upgrade"
+      summary: "Gets address of the controler Contract"
+      description: "Gets the address of the controler contract."
+      operationId: "getControler"
+      produces:
+        - "application/xml"
+        - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/ApiResponse"
+  /proxy/getUniversalProxy:
+    get:
+      tags:
+        - "Proxy and Upgrade"
+      summary: "Gets address of the Universal Proxy Contract"
+      description: "Gets the address of the Universal Proxy contract."
+      operationId: "getUniversalProxy"
+      produces:
+        - "application/xml"
+        - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/ApiResponse"
+
+  /proxy/setTarget/:
+    post:
+      tags:
+        - "Proxy and Upgrade"
+      summary: "Sets the address of Function"
+      description: "Sets address that is delegate called to run a function's logic. This function must be called with an signed nonce from the Freight Trust account in the https body."
+      operationId: "setTarget"
+      parameters:
+        - name: "id"
+          in: "query"
+          description: "Function selector whose target to change."
+          required: true
+          type: "string"
+          minLength: 10
+          maxLength: 10
+        - name: "target"
+          in: "query"
+          description: "The address to set the function too"
+          required: true
+          type: "string"
+          minLength: 42
+          maxLength: 42
+        - in: "body"
+          name: "auth"
+          description: "The Freight Trust signature of the nonce"
+          required: true
+          schema:
+            $ref: "#/definitions/auth"
+      produces:
+        - "application/xml"
+        - "application/json"
+      responses:
+        200:
+          description: "Successfuly Changed"
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        425:
+          description: "Invalid Input"
+  /proxy/changeMaster/:
+    post:
+      tags:
+        - "Proxy and Upgrade"
+      summary: "Sets the address of Function"
+      description: "Sets address that is delegate called to run a function's logic. This function must be called with an signed nonce from the Freight Trust account in the https body."
+      operationId: "changeMaster"
+      parameters:
+        - name: "newMaster"
+          in: "query"
+          description: "The new master address"
+          required: true
+          type: "string"
+          minLength: 42
+          maxLength: 42
+        - in: "body"
+          name: "auth"
+          description: "The Freight Trust signature of the nonce"
+          required: true
+          schema:
+            $ref: "#/definitions/auth"
+      produces:
+        - "application/xml"
+        - "application/json"
+      responses:
+        200:
+          description: "Successfuly Changed"
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        425:
+          description: "Invalid Input"
+  /proxy/changeController/:
+    post:
+      tags:
+        - "Proxy and Upgrade"
+      summary: "Sets the the new controller address"
+      description: "Sets the new controller address."
+      operationId: "changeController"
+      parameters:
+        - name: "newController"
+          in: "query"
+          description: "The new controller address"
+          required: true
+          type: "string"
+          minLength: 42
+          maxLength: 42
+        - in: "body"
+          name: "auth"
+          description: "The Freight Trust signature of the nonce"
+          required: true
+          schema:
+            $ref: "#/definitions/auth"
+      produces:
+        - "application/xml"
+        - "application/json"
+      responses:
+        200:
+          description: "Successfuly Changed"
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        425:
+          description: "Invalid Input"
+  /proxy/pause:
+    post:
+      tags:
+        - "Proxy and Upgrade"
+      summary: "Pauses the execution"
+      description: "Calls the pause method in the universal proxy, blocking any state changes while Freight Trust's Network Operations Group updates."
+      operationId: "pause"
+      parameters:
+        - in: "body"
+          name: "auth"
+          description: "The Freight Trust signature of the nonce"
+          required: true
+          schema:
+            $ref: "#/definitions/auth"
+      produces:
+        - "application/xml"
+        - "application/json"
+      responses:
+        200:
+          description: "Successfuly Paused"
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        425:
+          description: "Invalid Input"
+
+definitions:
+  auth:
+    type: "object"
+    required:
+      - "signature"
+    properties:
+      signature:
+        type: "string"
+        minLength: 132
+        maxLength: 132
+
+  ApiResponse:
+    type: "object"
+    properties:
+      code:
+        type: "integer"
+        format: "int32"
+      type:
+        type: "string"
+      message:
+        type: "string"
+externalDocs:
+  description: "Find out more about the Freight Trust Network"
+  url: "http://ft-docs.netlify.app"

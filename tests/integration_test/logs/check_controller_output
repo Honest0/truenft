@@ -1,0 +1,29 @@
+newman
+
+BlockArray Integration Tests
+
+❏ proxy / check_controller
+↳ getController
+  GET localhost:3000/proxy/getController [200 OK, 271B, 340ms]
+  ✓  Response status is 200
+  ✓  Controller address was changed correctly
+
+┌─────────────────────────┬──────────┬──────────┐
+│                         │ executed │   failed │
+├─────────────────────────┼──────────┼──────────┤
+│              iterations │        1 │        0 │
+├─────────────────────────┼──────────┼──────────┤
+│                requests │        1 │        0 │
+├─────────────────────────┼──────────┼──────────┤
+│            test-scripts │        1 │        0 │
+├─────────────────────────┼──────────┼──────────┤
+│      prerequest-scripts │        0 │        0 │
+├─────────────────────────┼──────────┼──────────┤
+│              assertions │        2 │        0 │
+├─────────────────────────┴──────────┴──────────┤
+│ total run duration: 449ms                     │
+├───────────────────────────────────────────────┤
+│ total data received: 59B (approx)             │
+├───────────────────────────────────────────────┤
+│ average response time: 340ms                  │
+└───────────────────────────────────────────────┘

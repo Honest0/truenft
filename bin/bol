@@ -1,0 +1,227 @@
+#!/usr/bin/env node
+const async = require('async')
+const app = require('../src/app.js')
+const Web3 = require('web3')
+const ganache = require('ganache-cli')
+const readline = require('readline')
+
+
+// Create a readline interface to the standard input and output streams
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+})
+
+// Configure this program to accept command line arguments that specify the ethereum network to use
+const program = require('commander')
+program
+  .version('0.1.0')
+  .option('-b, --rinkeby', 'Use Rinkeby Network')
+  .option('-k, --kovan', 'Use Kovan Network')
+  .option('-m, --mainnet', 'Use Mainnet Network')
+  .option('-r, --ropsten', 'Use Ropsten Network')
+  .option('-t, --testrpc', 'Use TestRPC Network')
+  .parse(process.argv)
+
+async.series([
+  (callback) => {
+    // Set the app's private key according to the command line arguments
+    if (program.rinkeby) {
+      app.pk = process.env.RINKEBY_PK
+    } else if (program.kovan) {
+      app.pk = process.env.KOVAN_PK
+    } else if (program.mainnet) {
+      app.pk = process.env.MAINNET_PK
+    } else if (program.ropsten) {
+      app.pk = process.env.ROPSTEN_PK
+    } else if (program.testrpc) {
+      app.pk = process.env.TESTRPC_PK
+    } if (!app.pk) { 
+      // Prompt the user for an ethereum private key
+      rl.question('Enter ethereum private key: ', (private_key) => { 
+        app.pk = private_key 
+        // Call the next function in the series
+        callback()
+      })
+    } else {
+      // Call the next function in the series
+      callback()
+    }
+  },
+  (callback) => {
+    // If the port number is specified in the .env file, use that value 
+    if (process.env.PORT) {
+      app.port = process.env.PORT
+      // Call the next function in the series
+      callback()
+    } else {
+      // Prompt the user for a port number
+      rl.question('Enter server port number: ', (port) => { 
+        app.port = port 
+        // Call the next function in the series
+        callback()
+      })
+    } 
+  },
+  (callback) => {
+    // If the infura api key is specified in the .env file, use that value
+    if (process.env.INFURA_KEY) {
+      app.key = process.env.INFURA_KEY
+      // Call the next function in the series
+      callback()
+    } else {
+      rl.question('Enter infura API key: ', (key) => {
+        app.key = key 
+        // Call the next function in the series
+        callback()
+      })
+    } 
+  },
+  (callback) => {
+    if (process.env.INFURA_SECRET) {
+      app.secret = process.env.INFURA_SECRET
+      // Call the next function in the series
+      callback()
+    } else {
+      rl.question('Enter infura API secret: ', (secret) => { 
+        app.secret = secret 
+        // Call the next function in the series
+        callback() 
+      })
+    } 
+  },
+  (callback) => {
+    // Set the app's web3 provider according to the command line arguments
+    if (program.rinkeby) {
+      app.endpoint = process.env.RINKEBY_ENDPOINT
+      app.web3 = new Web3(new Web3.providers.HttpProvider(app.endpoint))
+    } else if (program.kovan) {
+      app.endpoint = process.env.KOVAN_ENDPOINT
+      app.web3 = new Web3(new Web3.providers.HttpProvider(app.endpoint))
+    } else if (program.mainnet) {
+      app.endpoint = process.env.MAINNET_ENDPOINT
+      app.web3 = new Web3(new Web3.providers.HttpProvider(app.endpoint))
+    } else if (program.ropsten) {
+      app.endpoint = process.env.ROPSTEN_ENDPOINT
+      app.web3 = new Web3(new Web3.providers.HttpProvider(app.endpoint))
+      console.log(app.web3)
+    } else if (program.testrpc) {
+      app.endpoint = process.env.TESTRPC_ENDPOINT
+      app.web3 = new Web3(ganache.provider())
+    } if (!app.endpoint) {
+      // Prompt the user for an infura endpoint
+      rl.question('Enter infura endpoint: ', (endpoint) => { 
+        app.endpoint = endpoint 
+        app.web3 = new Web3(new Web3.providers.HttpProvider(app.endpoint))
+        // Call the next function in the series
+        callback()
+      })
+    } else {
+      // Call the next function in the series
+      callback()
+    }
+  },
+  (callback) => {
+    // Set the app's nft address according to the command line arguments
+    if (program.rinkeby) {
+      app.nft_address = process.env.RINKEBY_NFT
+    } else if (program.kovan) {
+      app.nft_address = process.env.KOVAN_NFT
+    } else if (program.mainnet) {
+      app.nft_address= process.env.MAINNET_NFT
+    } else if (program.ropsten) {
+      app.nft_address= process.env.ROPSTEN_NFT
+    } else if (program.testrpc) {
+      app.nft_address= process.env.TESTRPC_NFT
+    } if (!app.nft_address) {
+      // Prompt the user for a nft contract address
+      rl.question('Enter nft contract address: ', (address) => { 
+        app.nft_address = address
+        // Call the next function in the series
+        callback()
+      })
+    } else {
+      // Call the next function in the series
+      callback()
+    }
+  },
+  (callback) => {
+    // Set the app's nft address according to the command line arguments
+    if (program.rinkeby) {
+      app.master_address = process.env.RINKEBY_MASTER
+    } else if (program.kovan) {
+      app.master_address= process.env.KOVAN_MASTER
+    } else if (program.mainnet) {
+      app.master_address= process.env.MAINNET_MASTER
+    } else if (program.ropsten) {
+      app.master_address= process.env.ROPSTEN_MASTER
+    } else if (program.testrpc) {
+      app.master_address= process.env.TESTRPC_MASTER
+    } if (!app.master_address) {
+      // Prompt the user for a master proxy contract address
+      rl.question('Enter master proxy contract address: ', (address) => { 
+        app.master_address = address
+        // Call the next function in the series
+        callback()
+      })
+    } else {
+      // Call the next function in the series
+      callback()
+    }
+  },
+  (callback) => {
+    // Set the app's nft address according to the command line arguments
+    if (program.rinkeby) {
+      app.universal_address = process.env.RINKEBY_UNIVERSAL
+    } else if (program.kovan) {
+      app.universal_address= process.env.KOVAN_UNIVERSAL
+    } else if (program.mainnet) {
+      app.universal_address= process.env.MAINNET_UNIVERSAL
+    } else if (program.ropsten) {
+      app.universal_address= process.env.ROPSTEN_UNIVERSAL
+    } else if (program.testrpc) {
+      app.universal_address= process.env.TESTRPC_UNIVERSAL
+    } if (!app.universal_address) {
+      // Prompt the user for a master proxy contract address
+      rl.question('Enter universal proxy contract address: ', (address) => { 
+        app.universal_address = address
+        // Call the next function in the series
+        callback()
+      })
+    } else {
+      // Call the next function in the series
+      callback()
+    }
+  }, 
+  (callback) => {
+    // Set the app's nft address according to the command line arguments
+    if (program.rinkeby) {
+      app.controller_address = process.env.RINKEBY_CONTROLLER
+    } else if (program.kovan) {
+      app.controller_address= process.env.KOVAN_CONTROLLER
+    } else if (program.mainnet) {
+      app.controller_address= process.env.MAINNET_CONTROLLER
+    } else if (program.ropsten) {
+      app.controller_address= process.env.ROPSTEN_CONTROLLER
+    } else if (program.testrpc) {
+      app.controller_address= process.env.TESTRPC_CONTROLLER
+    } if (!app.controller_address) {
+      // Prompt the user for a master proxy contract address
+      rl.question('Enter controller contract address: ', (address) => { 
+        app.controller_address = address
+        // Call the next function in the series
+        callback()
+      })
+    } else {
+      // Call the next function in the series
+      callback()
+    }
+  } 
+], () => {
+  // Close the readline interface
+  rl.close()
+  // Start an express server on the user specified port
+  app.listen(app.port, () => {
+    console.log('Server started on port ' + app.port)
+  })
+})

@@ -1,0 +1,6 @@
+node_modules/
+ethereum/build/
+ethereum/test/logs
+.env
+.vscode
+ethereum/build/contracts/
