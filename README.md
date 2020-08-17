@@ -1,12 +1,31 @@
-# EDI-NFT Protocol
 
-> NFT Protocol
+<p center>
+<img src="https://raw.githubusercontent.com/freight-trust/branding/master/ft-github_repo_card.png" width="250">
+</p>
+
+---
+# TrueNFT 
+> a B2B NFT Protocol
+
+- [TrueNFT](#truenft)
+  * [Overview](#overview)
+    + [TrueNFT Protocol Diagram](#truenft-protocol-diagram)
+  * [Valid Server Setup](#valid-server-setup)
+  * [Security & Development](#security---development)
+      - [API Contract Testing](#api-contract-testing)
+  * [Usage](#usage)
+  * [Deployments](#deployments)
+  * [License](#license)
+
+> a B2B NFT Protocol
 
 ## Overview
 
-Creation of NFT-based primitives via EDI Mappings
+TrueNFT enables B2B Messages to be tokenized either through EDI or XML Mappings and Data Ingestion
 
-<p><img src="truenft-diagram.svg" alt="Solidity Contract Diagram" title="TrueNFT Diagram" width=350 /></p>
+### TrueNFT Protocol Diagram
+<p><img src="truenft-diagram.svg" alt="Solidity Contract Diagram" title="TrueNFT Diagram" width=900 /></p>
+
 
 ## Valid Server Setup
 
@@ -23,23 +42,24 @@ Creation of NFT-based primitives via EDI Mappings
 
 Steps 1-3 cannot be performed through the API. Step 4 can if the `controller_address`
 is originally set to equal the `universal_address`. This solution is not ideal,
-so all of steps 1-4 should be completed during server setup.
+so all of the steps 1-4 should be completed during the server setup.
 
 ## Security & Development
 
-The basic smart contract implementation is a functional set of smart contracts which will meet the implementation needs of any company using EDI X12/EDIFACT\*.
-
 > These smart contracts will need to be updated for gas efficiency and to verify their security in the upcoming weeks.
 
-The continuous integration for github is a script which will run the postman and truffle tests on new commits added to the github repository.
+The basic smart contract implementation is a functional set of smart contracts that will meet the implementation needs of any company using EDI X12/EDIFACT.
 
-The truffle tests are a set of javascript unit tests which will verify the modular properties of the code base to ensure that it always meets the intention of the smart contract architecture. They are designed to have near complete code coverage and thus should prevent most bugs.
+#### API Contract Testing
+- The continuous integration for github is a script that will run the postman and truffle tests on new commits added to the github repository.
 
-The postman api unit tests are a set of tests for each api endpoint that verify that the endpoints will reject on invalid inputs and return the right data types.
+- The truffle tests are a set of javascript unit tests that will verify the modular properties of the codebase to ensure that it always meets the intention of the smart contract architecture. They are designed to have near-complete code coverage and thus should prevent most bugs.
+
+- The postman api unit tests are a set of tests for each api endpoint that verify that the endpoints will reject on invalid inputs and return the right data types.
 
 In combination with the truffle tests, the postman tests will verify the integrity of the whole codebase.
 
-The javascript endpoint implementation of the endpoints extend the test endpoints from last week. Now, in addition to data sanitation and returning proper values, they will parse the input data, format transactions and make ethereum calls through the infura web3. The new endpoints will also properly validate Corporate signatures of the nonce which protects admin transactions.
+The javascript endpoint implementation of the endpoints extends the test endpoints from last week. Now, in addition to data sanitation and returning proper values, they will parse the input data, format transactions and make ethereum calls through the infura web3. The new endpoints will also properly validate Corporate signatures of the nonce which protects admin transactions.
 
 ## Usage
 
