@@ -1,6 +1,6 @@
 
 <p center>
-<img src="https://raw.githubusercontent.com/freight-trust/branding/master/ft-github_repo_card.png" width="250">
+<img src="https://raw.githubusercontent.com/freight-trust/branding/master/ft-github_repo_card.png" width="750">
 </p>
 
 ---
