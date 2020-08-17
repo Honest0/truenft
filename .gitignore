@@ -4,3 +4,9 @@ ethereum/test/logs
 .env
 .vscode
 ethereum/build/contracts/
+*.tar
+*.tar.gz
+*.zip
+key
+keys
+*.pkcs
