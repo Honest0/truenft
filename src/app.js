@@ -26,7 +26,7 @@ app.use(require("./routes/proxy"));
  * @dev Index, used to ping server
  */
 app.get("/", (req, res) => {
-	res.status(200).send(Messages.SUCCESS);
+  res.status(200).send(Messages.SUCCESS);
 });
 
 /**
@@ -35,12 +35,12 @@ app.get("/", (req, res) => {
  *      TODO this needs to correctly account for the actual data returned by the contract
  */
 app.get("/getNonce", (req, res) => {
-	let nonce = utils.getNonce(app);
-	if (typeof nonce === "string") {
-		res.json({ toBeSigned: nonce });
-	} else {
-		res.json({ nonce: nonce, typeof: typeof nonce });
-	}
+  let nonce = utils.getNonce(app);
+  if (typeof nonce === "string") {
+    res.json({ toBeSigned: nonce });
+  } else {
+    res.json({ nonce: nonce, typeof: typeof nonce });
+  }
 });
 
 module.exports = app;

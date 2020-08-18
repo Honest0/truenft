@@ -1,21 +1,22 @@
-
 <p center>
 <img src="https://raw.githubusercontent.com/freight-trust/branding/master/ft-github_repo_card.png" width="900">
 </p>
 
 ---
-# TrueNFT 
+
+# TrueNFT
+
 > a B2B NFT Protocol
 
 - [TrueNFT](#truenft)
-  * [Overview](#overview)
-    + [TrueNFT Protocol Diagram](#truenft-protocol-diagram)
-  * [Valid Server Setup](#valid-server-setup)
-  * [Security & Development](#security---development)
-      - [API Contract Testing](#api-contract-testing)
-  * [Usage](#usage)
-  * [Deployments](#deployments)
-  * [License](#license)
+  - [Overview](#overview)
+    - [TrueNFT Protocol Diagram](#truenft-protocol-diagram)
+  - [Valid Server Setup](#valid-server-setup)
+  - [Security & Development](#security---development)
+    - [API Contract Testing](#api-contract-testing)
+  - [Usage](#usage)
+  - [Deployments](#deployments)
+  - [License](#license)
 
 > a B2B NFT Protocol
 
@@ -24,8 +25,8 @@
 TrueNFT enables B2B Messages to be tokenized either through EDI or XML Mappings and Data Ingestion
 
 ### TrueNFT Protocol Diagram
-<p><img src="truenft-diagram.svg" alt="Solidity Contract Diagram" title="TrueNFT Diagram" width=900 /></p>
 
+<p><img src="truenft-diagram.svg" alt="Solidity Contract Diagram" title="TrueNFT Diagram" width=900 /></p>
 
 ## Valid Server Setup
 
@@ -51,6 +52,7 @@ so all of the steps 1-4 should be completed during the server setup.
 The basic smart contract implementation is a functional set of smart contracts that will meet the implementation needs of any company using EDI X12/EDIFACT.
 
 #### API Contract Testing
+
 - The continuous integration for github is a script that will run the postman and truffle tests on new commits added to the github repository.
 
 - The truffle tests are a set of javascript unit tests that will verify the modular properties of the codebase to ensure that it always meets the intention of the smart contract architecture. They are designed to have near-complete code coverage and thus should prevent most bugs.

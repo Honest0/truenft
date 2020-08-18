@@ -1,3052 +1,3052 @@
 {
-	"info": {
-		"_postman_id": "",
-		"name": "Freight Trust EDI/NFT Integration Tests",
-		"description": "This test suite consists of tests designed specifically to test the functionality of our server while it is synced to an Infura Node that is connected to Ropsten using Baseline. ",
-		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
-	},
-	"item": [
-		{
-			"name": "nft",
-			"item": [
-				{
-					"name": "create_record_post",
-					"item": [
-						{
-							"name": "createRecord",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "bfdc5c79-14fb-4c86-9113-2cf7b9ecd786",
-										"exec": [
-											"pm.test('Response code should be 200', () => {",
-											"    pm.expect(pm.response.code).to.be.eql(200)",
-											"})"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"type": "text",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"auth\" : {\n  \t\"blockArrayAuth\" : {\n  \t\t\"hash\":\"{{hash}}\", \n  \t\t\"sig\": \"{{sig}}\"\n  \t}, \n  \t\"ownerAuth\" : {\n  \t\t\"hash\": \"{{hash1}}\", \n  \t\t\"sig\": \"{{sig1}}\"\n  \t}, \n  \t\"partAuth\" : {\n  \t\t\"hash\": \"{{hash2}}\", \n  \t\t\"sig\": \"{{sig2}}\"\n  \t}\n  }\n}"
-								},
-								"url": {
-									"raw": "localhost:3000/nft/createRecord/?recordID={{recordID}}&owner={{creator}}&participant={{participant}}",
-									"host": ["localhost"],
-									"port": "3000",
-									"path": ["nft", "createRecord", ""],
-									"query": [
-										{
-											"key": "recordID",
-											"value": "{{recordID}}"
-										},
-										{
-											"key": "owner",
-											"value": "{{creator}}"
-										},
-										{
-											"key": "participant",
-											"value": "{{participant}}"
-										}
-									]
-								}
-							},
-							"response": []
-						}
-					],
-					"_postman_isSubFolder": true
-				},
-				{
-					"name": "owner_transfer_from",
-					"item": [
-						{
-							"name": "transferFrom",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"name": "Content-Type",
-										"type": "text",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"auth\" : { \n  \t\"hash\": \"{{hash}}\",\n  \t\"sig\": \"{{sig}}\"\n  }\n}"
-								},
-								"url": {
-									"raw": "localhost:3000/nft/transferFrom/?from={{creator}}&to={{recipient}}&tokenId={{recordId}}",
-									"host": ["localhost"],
-									"port": "3000",
-									"path": ["nft", "transferFrom", ""],
-									"query": [
-										{
-											"key": "from",
-											"value": "{{creator}}"
-										},
-										{
-											"key": "to",
-											"value": "{{recipient}}"
-										},
-										{
-											"key": "tokenId",
-											"value": "{{recordId}}"
-										}
-									]
-								}
-							},
-							"response": []
-						}
-					],
-					"_postman_isSubFolder": true
-				},
-				{
-					"name": "create_record_getters",
-					"item": [
-						{
-							"name": "tokenOfOwnerByIndex 1",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "908abe7d-55cd-4a47-9deb-555c83388649",
-										"exec": [
-											"pm.test('Response code should be 200', () => {",
-											"    pm.expect(pm.response.code).to.be.eql(200)",
-											"})",
-											"",
-											"pm.test('Token record should be correct', () => {",
-											"    pm.expect(pm.response.json()['tokenId']).to.be.eql(pm.iterationData.get('recordId'))",
-											"})"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"type": "text",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "localhost:3000/nft/tokenOfOwnerByIndex/?owner={{creator}}&index={{index}}",
-									"host": ["localhost"],
-									"port": "3000",
-									"path": ["nft", "tokenOfOwnerByIndex", ""],
-									"query": [
-										{
-											"key": "owner",
-											"value": "{{creator}}"
-										},
-										{
-											"key": "index",
-											"value": "{{index}}"
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "ownerOf 1",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "90ddfd3f-7b2b-4409-a3d9-ccb67d55536b",
-										"exec": [
-											"pm.test('Response code should be 200', () => {",
-											"    pm.expect(pm.response.code).to.be.eql(200)",
-											"})",
-											"",
-											"pm.test('Creator should be owner', () => {",
-											"    pm.expect(pm.response.json()['owner']).to.be.eql(pm.iterationData.get('creator'))",
-											"})"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"type": "text",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "localhost:3000/nft/ownerOf/?tokenId={{recordId}}",
-									"host": ["localhost"],
-									"port": "3000",
-									"path": ["nft", "ownerOf", ""],
-									"query": [
-										{
-											"key": "tokenId",
-											"value": "{{recordId}}"
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "balanceOf Creator 1",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "84f6e25b-d5e6-47fe-ab6a-fa00bd50eb4f",
-										"exec": [
-											"pm.test('Response code should be 200', () => {",
-											"    pm.expect(pm.response.code).to.be.eql(200)",
-											"})",
-											"",
-											"pm.test('Creator balance should be 0', () => {",
-											"    pm.expect(pm.response.json()['balance']).to.be.eql(1)",
-											"})"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"type": "text",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "localhost:3000/nft/balanceOf/?owner={{creator}}",
-									"host": ["localhost"],
-									"port": "3000",
-									"path": ["nft", "balanceOf", ""],
-									"query": [
-										{
-											"key": "owner",
-											"value": "{{creator}}"
-										},
-										{
-											"key": "",
-											"value": "",
-											"disabled": true
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "balanceOf Recipient 1",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "2422f913-cdc7-4353-860d-34c819ad5a31",
-										"exec": [
-											"pm.test('Response code should be 200', () => {",
-											"    pm.expect(pm.response.code).to.be.eql(200)",
-											"})",
-											"",
-											"pm.test('Recipient balance should be 0', () => {",
-											"    pm.expect(pm.response.json()['balance']).to.be.eql(0)",
-											"})"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"type": "text",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "localhost:3000/nft/balanceOf/?owner={{recipient}}",
-									"host": ["localhost"],
-									"port": "3000",
-									"path": ["nft", "balanceOf", ""],
-									"query": [
-										{
-											"key": "owner",
-											"value": "{{recipient}}"
-										}
-									]
-								}
-							},
-							"response": []
-						}
-					],
-					"_postman_isSubFolder": true
-				},
-				{
-					"name": "owner_transfer_getters",
-					"item": [
-						{
-							"name": "tokenOfOwnerByIndex 2",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "032f03f5-dccc-4fa8-8796-a18352f17eaf",
-										"exec": [
-											"pm.test('Response code should be 200', () => {",
-											"    pm.expect(pm.response.code).to.be.eql(200)",
-											"})",
-											"",
-											"pm.test('Token record should be correct', () => {",
-											"    pm.expect(pm.response.json()['tokenId']).to.be.eql(pm.iterationData.get('recordId'))",
-											"})"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"type": "text",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "localhost:3000/nft/tokenOfOwnerByIndex/?owner={{recipient}}&index={{index2}}",
-									"host": ["localhost"],
-									"port": "3000",
-									"path": ["nft", "tokenOfOwnerByIndex", ""],
-									"query": [
-										{
-											"key": "owner",
-											"value": "{{recipient}}"
-										},
-										{
-											"key": "index",
-											"value": "{{index2}}"
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "ownerOf 2",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "b40db4d9-3627-496c-9338-4605d0ff60a2",
-										"exec": [
-											"pm.test('Response code should be 200', () => {",
-											"    pm.expect(pm.response.code).to.be.eql(200)",
-											"})",
-											"",
-											"pm.test('Owner of the token should be the recipient', () => {",
-											"    pm.expect(pm.response.json()['owner']).to.be.eql(pm.iterationData.get('recipient'))",
-											"})"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"type": "text",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "localhost:3000/nft/ownerOf/?tokenId={{recordId}}",
-									"host": ["localhost"],
-									"port": "3000",
-									"path": ["nft", "ownerOf", ""],
-									"query": [
-										{
-											"key": "tokenId",
-											"value": "{{recordId}}"
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "balanceOf Creator 2",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "84f6e25b-d5e6-47fe-ab6a-fa00bd50eb4f",
-										"exec": [
-											"pm.test('Response code should be 200', () => {",
-											"    pm.expect(pm.response.code).to.be.eql(200)",
-											"})",
-											"",
-											"pm.test('Token record should be correct', () => {",
-											"    pm.expect(pm.response.json()['balance']).to.be.eql(1)",
-											"})"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"type": "text",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "localhost:3000/nft/balanceOf/?owner={{creator}}",
-									"host": ["localhost"],
-									"port": "3000",
-									"path": ["nft", "balanceOf", ""],
-									"query": [
-										{
-											"key": "owner",
-											"value": "{{creator}}"
-										},
-										{
-											"key": "",
-											"value": "",
-											"disabled": true
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "balanceOf Recipient 2",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "2422f913-cdc7-4353-860d-34c819ad5a31",
-										"exec": [
-											"pm.test('Response code should be 200', () => {",
-											"    pm.expect(pm.response.code).to.be.eql(200)",
-											"})",
-											"",
-											"pm.test('Recipient balance should be 1', () => {",
-											"    pm.expect(pm.response.json()['balance']).to.be.eql(1)",
-											"})"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "localhost:3000/nft/balanceOf/?owner={{recipient}}",
-									"host": ["localhost"],
-									"port": "3000",
-									"path": ["nft", "balanceOf", ""],
-									"query": [
-										{
-											"key": "owner",
-											"value": "{{recipient}}"
-										}
-									]
-								}
-							},
-							"response": []
-						}
-					],
-					"_postman_isSubFolder": true
-				},
-				{
-					"name": "Version Record",
-					"item": [
-						{
-							"name": "createRecord",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "bfdc5c79-14fb-4c86-9113-2cf7b9ecd786",
-										"exec": [
-											"pm.test('Response code should be 200', () => {",
-											"    pm.expect(pm.response.code).to.be.eql(200)",
-											"})"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"auth\" : {\n  \t\"blockArrayAuth\" : {\n  \t\t\"hash\":\"{{hash}}\", \n  \t\t\"sig\": \"{{sig}}\"\n  \t}, \n  \t\"ownerAuth\" : {\n  \t\t\"hash\": \"{{hash1}}\", \n  \t\t\"sig\": \"{{sig1}}\"\n  \t}, \"partAuth\" : {\n  \t\t\"hash\": \"{{hash2}}\", \n  \t\t\"sig\": \"{{sig2}}\"\n  \t}\n  }\n}"
-								},
-								"url": {
-									"raw": "localhost:3000/nft/createRecord/?recordID={{recordID}}&owner={{creator}}&participant={{participant}}",
-									"host": ["localhost"],
-									"port": "3000",
-									"path": ["nft", "createRecord", ""],
-									"query": [
-										{
-											"key": "recordID",
-											"value": "{{recordID}}"
-										},
-										{
-											"key": "owner",
-											"value": "{{creator}}"
-										},
-										{
-											"key": "participant",
-											"value": "{{participant}}"
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "tokenOfOwnerByIndex 1",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "908abe7d-55cd-4a47-9deb-555c83388649",
-										"exec": [
-											"pm.test('Response code should be 200', () => {",
-											"    pm.expect(pm.response.code).to.be.eql(200)",
-											"})",
-											"",
-											"pm.test('Token record should be correct', () => {",
-											"    pm.expect(pm.response.json()['tokenId']).to.be.eql(pm.iterationData.get('recordId'))",
-											"})"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"type": "text",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "localhost:3000/nft/tokenOfOwnerByIndex/?owner={{creator}}&index={{index}}",
-									"host": ["localhost"],
-									"port": "3000",
-									"path": ["nft", "tokenOfOwnerByIndex", ""],
-									"query": [
-										{
-											"key": "owner",
-											"value": "{{creator}}"
-										},
-										{
-											"key": "index",
-											"value": "{{index}}"
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "ownerOf 1",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "90ddfd3f-7b2b-4409-a3d9-ccb67d55536b",
-										"exec": [
-											"pm.test('Response code should be 200', () => {",
-											"    pm.expect(pm.response.code).to.be.eql(200)",
-											"})",
-											"",
-											"pm.test('Creator should be owner', () => {",
-											"    pm.expect(pm.response.json()['owner']).to.be.eql(pm.iterationData.get('creator'))",
-											"})"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"type": "text",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "localhost:3000/nft/ownerOf/?tokenId={{recordId}}",
-									"host": ["localhost"],
-									"port": "3000",
-									"path": ["nft", "ownerOf", ""],
-									"query": [
-										{
-											"key": "tokenId",
-											"value": "{{recordId}}"
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "balanceOf Creator 1",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "84f6e25b-d5e6-47fe-ab6a-fa00bd50eb4f",
-										"exec": [
-											"pm.test('Response code should be 200', () => {",
-											"    pm.expect(pm.response.code).to.be.eql(200)",
-											"})",
-											"",
-											"pm.test('Creator balance should be 1', () => {",
-											"    pm.expect(pm.response.json()['balance']).to.be.eql(1)",
-											"})"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"type": "text",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "localhost:3000/nft/balanceOf/?owner={{creator}}",
-									"host": ["localhost"],
-									"port": "3000",
-									"path": ["nft", "balanceOf", ""],
-									"query": [
-										{
-											"key": "owner",
-											"value": "{{creator}}"
-										},
-										{
-											"key": "",
-											"value": "",
-											"disabled": true
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "versionRecord",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "f0b7a8e3-bbc4-4335-abec-93e7ff31b2e4",
-										"exec": [
-											"pm.test('Response code should be 200', () => {",
-											"    pm.expect(pm.response.code).to.be.eql(200)",
-											"})"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"auth\" : { \n  \t\"hash\": \"{{hash}}\",\n  \t\"sig\": \"{{sig}}\"\n  }\n}"
-								},
-								"url": {
-									"raw": "localhost:3000/nft/versionRecord/?currentHash={{recordId}}&newHash={{newHash}}",
-									"host": ["localhost"],
-									"port": "3000",
-									"path": ["nft", "versionRecord", ""],
-									"query": [
-										{
-											"key": "currentHash",
-											"value": "{{recordId}}"
-										},
-										{
-											"key": "newHash",
-											"value": "{{newHash}}"
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "tokenOfOwnerByIndex 2",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "032f03f5-dccc-4fa8-8796-a18352f17eaf",
-										"exec": [
-											"pm.test('Response code should be 200', () => {",
-											"    pm.expect(pm.response.code).to.be.eql(200)",
-											"})",
-											"",
-											"pm.test('Token record should be correct', () => {",
-											"    pm.expect(pm.response.json()['tokenId']).to.be.eql(pm.iterationData.get('newHash'))",
-											"})"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"type": "text",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "localhost:3000/nft/tokenOfOwnerByIndex/?owner={{recipient}}&index={{index2}}",
-									"host": ["localhost"],
-									"port": "3000",
-									"path": ["nft", "tokenOfOwnerByIndex", ""],
-									"query": [
-										{
-											"key": "owner",
-											"value": "{{recipient}}"
-										},
-										{
-											"key": "index",
-											"value": "{{index2}}"
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "ownerOf 2",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "b40db4d9-3627-496c-9338-4605d0ff60a2",
-										"exec": [
-											"pm.test('Response code should be 200', () => {",
-											"    pm.expect(pm.response.code).to.be.eql(200)",
-											"})",
-											"",
-											"pm.test('Owner of the token should be the recipient', () => {",
-											"    pm.expect(pm.response.json()['owner']).to.be.eql(pm.iterationData.get('creator'))",
-											"})"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"type": "text",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "localhost:3000/nft/ownerOf/?tokenId={{newHash}}",
-									"host": ["localhost"],
-									"port": "3000",
-									"path": ["nft", "ownerOf", ""],
-									"query": [
-										{
-											"key": "tokenId",
-											"value": "{{newHash}}"
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "balanceOf Creator 2",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "84f6e25b-d5e6-47fe-ab6a-fa00bd50eb4f",
-										"exec": [
-											"pm.test('Response code should be 200', () => {",
-											"    pm.expect(pm.response.code).to.be.eql(200)",
-											"})",
-											"",
-											"pm.test('Creator should be 2', () => {",
-											"    pm.expect(pm.response.json()['balance']).to.be.eql(2)",
-											"})"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"type": "text",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "localhost:3000/nft/balanceOf/?owner={{creator}}",
-									"host": ["localhost"],
-									"port": "3000",
-									"path": ["nft", "balanceOf", ""],
-									"query": [
-										{
-											"key": "owner",
-											"value": "{{creator}}"
-										},
-										{
-											"key": "",
-											"value": "",
-											"disabled": true
-										}
-									]
-								}
-							},
-							"response": []
-						}
-					],
-					"_postman_isSubFolder": true
-				},
-				{
-					"name": "Create Record",
-					"item": [
-						{
-							"name": "createRecord",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "bfdc5c79-14fb-4c86-9113-2cf7b9ecd786",
-										"exec": [
-											"pm.test('Response code should be 200', () => {",
-											"    pm.expect(pm.response.code).to.be.eql(200)",
-											"})"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"type": "text",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"auth\" : {\n  \t\"blockArrayAuth\" : {\n  \t\t\"hash\":\"{{hash}}\", \n  \t\t\"sig\": \"{{sig}}\"\n  \t}, \n  \t\"ownerAuth\" : {\n  \t\t\"hash\": \"{{hash1}}\", \n  \t\t\"sig\": \"{{sig1}}\"\n  \t}, \"partAuth\" : {\n  \t\t\"hash\": \"{{hash2}}\", \n  \t\t\"sig\": \"{{sig2}}\"\n  \t}\n  }\n}"
-								},
-								"url": {
-									"raw": "localhost:3000/nft/createRecord/?recordID={{recordID}}&owner={{creator}}&participant={{participant}}",
-									"host": ["localhost"],
-									"port": "3000",
-									"path": ["nft", "createRecord", ""],
-									"query": [
-										{
-											"key": "recordID",
-											"value": "{{recordID}}"
-										},
-										{
-											"key": "owner",
-											"value": "{{creator}}"
-										},
-										{
-											"key": "participant",
-											"value": "{{participant}}"
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "ownerOf",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "90ddfd3f-7b2b-4409-a3d9-ccb67d55536b",
-										"exec": [
-											"pm.test('Response code should be 200', () => {",
-											"    pm.expect(pm.response.code).to.be.eql(200)",
-											"})",
-											"",
-											"pm.test('Creator should be owner', () => {",
-											"    pm.expect(pm.response.json()['owner']).to.be.eql(pm.iterationData.get('creator'))",
-											"})"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"type": "text",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "localhost:3000/nft/ownerOf/?tokenId={{recordId}}",
-									"host": ["localhost"],
-									"port": "3000",
-									"path": ["nft", "ownerOf", ""],
-									"query": [
-										{
-											"key": "tokenId",
-											"value": "{{recordId}}"
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "tokenByIndex",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "9b82ef0d-8d8f-485f-a906-92df552a12e4",
-										"exec": [
-											"pm.test('Response code should be 200', () => {",
-											"    pm.expect(pm.response.code).to.be.eql(200)",
-											"})",
-											"",
-											"pm.test('Token Id should be Record Id', () => {",
-											"    pm.expect(pm.response.json()['tokenId']).to.be.eql(pm.iterationData.get('recordId'))",
-											"})"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "localhost:3000/nft/tokenByIndex/?index={{index}}",
-									"host": ["localhost"],
-									"port": "3000",
-									"path": ["nft", "tokenByIndex", ""],
-									"query": [
-										{
-											"key": "index",
-											"value": "{{index}}"
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "tokenOfOwnerByIndex",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "908abe7d-55cd-4a47-9deb-555c83388649",
-										"exec": [
-											"pm.test('Response code should be 200', () => {",
-											"    pm.expect(pm.response.code).to.be.eql(200)",
-											"})",
-											"",
-											"pm.test('Token record should be correct', () => {",
-											"    pm.expect(pm.response.json()['tokenId']).to.be.eql(pm.iterationData.get('recordId'))",
-											"})"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"type": "text",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "localhost:3000/nft/tokenOfOwnerByIndex/?owner={{creator}}&index={{index2}}",
-									"host": ["localhost"],
-									"port": "3000",
-									"path": ["nft", "tokenOfOwnerByIndex", ""],
-									"query": [
-										{
-											"key": "owner",
-											"value": "{{creator}}"
-										},
-										{
-											"key": "index",
-											"value": "{{index2}}"
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "balanceOf",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "84f6e25b-d5e6-47fe-ab6a-fa00bd50eb4f",
-										"exec": [
-											"pm.test('Response code should be 200', () => {",
-											"    pm.expect(pm.response.code).to.be.eql(200)",
-											"})",
-											"",
-											"pm.test('Creator balance should be 1', () => {",
-											"    pm.expect(pm.response.json()['balance']).to.be.eql(1)",
-											"})"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"type": "text",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "localhost:3000/nft/balanceOf/?owner={{creator}}",
-									"host": ["localhost"],
-									"port": "3000",
-									"path": ["nft", "balanceOf", ""],
-									"query": [
-										{
-											"key": "owner",
-											"value": "{{creator}}"
-										},
-										{
-											"key": "",
-											"value": "",
-											"disabled": true
-										}
-									]
-								}
-							},
-							"response": []
-						}
-					],
-					"_postman_isSubFolder": true
-				},
-				{
-					"name": "Safe Transfer Record",
-					"item": [
-						{
-							"name": "createRecord",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "bfdc5c79-14fb-4c86-9113-2cf7b9ecd786",
-										"exec": [
-											"pm.test('Response code should be 200', () => {",
-											"    pm.expect(pm.response.code).to.be.eql(200)",
-											"})"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"auth\" : {\n  \t\"blockArrayAuth\" : {\n  \t\t\"hash\":\"{{hash}}\", \n  \t\t\"sig\": \"{{sig}}\"\n  \t}, \n  \t\"ownerAuth\" : {\n  \t\t\"hash\": \"{{hash1}}\", \n  \t\t\"sig\": \"{{sig1}}\"\n  \t}, \"partAuth\" : {\n  \t\t\"hash\": \"{{hash2}}\", \n  \t\t\"sig\": \"{{sig2}}\"\n  \t}\n  }\n}"
-								},
-								"url": {
-									"raw": "localhost:3000/nft/createRecord/?recordID={{recordID}}&owner={{creator}}&participant={{participant}}",
-									"host": ["localhost"],
-									"port": "3000",
-									"path": ["nft", "createRecord", ""],
-									"query": [
-										{
-											"key": "recordID",
-											"value": "{{recordID}}"
-										},
-										{
-											"key": "owner",
-											"value": "{{creator}}"
-										},
-										{
-											"key": "participant",
-											"value": "{{participant}}"
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "tokenOfOwnerByIndex 1",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "908abe7d-55cd-4a47-9deb-555c83388649",
-										"exec": [
-											"pm.test('Response code should be 200', () => {",
-											"    pm.expect(pm.response.code).to.be.eql(200)",
-											"})",
-											"",
-											"pm.test('Token record should be correct', () => {",
-											"    pm.expect(pm.response.json()['tokenId']).to.be.eql(pm.iterationData.get('recordId'))",
-											"})"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"type": "text",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "localhost:3000/nft/tokenOfOwnerByIndex/?owner={{creator}}&index={{index}}",
-									"host": ["localhost"],
-									"port": "3000",
-									"path": ["nft", "tokenOfOwnerByIndex", ""],
-									"query": [
-										{
-											"key": "owner",
-											"value": "{{creator}}"
-										},
-										{
-											"key": "index",
-											"value": "{{index}}"
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "ownerOf 1",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "90ddfd3f-7b2b-4409-a3d9-ccb67d55536b",
-										"exec": [
-											"pm.test('Response code should be 200', () => {",
-											"    pm.expect(pm.response.code).to.be.eql(200)",
-											"})",
-											"",
-											"pm.test('Creator should be owner', () => {",
-											"    pm.expect(pm.response.json()['owner']).to.be.eql(pm.iterationData.get('creator'))",
-											"})"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"type": "text",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "localhost:3000/nft/ownerOf/?tokenId={{recordId}}",
-									"host": ["localhost"],
-									"port": "3000",
-									"path": ["nft", "ownerOf", ""],
-									"query": [
-										{
-											"key": "tokenId",
-											"value": "{{recordId}}"
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "balanceOf Creator 1",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "84f6e25b-d5e6-47fe-ab6a-fa00bd50eb4f",
-										"exec": [
-											"pm.test('Response code should be 200', () => {",
-											"    pm.expect(pm.response.code).to.be.eql(200)",
-											"})",
-											"",
-											"pm.test('Creator balance should be 0', () => {",
-											"    pm.expect(pm.response.json()['balance']).to.be.eql(1)",
-											"})"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"type": "text",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "localhost:3000/nft/balanceOf/?owner={{creator}}",
-									"host": ["localhost"],
-									"port": "3000",
-									"path": ["nft", "balanceOf", ""],
-									"query": [
-										{
-											"key": "owner",
-											"value": "{{creator}}"
-										},
-										{
-											"key": "",
-											"value": "",
-											"disabled": true
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "balanceOf Recipient 1",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "2422f913-cdc7-4353-860d-34c819ad5a31",
-										"exec": [
-											"pm.test('Response code should be 200', () => {",
-											"    pm.expect(pm.response.code).to.be.eql(200)",
-											"})",
-											"",
-											"pm.test('Recipient balance should be 0', () => {",
-											"    pm.expect(pm.response.json()['balance']).to.be.eql(0)",
-											"})"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"type": "text",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "localhost:3000/nft/balanceOf/?owner={{recipient}}",
-									"host": ["localhost"],
-									"port": "3000",
-									"path": ["nft", "balanceOf", ""],
-									"query": [
-										{
-											"key": "owner",
-											"value": "{{recipient}}"
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "safeTransferFrom",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"name": "Content-Type",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n\t\"auth\": {\n\t\t\"hash\": \"{{hash}}\",\n\t\t\"sig\": \"{{sig}}\"\n\t}\n}"
-								},
-								"url": {
-									"raw": "localhost:3000/nft/safeTransferFrom/?from={{creator}}&to={{recipient}}&tokenId={{recordId}}&extraData={{extraData}}",
-									"host": ["localhost"],
-									"port": "3000",
-									"path": ["nft", "safeTransferFrom", ""],
-									"query": [
-										{
-											"key": "from",
-											"value": "{{creator}}"
-										},
-										{
-											"key": "to",
-											"value": "{{recipient}}"
-										},
-										{
-											"key": "tokenId",
-											"value": "{{recordId}}"
-										},
-										{
-											"key": "extraData",
-											"value": "{{extraData}}"
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "tokenOfOwnerByIndex 2",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "032f03f5-dccc-4fa8-8796-a18352f17eaf",
-										"exec": [
-											"pm.test('Response code should be 200', () => {",
-											"    pm.expect(pm.response.code).to.be.eql(200)",
-											"})",
-											"",
-											"pm.test('Token record should be correct', () => {",
-											"    pm.expect(pm.response.json()['tokenId']).to.be.eql(pm.iterationData.get('recordId'))",
-											"})"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"type": "text",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "localhost:3000/nft/tokenOfOwnerByIndex/?owner={{recipient}}&index={{index2}}",
-									"host": ["localhost"],
-									"port": "3000",
-									"path": ["nft", "tokenOfOwnerByIndex", ""],
-									"query": [
-										{
-											"key": "owner",
-											"value": "{{recipient}}"
-										},
-										{
-											"key": "index",
-											"value": "{{index2}}"
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "ownerOf 2",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "b40db4d9-3627-496c-9338-4605d0ff60a2",
-										"exec": [
-											"pm.test('Response code should be 200', () => {",
-											"    pm.expect(pm.response.code).to.be.eql(200)",
-											"})",
-											"",
-											"pm.test('Owner of the token should be the recipient', () => {",
-											"    pm.expect(pm.response.json()['owner']).to.be.eql(pm.iterationData.get('recipient'))",
-											"})"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"type": "text",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "localhost:3000/nft/ownerOf/?tokenId={{recordId}}",
-									"host": ["localhost"],
-									"port": "3000",
-									"path": ["nft", "ownerOf", ""],
-									"query": [
-										{
-											"key": "tokenId",
-											"value": "{{recordId}}"
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "balanceOf Creator 2",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "84f6e25b-d5e6-47fe-ab6a-fa00bd50eb4f",
-										"exec": [
-											"pm.test('Response code should be 200', () => {",
-											"    pm.expect(pm.response.code).to.be.eql(200)",
-											"})",
-											"",
-											"pm.test('Token record should be correct', () => {",
-											"    pm.expect(pm.response.json()['balance']).to.be.eql(1)",
-											"})"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"type": "text",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "localhost:3000/nft/balanceOf/?owner={{creator}}",
-									"host": ["localhost"],
-									"port": "3000",
-									"path": ["nft", "balanceOf", ""],
-									"query": [
-										{
-											"key": "owner",
-											"value": "{{creator}}"
-										},
-										{
-											"key": "",
-											"value": "",
-											"disabled": true
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "balanceOf Recipient 2",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "2422f913-cdc7-4353-860d-34c819ad5a31",
-										"exec": [
-											"pm.test('Response code should be 200', () => {",
-											"    pm.expect(pm.response.code).to.be.eql(200)",
-											"})",
-											"",
-											"pm.test('Recipient balance should be 1', () => {",
-											"    pm.expect(pm.response.json()['balance']).to.be.eql(1)",
-											"})"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"type": "text",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "localhost:3000/nft/balanceOf/?owner={{recipient}}",
-									"host": ["localhost"],
-									"port": "3000",
-									"path": ["nft", "balanceOf", ""],
-									"query": [
-										{
-											"key": "owner",
-											"value": "{{recipient}}"
-										}
-									]
-								}
-							},
-							"response": []
-						}
-					],
-					"_postman_isSubFolder": true
-				},
-				{
-					"name": "Signed Transfer Record",
-					"item": [
-						{
-							"name": "createRecord",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "bfdc5c79-14fb-4c86-9113-2cf7b9ecd786",
-										"exec": [
-											"pm.test('Response code should be 200', () => {",
-											"    pm.expect(pm.response.code).to.be.eql(200)",
-											"})"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"auth\" : {\n  \t\"blockArrayAuth\" : {\n  \t\t\"hash\":\"{{hash}}\", \n  \t\t\"sig\": \"{{sig}}\"\n  \t}, \n  \t\"ownerAuth\" : {\n  \t\t\"hash\": \"{{hash1}}\", \n  \t\t\"sig\": \"{{sig1}}\"\n  \t}, \"partAuth\" : {\n  \t\t\"hash\": \"{{hash2}}\", \n  \t\t\"sig\": \"{{sig2}}\"\n  \t}\n  }\n}"
-								},
-								"url": {
-									"raw": "localhost:3000/nft/createRecord/?recordID={{recordID}}&owner={{creator}}&participant={{participant}}",
-									"host": ["localhost"],
-									"port": "3000",
-									"path": ["nft", "createRecord", ""],
-									"query": [
-										{
-											"key": "recordID",
-											"value": "{{recordID}}"
-										},
-										{
-											"key": "owner",
-											"value": "{{creator}}"
-										},
-										{
-											"key": "participant",
-											"value": "{{participant}}"
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "tokenOfOwnerByIndex 1",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "908abe7d-55cd-4a47-9deb-555c83388649",
-										"exec": [
-											"pm.test('Response code should be 200', () => {",
-											"    pm.expect(pm.response.code).to.be.eql(200)",
-											"})",
-											"",
-											"pm.test('Token record should be correct', () => {",
-											"    pm.expect(pm.response.json()['tokenId']).to.be.eql(pm.iterationData.get('recordId'))",
-											"})"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"type": "text",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "localhost:3000/nft/tokenOfOwnerByIndex/?owner={{creator}}&index={{index}}",
-									"host": ["localhost"],
-									"port": "3000",
-									"path": ["nft", "tokenOfOwnerByIndex", ""],
-									"query": [
-										{
-											"key": "owner",
-											"value": "{{creator}}"
-										},
-										{
-											"key": "index",
-											"value": "{{index}}"
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "ownerOf 1",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "90ddfd3f-7b2b-4409-a3d9-ccb67d55536b",
-										"exec": [
-											"pm.test('Response code should be 200', () => {",
-											"    pm.expect(pm.response.code).to.be.eql(200)",
-											"})",
-											"",
-											"pm.test('Creator should be owner', () => {",
-											"    pm.expect(pm.response.json()['owner']).to.be.eql(pm.iterationData.get('creator'))",
-											"})"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"type": "text",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "localhost:3000/nft/ownerOf/?tokenId={{recordId}}",
-									"host": ["localhost"],
-									"port": "3000",
-									"path": ["nft", "ownerOf", ""],
-									"query": [
-										{
-											"key": "tokenId",
-											"value": "{{recordId}}"
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "balanceOf Creator 1",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "84f6e25b-d5e6-47fe-ab6a-fa00bd50eb4f",
-										"exec": [
-											"pm.test('Response code should be 200', () => {",
-											"    pm.expect(pm.response.code).to.be.eql(200)",
-											"})",
-											"",
-											"pm.test('Creator balance should be 0', () => {",
-											"    pm.expect(pm.response.json()['balance']).to.be.eql(1)",
-											"})"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"type": "text",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "localhost:3000/nft/balanceOf/?owner={{creator}}",
-									"host": ["localhost"],
-									"port": "3000",
-									"path": ["nft", "balanceOf", ""],
-									"query": [
-										{
-											"key": "owner",
-											"value": "{{creator}}"
-										},
-										{
-											"key": "",
-											"value": "",
-											"disabled": true
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "balanceOf Recipient 1",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "2422f913-cdc7-4353-860d-34c819ad5a31",
-										"exec": [
-											"pm.test('Response code should be 200', () => {",
-											"    pm.expect(pm.response.code).to.be.eql(200)",
-											"})",
-											"",
-											"pm.test('Recipient balance should be 0', () => {",
-											"    pm.expect(pm.response.json()['balance']).to.be.eql(0)",
-											"})"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"type": "text",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "localhost:3000/nft/balanceOf/?owner={{recipient}}",
-									"host": ["localhost"],
-									"port": "3000",
-									"path": ["nft", "balanceOf", ""],
-									"query": [
-										{
-											"key": "owner",
-											"value": "{{recipient}}"
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "signedTransfer",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "5c396c33-6b0a-4bcc-984f-8968ddff5c95",
-										"exec": [
-											"pm.test('Response code should be 200', () => {",
-											"    pm.expect(pm.response.code).to.be.eql(200)",
-											"})"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"auth\" : {\n  \t\"blockArrayAuth\" : {\n  \t\t\"hash\":\"{{hash}}\", \n  \t\t\"sig\": \"{{sig}}\"\n  \t\t\n  \t}, \"senderAuth\" : {\n  \t\t\"hash\": \"{{hash1}}\",\n  \t\t\"sig\": \"{{sig1}}\"\n  \t}\n  }\n}"
-								},
-								"url": {
-									"raw": "localhost:3000/nft/signedTransfer/?from={{from}}&to={{to}}&tokenId={{tokenId}}&data={{data}}",
-									"host": ["localhost"],
-									"port": "3000",
-									"path": ["nft", "signedTransfer", ""],
-									"query": [
-										{
-											"key": "from",
-											"value": "{{from}}"
-										},
-										{
-											"key": "to",
-											"value": "{{to}}"
-										},
-										{
-											"key": "tokenId",
-											"value": "{{tokenId}}"
-										},
-										{
-											"key": "data",
-											"value": "{{data}}"
-										}
-									]
-								},
-								"description": "Allows Block Array to sign and transfer a ERC721 token on the behalf of its holder"
-							},
-							"response": []
-						},
-						{
-							"name": "tokenOfOwnerByIndex 2",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "032f03f5-dccc-4fa8-8796-a18352f17eaf",
-										"exec": [
-											"pm.test('Response code should be 200', () => {",
-											"    pm.expect(pm.response.code).to.be.eql(200)",
-											"})",
-											"",
-											"pm.test('Token record should be correct', () => {",
-											"    pm.expect(pm.response.json()['tokenId']).to.be.eql(pm.iterationData.get('recordId'))",
-											"})"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"type": "text",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "localhost:3000/nft/tokenOfOwnerByIndex/?owner={{recipient}}&index={{index2}}",
-									"host": ["localhost"],
-									"port": "3000",
-									"path": ["nft", "tokenOfOwnerByIndex", ""],
-									"query": [
-										{
-											"key": "owner",
-											"value": "{{recipient}}"
-										},
-										{
-											"key": "index",
-											"value": "{{index2}}"
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "ownerOf 2",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "b40db4d9-3627-496c-9338-4605d0ff60a2",
-										"exec": [
-											"pm.test('Response code should be 200', () => {",
-											"    pm.expect(pm.response.code).to.be.eql(200)",
-											"})",
-											"",
-											"pm.test('Owner of the token should be the recipient', () => {",
-											"    pm.expect(pm.response.json()['owner']).to.be.eql(pm.iterationData.get('recipient'))",
-											"})"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"type": "text",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "localhost:3000/nft/ownerOf/?tokenId={{recordId}}",
-									"host": ["localhost"],
-									"port": "3000",
-									"path": ["nft", "ownerOf", ""],
-									"query": [
-										{
-											"key": "tokenId",
-											"value": "{{recordId}}"
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "balanceOf Creator 2",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "84f6e25b-d5e6-47fe-ab6a-fa00bd50eb4f",
-										"exec": [
-											"pm.test('Response code should be 200', () => {",
-											"    pm.expect(pm.response.code).to.be.eql(200)",
-											"})",
-											"",
-											"pm.test('Token record should be correct', () => {",
-											"    pm.expect(pm.response.json()['balance']).to.be.eql(1)",
-											"})"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"type": "text",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "localhost:3000/nft/balanceOf/?owner={{creator}}",
-									"host": ["localhost"],
-									"port": "3000",
-									"path": ["nft", "balanceOf", ""],
-									"query": [
-										{
-											"key": "owner",
-											"value": "{{creator}}"
-										},
-										{
-											"key": "",
-											"value": "",
-											"disabled": true
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "balanceOf Recipient 2",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "2422f913-cdc7-4353-860d-34c819ad5a31",
-										"exec": [
-											"pm.test('Response code should be 200', () => {",
-											"    pm.expect(pm.response.code).to.be.eql(200)",
-											"})",
-											"",
-											"pm.test('Recipient balance should be 1', () => {",
-											"    pm.expect(pm.response.json()['balance']).to.be.eql(1)",
-											"})"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"type": "text",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "localhost:3000/nft/balanceOf/?owner={{recipient}}",
-									"host": ["localhost"],
-									"port": "3000",
-									"path": ["nft", "balanceOf", ""],
-									"query": [
-										{
-											"key": "owner",
-											"value": "{{recipient}}"
-										}
-									]
-								}
-							},
-							"response": []
-						}
-					],
-					"_postman_isSubFolder": true
-				},
-				{
-					"name": "Signed Version Record",
-					"item": [
-						{
-							"name": "createRecord",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "bfdc5c79-14fb-4c86-9113-2cf7b9ecd786",
-										"exec": [
-											"pm.test('Response code should be 200', () => {",
-											"    pm.expect(pm.response.code).to.be.eql(200)",
-											"})"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"auth\" : {\n  \t\"blockArrayAuth\" : {\n  \t\t\"hash\":\"{{hash}}\", \n  \t\t\"sig\": \"{{sig}}\"\n  \t}, \n  \t\"ownerAuth\" : {\n  \t\t\"hash\": \"{{hash1}}\", \n  \t\t\"sig\": \"{{sig1}}\"\n  \t}, \"partAuth\" : {\n  \t\t\"hash\": \"{{hash2}}\", \n  \t\t\"sig\": \"{{sig2}}\"\n  \t}\n  }\n}"
-								},
-								"url": {
-									"raw": "localhost:3000/nft/createRecord/?recordID={{recordID}}&owner={{creator}}&participant={{participant}}",
-									"host": ["localhost"],
-									"port": "3000",
-									"path": ["nft", "createRecord", ""],
-									"query": [
-										{
-											"key": "recordID",
-											"value": "{{recordID}}"
-										},
-										{
-											"key": "owner",
-											"value": "{{creator}}"
-										},
-										{
-											"key": "participant",
-											"value": "{{participant}}"
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "tokenOfOwnerByIndex 1",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "908abe7d-55cd-4a47-9deb-555c83388649",
-										"exec": [
-											"pm.test('Response code should be 200', () => {",
-											"    pm.expect(pm.response.code).to.be.eql(200)",
-											"})",
-											"",
-											"pm.test('Token record should be correct', () => {",
-											"    pm.expect(pm.response.json()['tokenId']).to.be.eql(pm.iterationData.get('recordId'))",
-											"})"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"type": "text",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "localhost:3000/nft/tokenOfOwnerByIndex/?owner={{creator}}&index={{index}}",
-									"host": ["localhost"],
-									"port": "3000",
-									"path": ["nft", "tokenOfOwnerByIndex", ""],
-									"query": [
-										{
-											"key": "owner",
-											"value": "{{creator}}"
-										},
-										{
-											"key": "index",
-											"value": "{{index}}"
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "ownerOf 1",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "90ddfd3f-7b2b-4409-a3d9-ccb67d55536b",
-										"exec": [
-											"pm.test('Response code should be 200', () => {",
-											"    pm.expect(pm.response.code).to.be.eql(200)",
-											"})",
-											"",
-											"pm.test('Creator should be owner', () => {",
-											"    pm.expect(pm.response.json()['owner']).to.be.eql(pm.iterationData.get('creator'))",
-											"})"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"type": "text",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "localhost:3000/nft/ownerOf/?tokenId={{recordId}}",
-									"host": ["localhost"],
-									"port": "3000",
-									"path": ["nft", "ownerOf", ""],
-									"query": [
-										{
-											"key": "tokenId",
-											"value": "{{recordId}}"
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "balanceOf Creator 1",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "84f6e25b-d5e6-47fe-ab6a-fa00bd50eb4f",
-										"exec": [
-											"pm.test('Response code should be 200', () => {",
-											"    pm.expect(pm.response.code).to.be.eql(200)",
-											"})",
-											"",
-											"pm.test('Creator balance should be 1', () => {",
-											"    pm.expect(pm.response.json()['balance']).to.be.eql(1)",
-											"})"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"type": "text",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "localhost:3000/nft/balanceOf/?owner={{creator}}",
-									"host": ["localhost"],
-									"port": "3000",
-									"path": ["nft", "balanceOf", ""],
-									"query": [
-										{
-											"key": "owner",
-											"value": "{{creator}}"
-										},
-										{
-											"key": "",
-											"value": "",
-											"disabled": true
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "versionRecordSigned",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "878f2a11-b00d-4b42-8376-6392da07d0a9",
-										"exec": [
-											"pm.test('Response code should be 200', () => {",
-											"    pm.expect(pm.response.code).to.be.eql(200)",
-											"})"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"auth\" : {\n  \t\"blockArrayAuth\" : {\n  \t\t\"hash\": \"{{hash}}\", \n  \t\t\"sig\": \"{{sig}}\"\n  \t}, \"ownerAuth\" : {\n  \t\t\"hash\": \"{{hash1}}\", \n  \t\t\"sig\": \"{{sig1}}\"\n  \t\t\n  \t}\n  }\n}"
-								},
-								"url": {
-									"raw": "localhost:3000/nft/versionRecord/signed/?currentHash={{currentHash}}&newHash={{newHash}}&owner={{owner}}",
-									"host": ["localhost"],
-									"port": "3000",
-									"path": ["nft", "versionRecord", "signed", ""],
-									"query": [
-										{
-											"key": "currentHash",
-											"value": "{{currentHash}}"
-										},
-										{
-											"key": "newHash",
-											"value": "{{newHash}}"
-										},
-										{
-											"key": "owner",
-											"value": "{{owner}}"
-										}
-									]
-								},
-								"description": "Allows Block Array to version a record for the owner using the owner's signature."
-							},
-							"response": []
-						},
-						{
-							"name": "tokenOfOwnerByIndex 2",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "032f03f5-dccc-4fa8-8796-a18352f17eaf",
-										"exec": [
-											"pm.test('Response code should be 200', () => {",
-											"    pm.expect(pm.response.code).to.be.eql(200)",
-											"})",
-											"",
-											"pm.test('Token record should be correct', () => {",
-											"    pm.expect(pm.response.json()['tokenId']).to.be.eql(pm.iterationData.get('newHash'))",
-											"})"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"type": "text",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "localhost:3000/nft/tokenOfOwnerByIndex/?owner={{recipient}}&index={{index2}}",
-									"host": ["localhost"],
-									"port": "3000",
-									"path": ["nft", "tokenOfOwnerByIndex", ""],
-									"query": [
-										{
-											"key": "owner",
-											"value": "{{recipient}}"
-										},
-										{
-											"key": "index",
-											"value": "{{index2}}"
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "ownerOf 2",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "b40db4d9-3627-496c-9338-4605d0ff60a2",
-										"exec": [
-											"pm.test('Response code should be 200', () => {",
-											"    pm.expect(pm.response.code).to.be.eql(200)",
-											"})",
-											"",
-											"pm.test('Owner of the token should be the recipient', () => {",
-											"    pm.expect(pm.response.json()['owner']).to.be.eql(pm.iterationData.get('creator'))",
-											"})"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"type": "text",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "localhost:3000/nft/ownerOf/?tokenId={{newHash}}",
-									"host": ["localhost"],
-									"port": "3000",
-									"path": ["nft", "ownerOf", ""],
-									"query": [
-										{
-											"key": "tokenId",
-											"value": "{{newHash}}"
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "balanceOf Creator 2",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "84f6e25b-d5e6-47fe-ab6a-fa00bd50eb4f",
-										"exec": [
-											"pm.test('Response code should be 200', () => {",
-											"    pm.expect(pm.response.code).to.be.eql(200)",
-											"})",
-											"",
-											"pm.test('Creator should be 2', () => {",
-											"    pm.expect(pm.response.json()['balance']).to.be.eql(2)",
-											"})"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"type": "text",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "localhost:3000/nft/balanceOf/?owner={{creator}}",
-									"host": ["localhost"],
-									"port": "3000",
-									"path": ["nft", "balanceOf", ""],
-									"query": [
-										{
-											"key": "owner",
-											"value": "{{creator}}"
-										},
-										{
-											"key": "",
-											"value": "",
-											"disabled": true
-										}
-									]
-								}
-							},
-							"response": []
-						}
-					],
-					"_postman_isSubFolder": true
-				},
-				{
-					"name": "Set Approval for All",
-					"item": [
-						{
-							"name": "setApprovalForAll",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "455699bb-aefe-4fb3-811d-b17a2fd5eff5",
-										"exec": [
-											"pm.test('Response code should be 200', () => {",
-											"    pm.expect(pm.response.code).to.be.eql(200)",
-											"})"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"auth\" : { \n  \t\"hash\": \"{{hash}}\",\n  \t\"sig\": \"{{sig}}\"\n  }\n}"
-								},
-								"url": {
-									"raw": "localhost:3000/nft/setApprovalForAll/?operator={{operator}}&status={{status}}",
-									"host": ["localhost"],
-									"port": "3000",
-									"path": ["nft", "setApprovalForAll", ""],
-									"query": [
-										{
-											"key": "operator",
-											"value": "{{operator}}"
-										},
-										{
-											"key": "status",
-											"value": "{{status}}"
-										}
-									]
-								},
-								"description": "Enable or disable approval for a third party (`operator`) to manage all of Block Array's assets"
-							},
-							"response": []
-						},
-						{
-							"name": "isApprovedForAll",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "d3051178-46c8-4630-9fee-6e671238f720",
-										"exec": [
-											"pm.test('Response code should be 200', () => {",
-											"    pm.expect(pm.response.code).to.be.eql(200)",
-											"})",
-											"",
-											"pm.test('Operator should have correct approval status', () => {",
-											"    pm.expect(pm.response.json()['isApprovedForAll']).to.be.eql(pm.iterationData.get('status'))",
-											"})"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "localhost:3000/nft/isApprovedForAll/?owner={{owner}}&operator={{operator}}",
-									"host": ["localhost"],
-									"port": "3000",
-									"path": ["nft", "isApprovedForAll", ""],
-									"query": [
-										{
-											"key": "owner",
-											"value": "{{owner}}"
-										},
-										{
-											"key": "operator",
-											"value": "{{operator}}"
-										}
-									]
-								},
-								"description": "True if `operator` is an approved operator for `owner`, false otherwise"
-							},
-							"response": []
-						}
-					],
-					"_postman_isSubFolder": true
-				}
-			]
-		},
-		{
-			"name": "proxy",
-			"item": [
-				{
-					"name": "change_master",
-					"item": [
-						{
-							"name": "changeMaster",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "20574638-2897-4a64-9890-5555fd76f9f5",
-										"exec": [
-											"pm.test('Response code should be 200', () => {",
-											"    pm.expect(pm.response.code).to.be.eql(200)",
-											"})"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"type": "text",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"auth\" : { \n  \t\"hash\": \"{{hash}}\",\n  \t\"sig\": \"{{sig}}\"\n  }\n}"
-								},
-								"url": {
-									"raw": "localhost:3000/proxy/changeMaster/?newMaster={{newMaster}}",
-									"host": ["localhost"],
-									"port": "3000",
-									"path": ["proxy", "changeMaster", ""],
-									"query": [
-										{
-											"key": "newMaster",
-											"value": "{{newMaster}}"
-										}
-									]
-								}
-							},
-							"response": []
-						}
-					],
-					"description": "This fixture represents a valid call to change master. The result of this call should cause the function `getMaster` to return an updated address.",
-					"_postman_isSubFolder": true
-				},
-				{
-					"name": "change_controller",
-					"item": [
-						{
-							"name": "changeController",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "e54d1523-717d-49bf-bf23-e6399f7f02f8",
-										"exec": [
-											"pm.test('Response code should be 200', () => {",
-											"    pm.expect(pm.response.code).to.be.eql(200)",
-											"})"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"auth\" : { \n  \t\"hash\": \"{{hash}}\",\n  \t\"sig\": \"{{sig}}\"\n  }\n}"
-								},
-								"url": {
-									"raw": "localhost:3000/proxy/changeController/?newController={{newController}}",
-									"host": ["localhost"],
-									"port": "3000",
-									"path": ["proxy", "changeController", ""],
-									"query": [
-										{
-											"key": "newController",
-											"value": "{{newController}}"
-										}
-									]
-								}
-							},
-							"response": []
-						}
-					],
-					"_postman_isSubFolder": true
-				},
-				{
-					"name": "set_target",
-					"item": [
-						{
-							"name": "setTarget",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "cc5056ad-cea8-4416-b99b-f92a58470e8f",
-										"exec": [
-											"pm.test('Response code should be 200', () => {",
-											"    pm.expect(pm.response.code).to.be.eql(200)",
-											"})"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n\t\"auth\": {\n\t\t\"hash\": \"{{hash}}\",\n\t\t\"sig\": \"{{sig}}\"\n\t}\n}"
-								},
-								"url": {
-									"raw": "localhost:3000/proxy/setTarget/?id={{id}}&target={{target}}",
-									"host": ["localhost"],
-									"port": "3000",
-									"path": ["proxy", "setTarget", ""],
-									"query": [
-										{
-											"key": "id",
-											"value": "{{id}}"
-										},
-										{
-											"key": "target",
-											"value": "{{target}}"
-										}
-									]
-								}
-							},
-							"response": []
-						}
-					],
-					"_postman_isSubFolder": true
-				},
-				{
-					"name": "Pause",
-					"item": [],
-					"_postman_isSubFolder": true
-				},
-				{
-					"name": "check_master",
-					"item": [
-						{
-							"name": "getMaster",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "a75a560f-98e0-418d-8d06-6f86bd8cbacf",
-										"exec": [
-											"pm.test('Response status is 200', () => {",
-											"    pm.response.to.have.status(200)",
-											"})",
-											"",
-											"pm.test('Master address was changed correctly', () => {",
-											"    let master = pm.response.json()['master'].toUpperCase()",
-											"    let newMaster = pm.iterationData.get('newMaster').toUpperCase()",
-											"    pm.expect(master).to.be.eql(newMaster)",
-											"})"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"type": "text",
-										"value": "application/xml, application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": "localhost:3000/proxy/getMaster"
-							},
-							"response": []
-						}
-					],
-					"_postman_isSubFolder": true
-				},
-				{
-					"name": "check_controller",
-					"item": [
-						{
-							"name": "getController",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "5e79ac33-f766-4af9-a852-6942ac9391b0",
-										"exec": [
-											"pm.test('Response status is 200', () => {",
-											"    pm.response.to.have.status(200)",
-											"})",
-											"",
-											"pm.test('Controller address was changed correctly', () => {",
-											"    let controller = pm.response.json()['controller'].toUpperCase()",
-											"    let newController = pm.iterationData.get('newController').toUpperCase()",
-											"    pm.expect(controller).to.be.eql(newController)",
-											"})"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"type": "text",
-										"value": "application/xml, application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": "localhost:3000/proxy/getController"
-							},
-							"response": []
-						}
-					],
-					"_postman_isSubFolder": true
-				},
-				{
-					"name": "check_target",
-					"item": [
-						{
-							"name": "getTarget",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "2a75762e-bfef-47b7-b934-937cdf335140",
-										"exec": [
-											"pm.test('Response code is 200', () => {",
-											"    pm.expect(pm.response.code).to.be.eql(200)",
-											"})",
-											"",
-											"pm.test('Target was changed correctly', () => {",
-											"    pm.expect(pm.response.json()['target']).to.be.eql(pm.iterationData.get('target'))",
-											"})"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"type": "text",
-										"value": "application/xml, application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "localhost:3000/proxy/getTarget/?id={{id}}",
-									"host": ["localhost"],
-									"port": "3000",
-									"path": ["proxy", "getTarget", ""],
-									"query": [
-										{
-											"key": "id",
-											"value": "{{id}}"
-										}
-									]
-								}
-							},
-							"response": []
-						}
-					],
-					"_postman_isSubFolder": true
-				}
-			]
-		}
-	]
+  "info": {
+    "_postman_id": "",
+    "name": "Freight Trust EDI/NFT Integration Tests",
+    "description": "This test suite consists of tests designed specifically to test the functionality of our server while it is synced to an Infura Node that is connected to Ropsten using Baseline. ",
+    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "nft",
+      "item": [
+        {
+          "name": "create_record_post",
+          "item": [
+            {
+              "name": "createRecord",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "bfdc5c79-14fb-4c86-9113-2cf7b9ecd786",
+                    "exec": [
+                      "pm.test('Response code should be 200', () => {",
+                      "    pm.expect(pm.response.code).to.be.eql(200)",
+                      "})"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "type": "text",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"auth\" : {\n  \t\"freightTrustAuth\" : {\n  \t\t\"hash\":\"{{hash}}\", \n  \t\t\"sig\": \"{{sig}}\"\n  \t}, \n  \t\"ownerAuth\" : {\n  \t\t\"hash\": \"{{hash1}}\", \n  \t\t\"sig\": \"{{sig1}}\"\n  \t}, \n  \t\"partAuth\" : {\n  \t\t\"hash\": \"{{hash2}}\", \n  \t\t\"sig\": \"{{sig2}}\"\n  \t}\n  }\n}"
+                },
+                "url": {
+                  "raw": "localhost:3000/nft/createRecord/?recordID={{recordID}}&owner={{creator}}&participant={{participant}}",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["nft", "createRecord", ""],
+                  "query": [
+                    {
+                      "key": "recordID",
+                      "value": "{{recordID}}"
+                    },
+                    {
+                      "key": "owner",
+                      "value": "{{creator}}"
+                    },
+                    {
+                      "key": "participant",
+                      "value": "{{participant}}"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ],
+          "_postman_isSubFolder": true
+        },
+        {
+          "name": "owner_transfer_from",
+          "item": [
+            {
+              "name": "transferFrom",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "name": "Content-Type",
+                    "type": "text",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"auth\" : { \n  \t\"hash\": \"{{hash}}\",\n  \t\"sig\": \"{{sig}}\"\n  }\n}"
+                },
+                "url": {
+                  "raw": "localhost:3000/nft/transferFrom/?from={{creator}}&to={{recipient}}&tokenId={{recordId}}",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["nft", "transferFrom", ""],
+                  "query": [
+                    {
+                      "key": "from",
+                      "value": "{{creator}}"
+                    },
+                    {
+                      "key": "to",
+                      "value": "{{recipient}}"
+                    },
+                    {
+                      "key": "tokenId",
+                      "value": "{{recordId}}"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ],
+          "_postman_isSubFolder": true
+        },
+        {
+          "name": "create_record_getters",
+          "item": [
+            {
+              "name": "tokenOfOwnerByIndex 1",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "908abe7d-55cd-4a47-9deb-555c83388649",
+                    "exec": [
+                      "pm.test('Response code should be 200', () => {",
+                      "    pm.expect(pm.response.code).to.be.eql(200)",
+                      "})",
+                      "",
+                      "pm.test('Token record should be correct', () => {",
+                      "    pm.expect(pm.response.json()['tokenId']).to.be.eql(pm.iterationData.get('recordId'))",
+                      "})"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "type": "text",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "localhost:3000/nft/tokenOfOwnerByIndex/?owner={{creator}}&index={{index}}",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["nft", "tokenOfOwnerByIndex", ""],
+                  "query": [
+                    {
+                      "key": "owner",
+                      "value": "{{creator}}"
+                    },
+                    {
+                      "key": "index",
+                      "value": "{{index}}"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "ownerOf 1",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "90ddfd3f-7b2b-4409-a3d9-ccb67d55536b",
+                    "exec": [
+                      "pm.test('Response code should be 200', () => {",
+                      "    pm.expect(pm.response.code).to.be.eql(200)",
+                      "})",
+                      "",
+                      "pm.test('Creator should be owner', () => {",
+                      "    pm.expect(pm.response.json()['owner']).to.be.eql(pm.iterationData.get('creator'))",
+                      "})"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "type": "text",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "localhost:3000/nft/ownerOf/?tokenId={{recordId}}",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["nft", "ownerOf", ""],
+                  "query": [
+                    {
+                      "key": "tokenId",
+                      "value": "{{recordId}}"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "balanceOf Creator 1",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "84f6e25b-d5e6-47fe-ab6a-fa00bd50eb4f",
+                    "exec": [
+                      "pm.test('Response code should be 200', () => {",
+                      "    pm.expect(pm.response.code).to.be.eql(200)",
+                      "})",
+                      "",
+                      "pm.test('Creator balance should be 0', () => {",
+                      "    pm.expect(pm.response.json()['balance']).to.be.eql(1)",
+                      "})"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "type": "text",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "localhost:3000/nft/balanceOf/?owner={{creator}}",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["nft", "balanceOf", ""],
+                  "query": [
+                    {
+                      "key": "owner",
+                      "value": "{{creator}}"
+                    },
+                    {
+                      "key": "",
+                      "value": "",
+                      "disabled": true
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "balanceOf Recipient 1",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "2422f913-cdc7-4353-860d-34c819ad5a31",
+                    "exec": [
+                      "pm.test('Response code should be 200', () => {",
+                      "    pm.expect(pm.response.code).to.be.eql(200)",
+                      "})",
+                      "",
+                      "pm.test('Recipient balance should be 0', () => {",
+                      "    pm.expect(pm.response.json()['balance']).to.be.eql(0)",
+                      "})"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "type": "text",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "localhost:3000/nft/balanceOf/?owner={{recipient}}",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["nft", "balanceOf", ""],
+                  "query": [
+                    {
+                      "key": "owner",
+                      "value": "{{recipient}}"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ],
+          "_postman_isSubFolder": true
+        },
+        {
+          "name": "owner_transfer_getters",
+          "item": [
+            {
+              "name": "tokenOfOwnerByIndex 2",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "032f03f5-dccc-4fa8-8796-a18352f17eaf",
+                    "exec": [
+                      "pm.test('Response code should be 200', () => {",
+                      "    pm.expect(pm.response.code).to.be.eql(200)",
+                      "})",
+                      "",
+                      "pm.test('Token record should be correct', () => {",
+                      "    pm.expect(pm.response.json()['tokenId']).to.be.eql(pm.iterationData.get('recordId'))",
+                      "})"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "type": "text",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "localhost:3000/nft/tokenOfOwnerByIndex/?owner={{recipient}}&index={{index2}}",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["nft", "tokenOfOwnerByIndex", ""],
+                  "query": [
+                    {
+                      "key": "owner",
+                      "value": "{{recipient}}"
+                    },
+                    {
+                      "key": "index",
+                      "value": "{{index2}}"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "ownerOf 2",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "b40db4d9-3627-496c-9338-4605d0ff60a2",
+                    "exec": [
+                      "pm.test('Response code should be 200', () => {",
+                      "    pm.expect(pm.response.code).to.be.eql(200)",
+                      "})",
+                      "",
+                      "pm.test('Owner of the token should be the recipient', () => {",
+                      "    pm.expect(pm.response.json()['owner']).to.be.eql(pm.iterationData.get('recipient'))",
+                      "})"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "type": "text",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "localhost:3000/nft/ownerOf/?tokenId={{recordId}}",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["nft", "ownerOf", ""],
+                  "query": [
+                    {
+                      "key": "tokenId",
+                      "value": "{{recordId}}"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "balanceOf Creator 2",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "84f6e25b-d5e6-47fe-ab6a-fa00bd50eb4f",
+                    "exec": [
+                      "pm.test('Response code should be 200', () => {",
+                      "    pm.expect(pm.response.code).to.be.eql(200)",
+                      "})",
+                      "",
+                      "pm.test('Token record should be correct', () => {",
+                      "    pm.expect(pm.response.json()['balance']).to.be.eql(1)",
+                      "})"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "type": "text",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "localhost:3000/nft/balanceOf/?owner={{creator}}",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["nft", "balanceOf", ""],
+                  "query": [
+                    {
+                      "key": "owner",
+                      "value": "{{creator}}"
+                    },
+                    {
+                      "key": "",
+                      "value": "",
+                      "disabled": true
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "balanceOf Recipient 2",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "2422f913-cdc7-4353-860d-34c819ad5a31",
+                    "exec": [
+                      "pm.test('Response code should be 200', () => {",
+                      "    pm.expect(pm.response.code).to.be.eql(200)",
+                      "})",
+                      "",
+                      "pm.test('Recipient balance should be 1', () => {",
+                      "    pm.expect(pm.response.json()['balance']).to.be.eql(1)",
+                      "})"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "localhost:3000/nft/balanceOf/?owner={{recipient}}",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["nft", "balanceOf", ""],
+                  "query": [
+                    {
+                      "key": "owner",
+                      "value": "{{recipient}}"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ],
+          "_postman_isSubFolder": true
+        },
+        {
+          "name": "Version Record",
+          "item": [
+            {
+              "name": "createRecord",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "bfdc5c79-14fb-4c86-9113-2cf7b9ecd786",
+                    "exec": [
+                      "pm.test('Response code should be 200', () => {",
+                      "    pm.expect(pm.response.code).to.be.eql(200)",
+                      "})"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"auth\" : {\n  \t\"freightTrustAuth\" : {\n  \t\t\"hash\":\"{{hash}}\", \n  \t\t\"sig\": \"{{sig}}\"\n  \t}, \n  \t\"ownerAuth\" : {\n  \t\t\"hash\": \"{{hash1}}\", \n  \t\t\"sig\": \"{{sig1}}\"\n  \t}, \"partAuth\" : {\n  \t\t\"hash\": \"{{hash2}}\", \n  \t\t\"sig\": \"{{sig2}}\"\n  \t}\n  }\n}"
+                },
+                "url": {
+                  "raw": "localhost:3000/nft/createRecord/?recordID={{recordID}}&owner={{creator}}&participant={{participant}}",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["nft", "createRecord", ""],
+                  "query": [
+                    {
+                      "key": "recordID",
+                      "value": "{{recordID}}"
+                    },
+                    {
+                      "key": "owner",
+                      "value": "{{creator}}"
+                    },
+                    {
+                      "key": "participant",
+                      "value": "{{participant}}"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "tokenOfOwnerByIndex 1",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "908abe7d-55cd-4a47-9deb-555c83388649",
+                    "exec": [
+                      "pm.test('Response code should be 200', () => {",
+                      "    pm.expect(pm.response.code).to.be.eql(200)",
+                      "})",
+                      "",
+                      "pm.test('Token record should be correct', () => {",
+                      "    pm.expect(pm.response.json()['tokenId']).to.be.eql(pm.iterationData.get('recordId'))",
+                      "})"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "type": "text",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "localhost:3000/nft/tokenOfOwnerByIndex/?owner={{creator}}&index={{index}}",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["nft", "tokenOfOwnerByIndex", ""],
+                  "query": [
+                    {
+                      "key": "owner",
+                      "value": "{{creator}}"
+                    },
+                    {
+                      "key": "index",
+                      "value": "{{index}}"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "ownerOf 1",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "90ddfd3f-7b2b-4409-a3d9-ccb67d55536b",
+                    "exec": [
+                      "pm.test('Response code should be 200', () => {",
+                      "    pm.expect(pm.response.code).to.be.eql(200)",
+                      "})",
+                      "",
+                      "pm.test('Creator should be owner', () => {",
+                      "    pm.expect(pm.response.json()['owner']).to.be.eql(pm.iterationData.get('creator'))",
+                      "})"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "type": "text",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "localhost:3000/nft/ownerOf/?tokenId={{recordId}}",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["nft", "ownerOf", ""],
+                  "query": [
+                    {
+                      "key": "tokenId",
+                      "value": "{{recordId}}"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "balanceOf Creator 1",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "84f6e25b-d5e6-47fe-ab6a-fa00bd50eb4f",
+                    "exec": [
+                      "pm.test('Response code should be 200', () => {",
+                      "    pm.expect(pm.response.code).to.be.eql(200)",
+                      "})",
+                      "",
+                      "pm.test('Creator balance should be 1', () => {",
+                      "    pm.expect(pm.response.json()['balance']).to.be.eql(1)",
+                      "})"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "type": "text",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "localhost:3000/nft/balanceOf/?owner={{creator}}",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["nft", "balanceOf", ""],
+                  "query": [
+                    {
+                      "key": "owner",
+                      "value": "{{creator}}"
+                    },
+                    {
+                      "key": "",
+                      "value": "",
+                      "disabled": true
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "versionRecord",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "f0b7a8e3-bbc4-4335-abec-93e7ff31b2e4",
+                    "exec": [
+                      "pm.test('Response code should be 200', () => {",
+                      "    pm.expect(pm.response.code).to.be.eql(200)",
+                      "})"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"auth\" : { \n  \t\"hash\": \"{{hash}}\",\n  \t\"sig\": \"{{sig}}\"\n  }\n}"
+                },
+                "url": {
+                  "raw": "localhost:3000/nft/versionRecord/?currentHash={{recordId}}&newHash={{newHash}}",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["nft", "versionRecord", ""],
+                  "query": [
+                    {
+                      "key": "currentHash",
+                      "value": "{{recordId}}"
+                    },
+                    {
+                      "key": "newHash",
+                      "value": "{{newHash}}"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "tokenOfOwnerByIndex 2",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "032f03f5-dccc-4fa8-8796-a18352f17eaf",
+                    "exec": [
+                      "pm.test('Response code should be 200', () => {",
+                      "    pm.expect(pm.response.code).to.be.eql(200)",
+                      "})",
+                      "",
+                      "pm.test('Token record should be correct', () => {",
+                      "    pm.expect(pm.response.json()['tokenId']).to.be.eql(pm.iterationData.get('newHash'))",
+                      "})"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "type": "text",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "localhost:3000/nft/tokenOfOwnerByIndex/?owner={{recipient}}&index={{index2}}",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["nft", "tokenOfOwnerByIndex", ""],
+                  "query": [
+                    {
+                      "key": "owner",
+                      "value": "{{recipient}}"
+                    },
+                    {
+                      "key": "index",
+                      "value": "{{index2}}"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "ownerOf 2",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "b40db4d9-3627-496c-9338-4605d0ff60a2",
+                    "exec": [
+                      "pm.test('Response code should be 200', () => {",
+                      "    pm.expect(pm.response.code).to.be.eql(200)",
+                      "})",
+                      "",
+                      "pm.test('Owner of the token should be the recipient', () => {",
+                      "    pm.expect(pm.response.json()['owner']).to.be.eql(pm.iterationData.get('creator'))",
+                      "})"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "type": "text",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "localhost:3000/nft/ownerOf/?tokenId={{newHash}}",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["nft", "ownerOf", ""],
+                  "query": [
+                    {
+                      "key": "tokenId",
+                      "value": "{{newHash}}"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "balanceOf Creator 2",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "84f6e25b-d5e6-47fe-ab6a-fa00bd50eb4f",
+                    "exec": [
+                      "pm.test('Response code should be 200', () => {",
+                      "    pm.expect(pm.response.code).to.be.eql(200)",
+                      "})",
+                      "",
+                      "pm.test('Creator should be 2', () => {",
+                      "    pm.expect(pm.response.json()['balance']).to.be.eql(2)",
+                      "})"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "type": "text",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "localhost:3000/nft/balanceOf/?owner={{creator}}",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["nft", "balanceOf", ""],
+                  "query": [
+                    {
+                      "key": "owner",
+                      "value": "{{creator}}"
+                    },
+                    {
+                      "key": "",
+                      "value": "",
+                      "disabled": true
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ],
+          "_postman_isSubFolder": true
+        },
+        {
+          "name": "Create Record",
+          "item": [
+            {
+              "name": "createRecord",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "bfdc5c79-14fb-4c86-9113-2cf7b9ecd786",
+                    "exec": [
+                      "pm.test('Response code should be 200', () => {",
+                      "    pm.expect(pm.response.code).to.be.eql(200)",
+                      "})"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "type": "text",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"auth\" : {\n  \t\"freightTrustAuth\" : {\n  \t\t\"hash\":\"{{hash}}\", \n  \t\t\"sig\": \"{{sig}}\"\n  \t}, \n  \t\"ownerAuth\" : {\n  \t\t\"hash\": \"{{hash1}}\", \n  \t\t\"sig\": \"{{sig1}}\"\n  \t}, \"partAuth\" : {\n  \t\t\"hash\": \"{{hash2}}\", \n  \t\t\"sig\": \"{{sig2}}\"\n  \t}\n  }\n}"
+                },
+                "url": {
+                  "raw": "localhost:3000/nft/createRecord/?recordID={{recordID}}&owner={{creator}}&participant={{participant}}",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["nft", "createRecord", ""],
+                  "query": [
+                    {
+                      "key": "recordID",
+                      "value": "{{recordID}}"
+                    },
+                    {
+                      "key": "owner",
+                      "value": "{{creator}}"
+                    },
+                    {
+                      "key": "participant",
+                      "value": "{{participant}}"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "ownerOf",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "90ddfd3f-7b2b-4409-a3d9-ccb67d55536b",
+                    "exec": [
+                      "pm.test('Response code should be 200', () => {",
+                      "    pm.expect(pm.response.code).to.be.eql(200)",
+                      "})",
+                      "",
+                      "pm.test('Creator should be owner', () => {",
+                      "    pm.expect(pm.response.json()['owner']).to.be.eql(pm.iterationData.get('creator'))",
+                      "})"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "type": "text",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "localhost:3000/nft/ownerOf/?tokenId={{recordId}}",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["nft", "ownerOf", ""],
+                  "query": [
+                    {
+                      "key": "tokenId",
+                      "value": "{{recordId}}"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "tokenByIndex",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "9b82ef0d-8d8f-485f-a906-92df552a12e4",
+                    "exec": [
+                      "pm.test('Response code should be 200', () => {",
+                      "    pm.expect(pm.response.code).to.be.eql(200)",
+                      "})",
+                      "",
+                      "pm.test('Token Id should be Record Id', () => {",
+                      "    pm.expect(pm.response.json()['tokenId']).to.be.eql(pm.iterationData.get('recordId'))",
+                      "})"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "localhost:3000/nft/tokenByIndex/?index={{index}}",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["nft", "tokenByIndex", ""],
+                  "query": [
+                    {
+                      "key": "index",
+                      "value": "{{index}}"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "tokenOfOwnerByIndex",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "908abe7d-55cd-4a47-9deb-555c83388649",
+                    "exec": [
+                      "pm.test('Response code should be 200', () => {",
+                      "    pm.expect(pm.response.code).to.be.eql(200)",
+                      "})",
+                      "",
+                      "pm.test('Token record should be correct', () => {",
+                      "    pm.expect(pm.response.json()['tokenId']).to.be.eql(pm.iterationData.get('recordId'))",
+                      "})"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "type": "text",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "localhost:3000/nft/tokenOfOwnerByIndex/?owner={{creator}}&index={{index2}}",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["nft", "tokenOfOwnerByIndex", ""],
+                  "query": [
+                    {
+                      "key": "owner",
+                      "value": "{{creator}}"
+                    },
+                    {
+                      "key": "index",
+                      "value": "{{index2}}"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "balanceOf",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "84f6e25b-d5e6-47fe-ab6a-fa00bd50eb4f",
+                    "exec": [
+                      "pm.test('Response code should be 200', () => {",
+                      "    pm.expect(pm.response.code).to.be.eql(200)",
+                      "})",
+                      "",
+                      "pm.test('Creator balance should be 1', () => {",
+                      "    pm.expect(pm.response.json()['balance']).to.be.eql(1)",
+                      "})"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "type": "text",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "localhost:3000/nft/balanceOf/?owner={{creator}}",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["nft", "balanceOf", ""],
+                  "query": [
+                    {
+                      "key": "owner",
+                      "value": "{{creator}}"
+                    },
+                    {
+                      "key": "",
+                      "value": "",
+                      "disabled": true
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ],
+          "_postman_isSubFolder": true
+        },
+        {
+          "name": "Safe Transfer Record",
+          "item": [
+            {
+              "name": "createRecord",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "bfdc5c79-14fb-4c86-9113-2cf7b9ecd786",
+                    "exec": [
+                      "pm.test('Response code should be 200', () => {",
+                      "    pm.expect(pm.response.code).to.be.eql(200)",
+                      "})"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"auth\" : {\n  \t\"freightTrustAuth\" : {\n  \t\t\"hash\":\"{{hash}}\", \n  \t\t\"sig\": \"{{sig}}\"\n  \t}, \n  \t\"ownerAuth\" : {\n  \t\t\"hash\": \"{{hash1}}\", \n  \t\t\"sig\": \"{{sig1}}\"\n  \t}, \"partAuth\" : {\n  \t\t\"hash\": \"{{hash2}}\", \n  \t\t\"sig\": \"{{sig2}}\"\n  \t}\n  }\n}"
+                },
+                "url": {
+                  "raw": "localhost:3000/nft/createRecord/?recordID={{recordID}}&owner={{creator}}&participant={{participant}}",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["nft", "createRecord", ""],
+                  "query": [
+                    {
+                      "key": "recordID",
+                      "value": "{{recordID}}"
+                    },
+                    {
+                      "key": "owner",
+                      "value": "{{creator}}"
+                    },
+                    {
+                      "key": "participant",
+                      "value": "{{participant}}"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "tokenOfOwnerByIndex 1",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "908abe7d-55cd-4a47-9deb-555c83388649",
+                    "exec": [
+                      "pm.test('Response code should be 200', () => {",
+                      "    pm.expect(pm.response.code).to.be.eql(200)",
+                      "})",
+                      "",
+                      "pm.test('Token record should be correct', () => {",
+                      "    pm.expect(pm.response.json()['tokenId']).to.be.eql(pm.iterationData.get('recordId'))",
+                      "})"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "type": "text",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "localhost:3000/nft/tokenOfOwnerByIndex/?owner={{creator}}&index={{index}}",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["nft", "tokenOfOwnerByIndex", ""],
+                  "query": [
+                    {
+                      "key": "owner",
+                      "value": "{{creator}}"
+                    },
+                    {
+                      "key": "index",
+                      "value": "{{index}}"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "ownerOf 1",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "90ddfd3f-7b2b-4409-a3d9-ccb67d55536b",
+                    "exec": [
+                      "pm.test('Response code should be 200', () => {",
+                      "    pm.expect(pm.response.code).to.be.eql(200)",
+                      "})",
+                      "",
+                      "pm.test('Creator should be owner', () => {",
+                      "    pm.expect(pm.response.json()['owner']).to.be.eql(pm.iterationData.get('creator'))",
+                      "})"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "type": "text",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "localhost:3000/nft/ownerOf/?tokenId={{recordId}}",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["nft", "ownerOf", ""],
+                  "query": [
+                    {
+                      "key": "tokenId",
+                      "value": "{{recordId}}"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "balanceOf Creator 1",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "84f6e25b-d5e6-47fe-ab6a-fa00bd50eb4f",
+                    "exec": [
+                      "pm.test('Response code should be 200', () => {",
+                      "    pm.expect(pm.response.code).to.be.eql(200)",
+                      "})",
+                      "",
+                      "pm.test('Creator balance should be 0', () => {",
+                      "    pm.expect(pm.response.json()['balance']).to.be.eql(1)",
+                      "})"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "type": "text",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "localhost:3000/nft/balanceOf/?owner={{creator}}",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["nft", "balanceOf", ""],
+                  "query": [
+                    {
+                      "key": "owner",
+                      "value": "{{creator}}"
+                    },
+                    {
+                      "key": "",
+                      "value": "",
+                      "disabled": true
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "balanceOf Recipient 1",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "2422f913-cdc7-4353-860d-34c819ad5a31",
+                    "exec": [
+                      "pm.test('Response code should be 200', () => {",
+                      "    pm.expect(pm.response.code).to.be.eql(200)",
+                      "})",
+                      "",
+                      "pm.test('Recipient balance should be 0', () => {",
+                      "    pm.expect(pm.response.json()['balance']).to.be.eql(0)",
+                      "})"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "type": "text",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "localhost:3000/nft/balanceOf/?owner={{recipient}}",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["nft", "balanceOf", ""],
+                  "query": [
+                    {
+                      "key": "owner",
+                      "value": "{{recipient}}"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "safeTransferFrom",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "name": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n\t\"auth\": {\n\t\t\"hash\": \"{{hash}}\",\n\t\t\"sig\": \"{{sig}}\"\n\t}\n}"
+                },
+                "url": {
+                  "raw": "localhost:3000/nft/safeTransferFrom/?from={{creator}}&to={{recipient}}&tokenId={{recordId}}&extraData={{extraData}}",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["nft", "safeTransferFrom", ""],
+                  "query": [
+                    {
+                      "key": "from",
+                      "value": "{{creator}}"
+                    },
+                    {
+                      "key": "to",
+                      "value": "{{recipient}}"
+                    },
+                    {
+                      "key": "tokenId",
+                      "value": "{{recordId}}"
+                    },
+                    {
+                      "key": "extraData",
+                      "value": "{{extraData}}"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "tokenOfOwnerByIndex 2",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "032f03f5-dccc-4fa8-8796-a18352f17eaf",
+                    "exec": [
+                      "pm.test('Response code should be 200', () => {",
+                      "    pm.expect(pm.response.code).to.be.eql(200)",
+                      "})",
+                      "",
+                      "pm.test('Token record should be correct', () => {",
+                      "    pm.expect(pm.response.json()['tokenId']).to.be.eql(pm.iterationData.get('recordId'))",
+                      "})"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "type": "text",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "localhost:3000/nft/tokenOfOwnerByIndex/?owner={{recipient}}&index={{index2}}",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["nft", "tokenOfOwnerByIndex", ""],
+                  "query": [
+                    {
+                      "key": "owner",
+                      "value": "{{recipient}}"
+                    },
+                    {
+                      "key": "index",
+                      "value": "{{index2}}"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "ownerOf 2",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "b40db4d9-3627-496c-9338-4605d0ff60a2",
+                    "exec": [
+                      "pm.test('Response code should be 200', () => {",
+                      "    pm.expect(pm.response.code).to.be.eql(200)",
+                      "})",
+                      "",
+                      "pm.test('Owner of the token should be the recipient', () => {",
+                      "    pm.expect(pm.response.json()['owner']).to.be.eql(pm.iterationData.get('recipient'))",
+                      "})"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "type": "text",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "localhost:3000/nft/ownerOf/?tokenId={{recordId}}",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["nft", "ownerOf", ""],
+                  "query": [
+                    {
+                      "key": "tokenId",
+                      "value": "{{recordId}}"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "balanceOf Creator 2",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "84f6e25b-d5e6-47fe-ab6a-fa00bd50eb4f",
+                    "exec": [
+                      "pm.test('Response code should be 200', () => {",
+                      "    pm.expect(pm.response.code).to.be.eql(200)",
+                      "})",
+                      "",
+                      "pm.test('Token record should be correct', () => {",
+                      "    pm.expect(pm.response.json()['balance']).to.be.eql(1)",
+                      "})"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "type": "text",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "localhost:3000/nft/balanceOf/?owner={{creator}}",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["nft", "balanceOf", ""],
+                  "query": [
+                    {
+                      "key": "owner",
+                      "value": "{{creator}}"
+                    },
+                    {
+                      "key": "",
+                      "value": "",
+                      "disabled": true
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "balanceOf Recipient 2",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "2422f913-cdc7-4353-860d-34c819ad5a31",
+                    "exec": [
+                      "pm.test('Response code should be 200', () => {",
+                      "    pm.expect(pm.response.code).to.be.eql(200)",
+                      "})",
+                      "",
+                      "pm.test('Recipient balance should be 1', () => {",
+                      "    pm.expect(pm.response.json()['balance']).to.be.eql(1)",
+                      "})"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "type": "text",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "localhost:3000/nft/balanceOf/?owner={{recipient}}",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["nft", "balanceOf", ""],
+                  "query": [
+                    {
+                      "key": "owner",
+                      "value": "{{recipient}}"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ],
+          "_postman_isSubFolder": true
+        },
+        {
+          "name": "Signed Transfer Record",
+          "item": [
+            {
+              "name": "createRecord",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "bfdc5c79-14fb-4c86-9113-2cf7b9ecd786",
+                    "exec": [
+                      "pm.test('Response code should be 200', () => {",
+                      "    pm.expect(pm.response.code).to.be.eql(200)",
+                      "})"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"auth\" : {\n  \t\"freightTrustAuth\" : {\n  \t\t\"hash\":\"{{hash}}\", \n  \t\t\"sig\": \"{{sig}}\"\n  \t}, \n  \t\"ownerAuth\" : {\n  \t\t\"hash\": \"{{hash1}}\", \n  \t\t\"sig\": \"{{sig1}}\"\n  \t}, \"partAuth\" : {\n  \t\t\"hash\": \"{{hash2}}\", \n  \t\t\"sig\": \"{{sig2}}\"\n  \t}\n  }\n}"
+                },
+                "url": {
+                  "raw": "localhost:3000/nft/createRecord/?recordID={{recordID}}&owner={{creator}}&participant={{participant}}",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["nft", "createRecord", ""],
+                  "query": [
+                    {
+                      "key": "recordID",
+                      "value": "{{recordID}}"
+                    },
+                    {
+                      "key": "owner",
+                      "value": "{{creator}}"
+                    },
+                    {
+                      "key": "participant",
+                      "value": "{{participant}}"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "tokenOfOwnerByIndex 1",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "908abe7d-55cd-4a47-9deb-555c83388649",
+                    "exec": [
+                      "pm.test('Response code should be 200', () => {",
+                      "    pm.expect(pm.response.code).to.be.eql(200)",
+                      "})",
+                      "",
+                      "pm.test('Token record should be correct', () => {",
+                      "    pm.expect(pm.response.json()['tokenId']).to.be.eql(pm.iterationData.get('recordId'))",
+                      "})"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "type": "text",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "localhost:3000/nft/tokenOfOwnerByIndex/?owner={{creator}}&index={{index}}",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["nft", "tokenOfOwnerByIndex", ""],
+                  "query": [
+                    {
+                      "key": "owner",
+                      "value": "{{creator}}"
+                    },
+                    {
+                      "key": "index",
+                      "value": "{{index}}"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "ownerOf 1",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "90ddfd3f-7b2b-4409-a3d9-ccb67d55536b",
+                    "exec": [
+                      "pm.test('Response code should be 200', () => {",
+                      "    pm.expect(pm.response.code).to.be.eql(200)",
+                      "})",
+                      "",
+                      "pm.test('Creator should be owner', () => {",
+                      "    pm.expect(pm.response.json()['owner']).to.be.eql(pm.iterationData.get('creator'))",
+                      "})"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "type": "text",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "localhost:3000/nft/ownerOf/?tokenId={{recordId}}",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["nft", "ownerOf", ""],
+                  "query": [
+                    {
+                      "key": "tokenId",
+                      "value": "{{recordId}}"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "balanceOf Creator 1",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "84f6e25b-d5e6-47fe-ab6a-fa00bd50eb4f",
+                    "exec": [
+                      "pm.test('Response code should be 200', () => {",
+                      "    pm.expect(pm.response.code).to.be.eql(200)",
+                      "})",
+                      "",
+                      "pm.test('Creator balance should be 0', () => {",
+                      "    pm.expect(pm.response.json()['balance']).to.be.eql(1)",
+                      "})"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "type": "text",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "localhost:3000/nft/balanceOf/?owner={{creator}}",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["nft", "balanceOf", ""],
+                  "query": [
+                    {
+                      "key": "owner",
+                      "value": "{{creator}}"
+                    },
+                    {
+                      "key": "",
+                      "value": "",
+                      "disabled": true
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "balanceOf Recipient 1",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "2422f913-cdc7-4353-860d-34c819ad5a31",
+                    "exec": [
+                      "pm.test('Response code should be 200', () => {",
+                      "    pm.expect(pm.response.code).to.be.eql(200)",
+                      "})",
+                      "",
+                      "pm.test('Recipient balance should be 0', () => {",
+                      "    pm.expect(pm.response.json()['balance']).to.be.eql(0)",
+                      "})"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "type": "text",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "localhost:3000/nft/balanceOf/?owner={{recipient}}",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["nft", "balanceOf", ""],
+                  "query": [
+                    {
+                      "key": "owner",
+                      "value": "{{recipient}}"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "signedTransfer",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "5c396c33-6b0a-4bcc-984f-8968ddff5c95",
+                    "exec": [
+                      "pm.test('Response code should be 200', () => {",
+                      "    pm.expect(pm.response.code).to.be.eql(200)",
+                      "})"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"auth\" : {\n  \t\"freightTrustAuth\" : {\n  \t\t\"hash\":\"{{hash}}\", \n  \t\t\"sig\": \"{{sig}}\"\n  \t\t\n  \t}, \"senderAuth\" : {\n  \t\t\"hash\": \"{{hash1}}\",\n  \t\t\"sig\": \"{{sig1}}\"\n  \t}\n  }\n}"
+                },
+                "url": {
+                  "raw": "localhost:3000/nft/signedTransfer/?from={{from}}&to={{to}}&tokenId={{tokenId}}&data={{data}}",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["nft", "signedTransfer", ""],
+                  "query": [
+                    {
+                      "key": "from",
+                      "value": "{{from}}"
+                    },
+                    {
+                      "key": "to",
+                      "value": "{{to}}"
+                    },
+                    {
+                      "key": "tokenId",
+                      "value": "{{tokenId}}"
+                    },
+                    {
+                      "key": "data",
+                      "value": "{{data}}"
+                    }
+                  ]
+                },
+                "description": "Allows Block Array to sign and transfer a ERC721 token on the behalf of its holder"
+              },
+              "response": []
+            },
+            {
+              "name": "tokenOfOwnerByIndex 2",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "032f03f5-dccc-4fa8-8796-a18352f17eaf",
+                    "exec": [
+                      "pm.test('Response code should be 200', () => {",
+                      "    pm.expect(pm.response.code).to.be.eql(200)",
+                      "})",
+                      "",
+                      "pm.test('Token record should be correct', () => {",
+                      "    pm.expect(pm.response.json()['tokenId']).to.be.eql(pm.iterationData.get('recordId'))",
+                      "})"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "type": "text",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "localhost:3000/nft/tokenOfOwnerByIndex/?owner={{recipient}}&index={{index2}}",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["nft", "tokenOfOwnerByIndex", ""],
+                  "query": [
+                    {
+                      "key": "owner",
+                      "value": "{{recipient}}"
+                    },
+                    {
+                      "key": "index",
+                      "value": "{{index2}}"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "ownerOf 2",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "b40db4d9-3627-496c-9338-4605d0ff60a2",
+                    "exec": [
+                      "pm.test('Response code should be 200', () => {",
+                      "    pm.expect(pm.response.code).to.be.eql(200)",
+                      "})",
+                      "",
+                      "pm.test('Owner of the token should be the recipient', () => {",
+                      "    pm.expect(pm.response.json()['owner']).to.be.eql(pm.iterationData.get('recipient'))",
+                      "})"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "type": "text",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "localhost:3000/nft/ownerOf/?tokenId={{recordId}}",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["nft", "ownerOf", ""],
+                  "query": [
+                    {
+                      "key": "tokenId",
+                      "value": "{{recordId}}"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "balanceOf Creator 2",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "84f6e25b-d5e6-47fe-ab6a-fa00bd50eb4f",
+                    "exec": [
+                      "pm.test('Response code should be 200', () => {",
+                      "    pm.expect(pm.response.code).to.be.eql(200)",
+                      "})",
+                      "",
+                      "pm.test('Token record should be correct', () => {",
+                      "    pm.expect(pm.response.json()['balance']).to.be.eql(1)",
+                      "})"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "type": "text",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "localhost:3000/nft/balanceOf/?owner={{creator}}",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["nft", "balanceOf", ""],
+                  "query": [
+                    {
+                      "key": "owner",
+                      "value": "{{creator}}"
+                    },
+                    {
+                      "key": "",
+                      "value": "",
+                      "disabled": true
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "balanceOf Recipient 2",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "2422f913-cdc7-4353-860d-34c819ad5a31",
+                    "exec": [
+                      "pm.test('Response code should be 200', () => {",
+                      "    pm.expect(pm.response.code).to.be.eql(200)",
+                      "})",
+                      "",
+                      "pm.test('Recipient balance should be 1', () => {",
+                      "    pm.expect(pm.response.json()['balance']).to.be.eql(1)",
+                      "})"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "type": "text",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "localhost:3000/nft/balanceOf/?owner={{recipient}}",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["nft", "balanceOf", ""],
+                  "query": [
+                    {
+                      "key": "owner",
+                      "value": "{{recipient}}"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ],
+          "_postman_isSubFolder": true
+        },
+        {
+          "name": "Signed Version Record",
+          "item": [
+            {
+              "name": "createRecord",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "bfdc5c79-14fb-4c86-9113-2cf7b9ecd786",
+                    "exec": [
+                      "pm.test('Response code should be 200', () => {",
+                      "    pm.expect(pm.response.code).to.be.eql(200)",
+                      "})"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"auth\" : {\n  \t\"freightTrustAuth\" : {\n  \t\t\"hash\":\"{{hash}}\", \n  \t\t\"sig\": \"{{sig}}\"\n  \t}, \n  \t\"ownerAuth\" : {\n  \t\t\"hash\": \"{{hash1}}\", \n  \t\t\"sig\": \"{{sig1}}\"\n  \t}, \"partAuth\" : {\n  \t\t\"hash\": \"{{hash2}}\", \n  \t\t\"sig\": \"{{sig2}}\"\n  \t}\n  }\n}"
+                },
+                "url": {
+                  "raw": "localhost:3000/nft/createRecord/?recordID={{recordID}}&owner={{creator}}&participant={{participant}}",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["nft", "createRecord", ""],
+                  "query": [
+                    {
+                      "key": "recordID",
+                      "value": "{{recordID}}"
+                    },
+                    {
+                      "key": "owner",
+                      "value": "{{creator}}"
+                    },
+                    {
+                      "key": "participant",
+                      "value": "{{participant}}"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "tokenOfOwnerByIndex 1",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "908abe7d-55cd-4a47-9deb-555c83388649",
+                    "exec": [
+                      "pm.test('Response code should be 200', () => {",
+                      "    pm.expect(pm.response.code).to.be.eql(200)",
+                      "})",
+                      "",
+                      "pm.test('Token record should be correct', () => {",
+                      "    pm.expect(pm.response.json()['tokenId']).to.be.eql(pm.iterationData.get('recordId'))",
+                      "})"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "type": "text",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "localhost:3000/nft/tokenOfOwnerByIndex/?owner={{creator}}&index={{index}}",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["nft", "tokenOfOwnerByIndex", ""],
+                  "query": [
+                    {
+                      "key": "owner",
+                      "value": "{{creator}}"
+                    },
+                    {
+                      "key": "index",
+                      "value": "{{index}}"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "ownerOf 1",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "90ddfd3f-7b2b-4409-a3d9-ccb67d55536b",
+                    "exec": [
+                      "pm.test('Response code should be 200', () => {",
+                      "    pm.expect(pm.response.code).to.be.eql(200)",
+                      "})",
+                      "",
+                      "pm.test('Creator should be owner', () => {",
+                      "    pm.expect(pm.response.json()['owner']).to.be.eql(pm.iterationData.get('creator'))",
+                      "})"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "type": "text",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "localhost:3000/nft/ownerOf/?tokenId={{recordId}}",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["nft", "ownerOf", ""],
+                  "query": [
+                    {
+                      "key": "tokenId",
+                      "value": "{{recordId}}"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "balanceOf Creator 1",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "84f6e25b-d5e6-47fe-ab6a-fa00bd50eb4f",
+                    "exec": [
+                      "pm.test('Response code should be 200', () => {",
+                      "    pm.expect(pm.response.code).to.be.eql(200)",
+                      "})",
+                      "",
+                      "pm.test('Creator balance should be 1', () => {",
+                      "    pm.expect(pm.response.json()['balance']).to.be.eql(1)",
+                      "})"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "type": "text",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "localhost:3000/nft/balanceOf/?owner={{creator}}",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["nft", "balanceOf", ""],
+                  "query": [
+                    {
+                      "key": "owner",
+                      "value": "{{creator}}"
+                    },
+                    {
+                      "key": "",
+                      "value": "",
+                      "disabled": true
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "versionRecordSigned",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "878f2a11-b00d-4b42-8376-6392da07d0a9",
+                    "exec": [
+                      "pm.test('Response code should be 200', () => {",
+                      "    pm.expect(pm.response.code).to.be.eql(200)",
+                      "})"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"auth\" : {\n  \t\"freightTrustAuth\" : {\n  \t\t\"hash\": \"{{hash}}\", \n  \t\t\"sig\": \"{{sig}}\"\n  \t}, \"ownerAuth\" : {\n  \t\t\"hash\": \"{{hash1}}\", \n  \t\t\"sig\": \"{{sig1}}\"\n  \t\t\n  \t}\n  }\n}"
+                },
+                "url": {
+                  "raw": "localhost:3000/nft/versionRecord/signed/?currentHash={{currentHash}}&newHash={{newHash}}&owner={{owner}}",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["nft", "versionRecord", "signed", ""],
+                  "query": [
+                    {
+                      "key": "currentHash",
+                      "value": "{{currentHash}}"
+                    },
+                    {
+                      "key": "newHash",
+                      "value": "{{newHash}}"
+                    },
+                    {
+                      "key": "owner",
+                      "value": "{{owner}}"
+                    }
+                  ]
+                },
+                "description": "Allows Block Array to version a record for the owner using the owner's signature."
+              },
+              "response": []
+            },
+            {
+              "name": "tokenOfOwnerByIndex 2",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "032f03f5-dccc-4fa8-8796-a18352f17eaf",
+                    "exec": [
+                      "pm.test('Response code should be 200', () => {",
+                      "    pm.expect(pm.response.code).to.be.eql(200)",
+                      "})",
+                      "",
+                      "pm.test('Token record should be correct', () => {",
+                      "    pm.expect(pm.response.json()['tokenId']).to.be.eql(pm.iterationData.get('newHash'))",
+                      "})"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "type": "text",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "localhost:3000/nft/tokenOfOwnerByIndex/?owner={{recipient}}&index={{index2}}",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["nft", "tokenOfOwnerByIndex", ""],
+                  "query": [
+                    {
+                      "key": "owner",
+                      "value": "{{recipient}}"
+                    },
+                    {
+                      "key": "index",
+                      "value": "{{index2}}"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "ownerOf 2",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "b40db4d9-3627-496c-9338-4605d0ff60a2",
+                    "exec": [
+                      "pm.test('Response code should be 200', () => {",
+                      "    pm.expect(pm.response.code).to.be.eql(200)",
+                      "})",
+                      "",
+                      "pm.test('Owner of the token should be the recipient', () => {",
+                      "    pm.expect(pm.response.json()['owner']).to.be.eql(pm.iterationData.get('creator'))",
+                      "})"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "type": "text",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "localhost:3000/nft/ownerOf/?tokenId={{newHash}}",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["nft", "ownerOf", ""],
+                  "query": [
+                    {
+                      "key": "tokenId",
+                      "value": "{{newHash}}"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "balanceOf Creator 2",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "84f6e25b-d5e6-47fe-ab6a-fa00bd50eb4f",
+                    "exec": [
+                      "pm.test('Response code should be 200', () => {",
+                      "    pm.expect(pm.response.code).to.be.eql(200)",
+                      "})",
+                      "",
+                      "pm.test('Creator should be 2', () => {",
+                      "    pm.expect(pm.response.json()['balance']).to.be.eql(2)",
+                      "})"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "type": "text",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "localhost:3000/nft/balanceOf/?owner={{creator}}",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["nft", "balanceOf", ""],
+                  "query": [
+                    {
+                      "key": "owner",
+                      "value": "{{creator}}"
+                    },
+                    {
+                      "key": "",
+                      "value": "",
+                      "disabled": true
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ],
+          "_postman_isSubFolder": true
+        },
+        {
+          "name": "Set Approval for All",
+          "item": [
+            {
+              "name": "setApprovalForAll",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "455699bb-aefe-4fb3-811d-b17a2fd5eff5",
+                    "exec": [
+                      "pm.test('Response code should be 200', () => {",
+                      "    pm.expect(pm.response.code).to.be.eql(200)",
+                      "})"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"auth\" : { \n  \t\"hash\": \"{{hash}}\",\n  \t\"sig\": \"{{sig}}\"\n  }\n}"
+                },
+                "url": {
+                  "raw": "localhost:3000/nft/setApprovalForAll/?operator={{operator}}&status={{status}}",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["nft", "setApprovalForAll", ""],
+                  "query": [
+                    {
+                      "key": "operator",
+                      "value": "{{operator}}"
+                    },
+                    {
+                      "key": "status",
+                      "value": "{{status}}"
+                    }
+                  ]
+                },
+                "description": "Enable or disable approval for a third party (`operator`) to manage all of Block Array's assets"
+              },
+              "response": []
+            },
+            {
+              "name": "isApprovedForAll",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "d3051178-46c8-4630-9fee-6e671238f720",
+                    "exec": [
+                      "pm.test('Response code should be 200', () => {",
+                      "    pm.expect(pm.response.code).to.be.eql(200)",
+                      "})",
+                      "",
+                      "pm.test('Operator should have correct approval status', () => {",
+                      "    pm.expect(pm.response.json()['isApprovedForAll']).to.be.eql(pm.iterationData.get('status'))",
+                      "})"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "localhost:3000/nft/isApprovedForAll/?owner={{owner}}&operator={{operator}}",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["nft", "isApprovedForAll", ""],
+                  "query": [
+                    {
+                      "key": "owner",
+                      "value": "{{owner}}"
+                    },
+                    {
+                      "key": "operator",
+                      "value": "{{operator}}"
+                    }
+                  ]
+                },
+                "description": "True if `operator` is an approved operator for `owner`, false otherwise"
+              },
+              "response": []
+            }
+          ],
+          "_postman_isSubFolder": true
+        }
+      ]
+    },
+    {
+      "name": "proxy",
+      "item": [
+        {
+          "name": "change_master",
+          "item": [
+            {
+              "name": "changeMaster",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "20574638-2897-4a64-9890-5555fd76f9f5",
+                    "exec": [
+                      "pm.test('Response code should be 200', () => {",
+                      "    pm.expect(pm.response.code).to.be.eql(200)",
+                      "})"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "type": "text",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"auth\" : { \n  \t\"hash\": \"{{hash}}\",\n  \t\"sig\": \"{{sig}}\"\n  }\n}"
+                },
+                "url": {
+                  "raw": "localhost:3000/proxy/changeMaster/?newMaster={{newMaster}}",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["proxy", "changeMaster", ""],
+                  "query": [
+                    {
+                      "key": "newMaster",
+                      "value": "{{newMaster}}"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ],
+          "description": "This fixture represents a valid call to change master. The result of this call should cause the function `getMaster` to return an updated address.",
+          "_postman_isSubFolder": true
+        },
+        {
+          "name": "change_controller",
+          "item": [
+            {
+              "name": "changeController",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "e54d1523-717d-49bf-bf23-e6399f7f02f8",
+                    "exec": [
+                      "pm.test('Response code should be 200', () => {",
+                      "    pm.expect(pm.response.code).to.be.eql(200)",
+                      "})"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"auth\" : { \n  \t\"hash\": \"{{hash}}\",\n  \t\"sig\": \"{{sig}}\"\n  }\n}"
+                },
+                "url": {
+                  "raw": "localhost:3000/proxy/changeController/?newController={{newController}}",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["proxy", "changeController", ""],
+                  "query": [
+                    {
+                      "key": "newController",
+                      "value": "{{newController}}"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ],
+          "_postman_isSubFolder": true
+        },
+        {
+          "name": "set_target",
+          "item": [
+            {
+              "name": "setTarget",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "cc5056ad-cea8-4416-b99b-f92a58470e8f",
+                    "exec": [
+                      "pm.test('Response code should be 200', () => {",
+                      "    pm.expect(pm.response.code).to.be.eql(200)",
+                      "})"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n\t\"auth\": {\n\t\t\"hash\": \"{{hash}}\",\n\t\t\"sig\": \"{{sig}}\"\n\t}\n}"
+                },
+                "url": {
+                  "raw": "localhost:3000/proxy/setTarget/?id={{id}}&target={{target}}",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["proxy", "setTarget", ""],
+                  "query": [
+                    {
+                      "key": "id",
+                      "value": "{{id}}"
+                    },
+                    {
+                      "key": "target",
+                      "value": "{{target}}"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ],
+          "_postman_isSubFolder": true
+        },
+        {
+          "name": "Pause",
+          "item": [],
+          "_postman_isSubFolder": true
+        },
+        {
+          "name": "check_master",
+          "item": [
+            {
+              "name": "getMaster",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "a75a560f-98e0-418d-8d06-6f86bd8cbacf",
+                    "exec": [
+                      "pm.test('Response status is 200', () => {",
+                      "    pm.response.to.have.status(200)",
+                      "})",
+                      "",
+                      "pm.test('Master address was changed correctly', () => {",
+                      "    let master = pm.response.json()['master'].toUpperCase()",
+                      "    let newMaster = pm.iterationData.get('newMaster').toUpperCase()",
+                      "    pm.expect(master).to.be.eql(newMaster)",
+                      "})"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "type": "text",
+                    "value": "application/xml, application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": "localhost:3000/proxy/getMaster"
+              },
+              "response": []
+            }
+          ],
+          "_postman_isSubFolder": true
+        },
+        {
+          "name": "check_controller",
+          "item": [
+            {
+              "name": "getController",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "5e79ac33-f766-4af9-a852-6942ac9391b0",
+                    "exec": [
+                      "pm.test('Response status is 200', () => {",
+                      "    pm.response.to.have.status(200)",
+                      "})",
+                      "",
+                      "pm.test('Controller address was changed correctly', () => {",
+                      "    let controller = pm.response.json()['controller'].toUpperCase()",
+                      "    let newController = pm.iterationData.get('newController').toUpperCase()",
+                      "    pm.expect(controller).to.be.eql(newController)",
+                      "})"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "type": "text",
+                    "value": "application/xml, application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": "localhost:3000/proxy/getController"
+              },
+              "response": []
+            }
+          ],
+          "_postman_isSubFolder": true
+        },
+        {
+          "name": "check_target",
+          "item": [
+            {
+              "name": "getTarget",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "2a75762e-bfef-47b7-b934-937cdf335140",
+                    "exec": [
+                      "pm.test('Response code is 200', () => {",
+                      "    pm.expect(pm.response.code).to.be.eql(200)",
+                      "})",
+                      "",
+                      "pm.test('Target was changed correctly', () => {",
+                      "    pm.expect(pm.response.json()['target']).to.be.eql(pm.iterationData.get('target'))",
+                      "})"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "type": "text",
+                    "value": "application/xml, application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "localhost:3000/proxy/getTarget/?id={{id}}",
+                  "host": ["localhost"],
+                  "port": "3000",
+                  "path": ["proxy", "getTarget", ""],
+                  "query": [
+                    {
+                      "key": "id",
+                      "value": "{{id}}"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ],
+          "_postman_isSubFolder": true
+        }
+      ]
+    }
+  ]
 }

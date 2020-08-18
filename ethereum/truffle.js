@@ -17,17 +17,17 @@ var HDWalletProvider = require("truffle-hdwallet-provider");
 var mnemonic = process.env.WALLET_MNEMONIC;
 
 module.exports = {
-	// See <http://truffleframework.com/docs/advanced/configuration>
-	// to customize your Truffle configuration!
-	networks: {
-		ropsten: {
-			provider: function () {
-				return new HDWalletProvider(
-					mnemonic,
-					process.env.INFURA_ROPSTEN_ENDPOINT
-				);
-			},
-			network_id: "3",
-		},
-	},
+  // See <http://truffleframework.com/docs/advanced/configuration>
+  // to customize your Truffle configuration!
+  networks: {
+    ropsten: {
+      provider: function () {
+        return new HDWalletProvider(
+          mnemonic,
+          process.env.INFURA_ROPSTEN_ENDPOINT
+        );
+      },
+      network_id: "3",
+    },
+  },
 };

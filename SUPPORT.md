@@ -15,12 +15,13 @@ Having a Github account is necessary for obtaining support including chat,
 troubleshooting, and issue management.
 
 - If you want to raise an issue, you can do so
-<<<<<<< HEAD
-  [on the github issue tab](https://github.com/${freight-trust}/${repository/{$ref}/issues).  
+  <<<<<<< HEAD
+  [on the github issue tab](https://github.com/${freight-trust}/${repository/{$ref}/issues).
 
 =======
-  [on the github issue tab](https://github.com/${freight-trust}/${repository/{$ref}/issues).
->>>>>>> 2.0.0
+[on the github issue tab](https://github.com/${freight-trust}/${repository/{$ref}/issues).
+
+> > > > > > > 2.0.0
 
 ### Useful support links
 
