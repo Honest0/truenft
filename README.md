@@ -16,13 +16,17 @@
     - [API Contract Testing](#api-contract-testing)
   - [Usage](#usage)
   - [Deployments](#deployments)
+  - [Roadmap](#roadmap)
   - [License](#license)
 
 > a B2B NFT Protocol
 
+
+
 ## Overview
 
 TrueNFT enables B2B Messages to be tokenized either through EDI or XML Mappings and Data Ingestion
+
 
 ### TrueNFT Protocol Diagram
 
@@ -70,6 +74,16 @@ SEE [API](/postman)
 ## Deployments
 
 SEE [DEPLOYMENTS](/deployments)
+
+## Roadmap
+
+
+
+| Development | Dates | 
+| -------- | -------- |
+| GraphQL     | 2020 Q4     |
+| Gas Optimizations     | 2020 Q4     |
+| Composability     | 2020 Q4     |
 
 ## License
 
