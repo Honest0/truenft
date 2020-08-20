@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE article>
+<article
+  xmlns="http://docbook.org/ns/docbook" version="5.0"
+  xmlns:xlink="http://www.w3.org/1999/xlink" >
+  <info>
+    <title></title>
+  </info>
+  <section xml:id="truenft">
+    <title>TrueNFT</title>
+    <blockquote>
+      <para>
+        a B2B NFT Protocol
+      </para>
+    </blockquote>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          <link linkend="truenft">TrueNFT</link>
+        </para>
+        <itemizedlist spacing="compact">
+          <listitem>
+            <para>
+              <link linkend="overview">Overview</link>
+            </para>
+            <itemizedlist spacing="compact">
+              <listitem>
+                <para>
+                  <link linkend="truenft-protocol-diagram">TrueNFT
+                  Protocol Diagram</link>
+                </para>
+              </listitem>
+            </itemizedlist>
+          </listitem>
+          <listitem>
+            <para>
+              <link linkend="valid-server-setup">Valid Server
+              Setup</link>
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <link linkend="security---development">Security &amp;
+              Development</link>
+            </para>
+            <itemizedlist spacing="compact">
+              <listitem>
+                <para>
+                  <link linkend="api-contract-testing">API Contract
+                  Testing</link>
+                </para>
+              </listitem>
+            </itemizedlist>
+          </listitem>
+          <listitem>
+            <para>
+              <link linkend="usage">Usage</link>
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <link linkend="deployments">Deployments</link>
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <link linkend="roadmap">Roadmap</link>
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <link linkend="license">License</link>
+            </para>
+          </listitem>
+        </itemizedlist>
+      </listitem>
+    </itemizedlist>
+    <blockquote>
+      <para>
+        a B2B NFT Protocol
+      </para>
+    </blockquote>
+    <section xml:id="overview">
+      <title>Overview</title>
+      <para>
+        TrueNFT enables B2B Messages to be tokenized either through EDI
+        or XML Mappings and Data Ingestion
+      </para>
+      <section xml:id="truenft-protocol-diagram">
+        <title>TrueNFT Protocol Diagram</title>
+      </section>
+    </section>
+    <section xml:id="valid-server-setup">
+      <title>Valid Server Setup</title>
+      <orderedlist>
+        <listitem>
+          <para>
+            Deploy the NFT and Master Proxy contracts
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Deploy the Universal Proxy contract with the Master Proxy's
+            address and an admin address (this should be a human
+            account) as input
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Deploy the Controller contract with the Universal Proxy's
+            address and an admin address (the same address as in step 2)
+            an input
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Call <literal>changeController</literal> through the
+            Universal Proxy from the admin address. The controller
+            should be changed to the controller address deployed in step
+          </para>
+        </listitem>
+      </orderedlist>
+      <para>
+        Steps 1-3 cannot be performed through the API. Step 4 can if the
+        <literal>controller_address</literal> is originally set to equal
+        the <literal>universal_address</literal>. This solution is not
+        ideal, so all of the steps 1-4 should be completed during the
+        server setup.
+      </para>
+    </section>
+    <section xml:id="security--development">
+      <title>Security &amp; Development</title>
+      <blockquote>
+        <para>
+          These smart contracts will need to be updated for gas
+          efficiency and to verify their security in the upcoming weeks.
+        </para>
+      </blockquote>
+      <para>
+        The basic smart contract implementation is a functional set of
+        smart contracts that will meet the implementation needs of any
+        company using EDI X12/EDIFACT.
+      </para>
+      <section xml:id="api-contract-testing">
+        <title>API Contract Testing</title>
+        <itemizedlist>
+          <listitem>
+            <para>
+              The continuous integration for github is a script that
+              will run the postman and truffle tests on new commits
+              added to the github repository.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              The truffle tests are a set of javascript unit tests that
+              will verify the modular properties of the codebase to
+              ensure that it always meets the intention of the smart
+              contract architecture. They are designed to have
+              near-complete code coverage and thus should prevent most
+              bugs.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              The postman api unit tests are a set of tests for each api
+              endpoint that verify that the endpoints will reject on
+              invalid inputs and return the right data types.
+            </para>
+          </listitem>
+        </itemizedlist>
+        <para>
+          In combination with the truffle tests, the postman tests will
+          verify the integrity of the whole codebase.
+        </para>
+        <para>
+          The javascript endpoint implementation of the endpoints
+          extends the test endpoints from last week. Now, in addition to
+          data sanitation and returning proper values, they will parse
+          the input data, format transactions and make ethereum calls
+          through the infura web3. The new endpoints will also properly
+          validate Corporate signatures of the nonce which protects
+          admin transactions.
+        </para>
+      </section>
+    </section>
+    <section xml:id="usage">
+      <title>Usage</title>
+      <para>
+        SEE <link xlink:href="/postman">API</link>
+      </para>
+    </section>
+    <section xml:id="deployments">
+      <title>Deployments</title>
+      <para>
+        SEE <link xlink:href="/deployments">DEPLOYMENTS</link>
+      </para>
+    </section>
+    <section xml:id="roadmap">
+      <title>Roadmap</title>
+      <informaltable>
+        <tgroup cols="2">
+          <colspec align="left" />
+          <colspec align="left" />
+          <thead>
+            <row>
+              <entry>
+                Development
+              </entry>
+              <entry>
+                Dates
+              </entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry>
+                GraphQL
+              </entry>
+              <entry>
+                2020 Q4
+              </entry>
+            </row>
+            <row>
+              <entry>
+                Gas Optimizations
+              </entry>
+              <entry>
+                2020 Q4
+              </entry>
+            </row>
+            <row>
+              <entry>
+                Composability
+              </entry>
+              <entry>
+                2020 Q4
+              </entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </section>
+    <section xml:id="license">
+      <title>License</title>
+      <para>
+        Copyright 2020 (C) FreightTrust and Clearing Corporation All
+        Rights Reserved -
+        <link xlink:href="https://freighttrust.com">https://freighttrust.com</link>
+      </para>
+      <para>
+        This Source Code Form is subject to the terms of the Mozilla
+        Public License, v. 2.0. If a copy of the MPL was not distributed
+        with this file, You can obtain one at
+        <link xlink:href="https://mozilla.org/MPL/2.0/">https://mozilla.org/MPL/2.0/</link>
+      </para>
+    </section>
+  </section>
+</article>

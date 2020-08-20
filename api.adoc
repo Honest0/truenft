@@ -1,0 +1,2838 @@
+= Freight Trust - TrueNFT dApp API
+corporate@freighttrust.com
+1.0.0
+:toc: left
+:numbered:
+:toclevels: 3
+:source-highlighter: highlightjs
+:keywords: openapi, rest, Freight Trust - TrueNFT dApp API 
+:specDir: 
+:snippetDir: 
+:generator-template: v1 2019-12-20
+:info-url: https://openapi-generator.tech
+:app-name: Freight Trust - TrueNFT dApp API
+
+[abstract]
+.Abstract
+API reference for the Freight Trust dApp which allows recording, transfering and signing of EDI-based documents such as bills of lading or warehouse receipts.
+
+
+// markup not found, no include::{specDir}intro.adoc[opts=optional]
+
+
+
+== Endpoints
+
+
+[.Default]
+=== Default
+
+
+[.getNonce]
+==== getNonce
+    
+`GET /getNonce`
+
+Returns the current message Freight Trust needs to sign to verify their next post request
+
+===== Description 
+
+
+
+
+// markup not found, no include::{specDir}getNonce/GET/spec.adoc[opts=optional]
+
+
+
+===== Parameters
+
+
+
+
+
+
+
+===== Return Type
+
+<<ApiResponse>>
+
+
+===== Content Type
+
+* application/json
+
+===== Responses
+
+.http response codes
+[cols="2,3,1"]
+|===         
+| Code | Message | Datatype 
+
+
+| 200
+| Successful query
+|  <<ApiResponse>>
+
+
+| 428
+| Request Timeout
+|  <<>>
+
+|===         
+
+===== Samples
+
+
+// markup not found, no include::{snippetDir}getNonce/GET/http-request.adoc[opts=optional]
+
+
+// markup not found, no include::{snippetDir}getNonce/GET/http-response.adoc[opts=optional]
+
+
+
+// file not found, no * wiremock data link :getNonce/GET/GET.json[]
+
+
+ifdef::internal-generation[]
+===== Implementation
+
+// markup not found, no include::{specDir}getNonce/GET/implementation.adoc[opts=optional]
+
+
+endif::internal-generation[]
+
+
+[.ERC721Token]
+=== ERC721Token
+
+
+[.approve]
+==== approve
+    
+`POST /nft/approve/`
+
+Change or reaffirm the approved address for an NFT
+
+===== Description 
+
+
+
+
+// markup not found, no include::{specDir}nft/approve/POST/spec.adoc[opts=optional]
+
+
+
+===== Parameters
+
+
+===== Body Parameter
+
+[cols="2,3,1,1,1"]
+|===         
+|Name| Description| Required| Default| Pattern
+
+| auth 
+| The Freight Trust signature of the nonce <<Auth>> 
+| X 
+|  
+|  
+
+|===         
+
+
+
+====== Query Parameters
+
+[cols="2,3,1,1,1"]
+|===         
+|Name| Description| Required| Default| Pattern
+
+| approved 
+| The address being approved  
+| X 
+| null 
+|  
+
+| tokenId 
+| The id of the token to be approved  
+| X 
+| null 
+|  
+
+|===         
+
+
+===== Return Type
+
+<<ApiResponse>>
+
+
+===== Content Type
+
+* application/json
+
+===== Responses
+
+.http response codes
+[cols="2,3,1"]
+|===         
+| Code | Message | Datatype 
+
+
+| 200
+| Successful Approve
+|  <<ApiResponse>>
+
+
+| 420
+| Bad Request
+|  <<>>
+
+
+| 428
+| Request Timeout
+|  <<>>
+
+|===         
+
+===== Samples
+
+
+// markup not found, no include::{snippetDir}nft/approve/POST/http-request.adoc[opts=optional]
+
+
+// markup not found, no include::{snippetDir}nft/approve/POST/http-response.adoc[opts=optional]
+
+
+
+// file not found, no * wiremock data link :nft/approve/POST/POST.json[]
+
+
+ifdef::internal-generation[]
+===== Implementation
+
+// markup not found, no include::{specDir}nft/approve/POST/implementation.adoc[opts=optional]
+
+
+endif::internal-generation[]
+
+
+[.balanceOf]
+==== balanceOf
+    
+`GET /nft/balanceOf/`
+
+Count all NFTs assigned to an owner
+
+===== Description 
+
+
+
+
+// markup not found, no include::{specDir}nft/balanceOf/GET/spec.adoc[opts=optional]
+
+
+
+===== Parameters
+
+
+
+
+
+====== Query Parameters
+
+[cols="2,3,1,1,1"]
+|===         
+|Name| Description| Required| Default| Pattern
+
+| owner 
+| The address of the owner  
+| X 
+| null 
+|  
+
+|===         
+
+
+===== Return Type
+
+<<ApiResponse>>
+
+
+===== Content Type
+
+* application/json
+
+===== Responses
+
+.http response codes
+[cols="2,3,1"]
+|===         
+| Code | Message | Datatype 
+
+
+| 200
+| Successful Query
+|  <<ApiResponse>>
+
+
+| 420
+| Bad Request
+|  <<>>
+
+
+| 428
+| Request Timeout
+|  <<>>
+
+|===         
+
+===== Samples
+
+
+// markup not found, no include::{snippetDir}nft/balanceOf/GET/http-request.adoc[opts=optional]
+
+
+// markup not found, no include::{snippetDir}nft/balanceOf/GET/http-response.adoc[opts=optional]
+
+
+
+// file not found, no * wiremock data link :nft/balanceOf/GET/GET.json[]
+
+
+ifdef::internal-generation[]
+===== Implementation
+
+// markup not found, no include::{specDir}nft/balanceOf/GET/implementation.adoc[opts=optional]
+
+
+endif::internal-generation[]
+
+
+[.createRecord]
+==== createRecord
+    
+`POST /nft/createRecord/`
+
+Creates a new record
+
+===== Description 
+
+Allows Freight Trust to create a record with the signature of the owner and of the participant.
+
+
+// markup not found, no include::{specDir}nft/createRecord/POST/spec.adoc[opts=optional]
+
+
+
+===== Parameters
+
+
+===== Body Parameter
+
+[cols="2,3,1,1,1"]
+|===         
+|Name| Description| Required| Default| Pattern
+
+| auth 
+|  <<InlineObject1>> 
+| X 
+|  
+|  
+
+|===         
+
+
+
+====== Query Parameters
+
+[cols="2,3,1,1,1"]
+|===         
+|Name| Description| Required| Default| Pattern
+
+| recordID 
+| The identifying hash of the record  
+| X 
+| null 
+|  
+
+| owner 
+| The owner of the record  
+| X 
+| null 
+|  
+
+| participant 
+| The address of the participant in the record  
+| X 
+| null 
+|  
+
+|===         
+
+
+===== Return Type
+
+<<ApiResponse>>
+
+
+===== Content Type
+
+* application/json
+
+===== Responses
+
+.http response codes
+[cols="2,3,1"]
+|===         
+| Code | Message | Datatype 
+
+
+| 200
+| Successful Creation
+|  <<ApiResponse>>
+
+
+| 420
+| Bad Request
+|  <<>>
+
+
+| 428
+| Request Timeout
+|  <<>>
+
+|===         
+
+===== Samples
+
+
+// markup not found, no include::{snippetDir}nft/createRecord/POST/http-request.adoc[opts=optional]
+
+
+// markup not found, no include::{snippetDir}nft/createRecord/POST/http-response.adoc[opts=optional]
+
+
+
+// file not found, no * wiremock data link :nft/createRecord/POST/POST.json[]
+
+
+ifdef::internal-generation[]
+===== Implementation
+
+// markup not found, no include::{specDir}nft/createRecord/POST/implementation.adoc[opts=optional]
+
+
+endif::internal-generation[]
+
+
+[.getApprovedById]
+==== getApprovedById
+    
+`GET /nft/getApproved/`
+
+Get the approved address for a single NFT
+
+===== Description 
+
+The approved address for this NFT, or the zero address if there is none
+
+
+// markup not found, no include::{specDir}nft/getApproved/GET/spec.adoc[opts=optional]
+
+
+
+===== Parameters
+
+
+
+
+
+====== Query Parameters
+
+[cols="2,3,1,1,1"]
+|===         
+|Name| Description| Required| Default| Pattern
+
+| tokenId 
+| The NFT to find the approved address for  
+| X 
+| null 
+|  
+
+|===         
+
+
+===== Return Type
+
+<<ApiResponse>>
+
+
+===== Content Type
+
+* application/json
+
+===== Responses
+
+.http response codes
+[cols="2,3,1"]
+|===         
+| Code | Message | Datatype 
+
+
+| 200
+| Successful Query
+|  <<ApiResponse>>
+
+
+| 420
+| Bad Request
+|  <<>>
+
+
+| 428
+| Request Timeout
+|  <<>>
+
+|===         
+
+===== Samples
+
+
+// markup not found, no include::{snippetDir}nft/getApproved/GET/http-request.adoc[opts=optional]
+
+
+// markup not found, no include::{snippetDir}nft/getApproved/GET/http-response.adoc[opts=optional]
+
+
+
+// file not found, no * wiremock data link :nft/getApproved/GET/GET.json[]
+
+
+ifdef::internal-generation[]
+===== Implementation
+
+// markup not found, no include::{specDir}nft/getApproved/GET/implementation.adoc[opts=optional]
+
+
+endif::internal-generation[]
+
+
+[.isApprovedForAll]
+==== isApprovedForAll
+    
+`GET /nft/isApprovedForAll/`
+
+Query if an address is an authorized operator for another address
+
+===== Description 
+
+True if `operator` is an approved operator for `owner`, false otherwise
+
+
+// markup not found, no include::{specDir}nft/isApprovedForAll/GET/spec.adoc[opts=optional]
+
+
+
+===== Parameters
+
+
+
+
+
+====== Query Parameters
+
+[cols="2,3,1,1,1"]
+|===         
+|Name| Description| Required| Default| Pattern
+
+| owner 
+| The address that owns the NFTs  
+| X 
+| null 
+|  
+
+| operator 
+| The address that acts on behalf of the owner  
+| X 
+| null 
+|  
+
+|===         
+
+
+===== Return Type
+
+<<ApiResponse>>
+
+
+===== Content Type
+
+* application/json
+
+===== Responses
+
+.http response codes
+[cols="2,3,1"]
+|===         
+| Code | Message | Datatype 
+
+
+| 200
+| Successful Query
+|  <<ApiResponse>>
+
+
+| 420
+| Bad Request
+|  <<>>
+
+
+| 428
+| Request Timeout
+|  <<>>
+
+|===         
+
+===== Samples
+
+
+// markup not found, no include::{snippetDir}nft/isApprovedForAll/GET/http-request.adoc[opts=optional]
+
+
+// markup not found, no include::{snippetDir}nft/isApprovedForAll/GET/http-response.adoc[opts=optional]
+
+
+
+// file not found, no * wiremock data link :nft/isApprovedForAll/GET/GET.json[]
+
+
+ifdef::internal-generation[]
+===== Implementation
+
+// markup not found, no include::{specDir}nft/isApprovedForAll/GET/implementation.adoc[opts=optional]
+
+
+endif::internal-generation[]
+
+
+[.name]
+==== name
+    
+`GET /nft/name`
+
+Returns the token contract's name
+
+===== Description 
+
+
+
+
+// markup not found, no include::{specDir}nft/name/GET/spec.adoc[opts=optional]
+
+
+
+===== Parameters
+
+
+
+
+
+
+
+===== Return Type
+
+<<ApiResponse>>
+
+
+===== Content Type
+
+* application/json
+
+===== Responses
+
+.http response codes
+[cols="2,3,1"]
+|===         
+| Code | Message | Datatype 
+
+
+| 200
+| Successful query
+|  <<ApiResponse>>
+
+
+| 428
+| Request Timeout
+|  <<>>
+
+|===         
+
+===== Samples
+
+
+// markup not found, no include::{snippetDir}nft/name/GET/http-request.adoc[opts=optional]
+
+
+// markup not found, no include::{snippetDir}nft/name/GET/http-response.adoc[opts=optional]
+
+
+
+// file not found, no * wiremock data link :nft/name/GET/GET.json[]
+
+
+ifdef::internal-generation[]
+===== Implementation
+
+// markup not found, no include::{specDir}nft/name/GET/implementation.adoc[opts=optional]
+
+
+endif::internal-generation[]
+
+
+[.ownerOf]
+==== ownerOf
+    
+`GET /nft/ownerOf/`
+
+Find the owner of an NFT
+
+===== Description 
+
+
+
+
+// markup not found, no include::{specDir}nft/ownerOf/GET/spec.adoc[opts=optional]
+
+
+
+===== Parameters
+
+
+
+
+
+====== Query Parameters
+
+[cols="2,3,1,1,1"]
+|===         
+|Name| Description| Required| Default| Pattern
+
+| tokenId 
+| The Id of the token in question  
+| X 
+| null 
+|  
+
+|===         
+
+
+===== Return Type
+
+<<ApiResponse>>
+
+
+===== Content Type
+
+* application/json
+
+===== Responses
+
+.http response codes
+[cols="2,3,1"]
+|===         
+| Code | Message | Datatype 
+
+
+| 200
+| Successful Query
+|  <<ApiResponse>>
+
+
+| 420
+| Bad Request
+|  <<>>
+
+
+| 428
+| Request Timeout
+|  <<>>
+
+|===         
+
+===== Samples
+
+
+// markup not found, no include::{snippetDir}nft/ownerOf/GET/http-request.adoc[opts=optional]
+
+
+// markup not found, no include::{snippetDir}nft/ownerOf/GET/http-response.adoc[opts=optional]
+
+
+
+// file not found, no * wiremock data link :nft/ownerOf/GET/GET.json[]
+
+
+ifdef::internal-generation[]
+===== Implementation
+
+// markup not found, no include::{specDir}nft/ownerOf/GET/implementation.adoc[opts=optional]
+
+
+endif::internal-generation[]
+
+
+[.safeTransferFrom]
+==== safeTransferFrom
+    
+`POST /nft/safeTransferFrom/`
+
+Transfers the ownership of an NFT from one address to another address
+
+===== Description 
+
+
+
+
+// markup not found, no include::{specDir}nft/safeTransferFrom/POST/spec.adoc[opts=optional]
+
+
+
+===== Parameters
+
+
+===== Body Parameter
+
+[cols="2,3,1,1,1"]
+|===         
+|Name| Description| Required| Default| Pattern
+
+| auth 
+| The Freight Trust signature of the nonce <<Auth>> 
+| X 
+|  
+|  
+
+|===         
+
+
+
+====== Query Parameters
+
+[cols="2,3,1,1,1"]
+|===         
+|Name| Description| Required| Default| Pattern
+
+| from 
+| The sender of the transfer  
+| X 
+| null 
+|  
+
+| to 
+| The recipient of the transfer  
+| X 
+| null 
+|  
+
+| tokenId 
+| The id of the token to be transferred  
+| X 
+| null 
+|  
+
+| extraData 
+| Optional data to be sent with the transaction  
+| - 
+| null 
+|  
+
+|===         
+
+
+===== Return Type
+
+<<ApiResponse>>
+
+
+===== Content Type
+
+* application/json
+
+===== Responses
+
+.http response codes
+[cols="2,3,1"]
+|===         
+| Code | Message | Datatype 
+
+
+| 200
+| Successful Transfer
+|  <<ApiResponse>>
+
+
+| 420
+| Bad Request
+|  <<>>
+
+
+| 428
+| Request Timeout
+|  <<>>
+
+|===         
+
+===== Samples
+
+
+// markup not found, no include::{snippetDir}nft/safeTransferFrom/POST/http-request.adoc[opts=optional]
+
+
+// markup not found, no include::{snippetDir}nft/safeTransferFrom/POST/http-response.adoc[opts=optional]
+
+
+
+// file not found, no * wiremock data link :nft/safeTransferFrom/POST/POST.json[]
+
+
+ifdef::internal-generation[]
+===== Implementation
+
+// markup not found, no include::{specDir}nft/safeTransferFrom/POST/implementation.adoc[opts=optional]
+
+
+endif::internal-generation[]
+
+
+[.setApprovalForAll]
+==== setApprovalForAll
+    
+`POST /nft/setApprovalForAll/`
+
+Allows Freight Trust to issue univeral approval
+
+===== Description 
+
+Enable or disable approval for a third party (`operator`) to manage all of Freight Trust's assets
+
+
+// markup not found, no include::{specDir}nft/setApprovalForAll/POST/spec.adoc[opts=optional]
+
+
+
+===== Parameters
+
+
+===== Body Parameter
+
+[cols="2,3,1,1,1"]
+|===         
+|Name| Description| Required| Default| Pattern
+
+| auth 
+| The Freight Trust signature of the nonce <<Auth>> 
+| X 
+|  
+|  
+
+|===         
+
+
+
+====== Query Parameters
+
+[cols="2,3,1,1,1"]
+|===         
+|Name| Description| Required| Default| Pattern
+
+| operator 
+| Address to add to the set of authorized operators  
+| X 
+| null 
+|  
+
+| approved 
+| True if the operator is approved, false to revoke approval  
+| X 
+| null 
+|  
+
+|===         
+
+
+===== Return Type
+
+<<ApiResponse>>
+
+
+===== Content Type
+
+* application/json
+
+===== Responses
+
+.http response codes
+[cols="2,3,1"]
+|===         
+| Code | Message | Datatype 
+
+
+| 200
+| Successful Approve
+|  <<ApiResponse>>
+
+
+| 420
+| Bad Request
+|  <<>>
+
+
+| 428
+| Request Timeout
+|  <<>>
+
+|===         
+
+===== Samples
+
+
+// markup not found, no include::{snippetDir}nft/setApprovalForAll/POST/http-request.adoc[opts=optional]
+
+
+// markup not found, no include::{snippetDir}nft/setApprovalForAll/POST/http-response.adoc[opts=optional]
+
+
+
+// file not found, no * wiremock data link :nft/setApprovalForAll/POST/POST.json[]
+
+
+ifdef::internal-generation[]
+===== Implementation
+
+// markup not found, no include::{specDir}nft/setApprovalForAll/POST/implementation.adoc[opts=optional]
+
+
+endif::internal-generation[]
+
+
+[.signedTransfer]
+==== signedTransfer
+    
+`POST /nft/signedTransfer/`
+
+Signed Transfer
+
+===== Description 
+
+Allows Freight Trust to sign and transfer a ERC721 token on the behalf of its holder
+
+
+// markup not found, no include::{specDir}nft/signedTransfer/POST/spec.adoc[opts=optional]
+
+
+
+===== Parameters
+
+
+===== Body Parameter
+
+[cols="2,3,1,1,1"]
+|===         
+|Name| Description| Required| Default| Pattern
+
+| auth 
+|  <<InlineObject>> 
+| X 
+|  
+|  
+
+|===         
+
+
+
+====== Query Parameters
+
+[cols="2,3,1,1,1"]
+|===         
+|Name| Description| Required| Default| Pattern
+
+| from 
+| The sender of the transfer  
+| X 
+| null 
+|  
+
+| to 
+| The recipient of the transfer  
+| X 
+| null 
+|  
+
+| tokenId 
+| The id of the token to be transferred  
+| X 
+| null 
+|  
+
+| data 
+| Optional data to be sent with the transaction  
+| - 
+| null 
+|  
+
+|===         
+
+
+===== Return Type
+
+<<ApiResponse>>
+
+
+===== Content Type
+
+* application/json
+
+===== Responses
+
+.http response codes
+[cols="2,3,1"]
+|===         
+| Code | Message | Datatype 
+
+
+| 200
+| Successful Transfer
+|  <<ApiResponse>>
+
+
+| 420
+| Bad Request
+|  <<>>
+
+
+| 428
+| Request Timeout
+|  <<>>
+
+|===         
+
+===== Samples
+
+
+// markup not found, no include::{snippetDir}nft/signedTransfer/POST/http-request.adoc[opts=optional]
+
+
+// markup not found, no include::{snippetDir}nft/signedTransfer/POST/http-response.adoc[opts=optional]
+
+
+
+// file not found, no * wiremock data link :nft/signedTransfer/POST/POST.json[]
+
+
+ifdef::internal-generation[]
+===== Implementation
+
+// markup not found, no include::{specDir}nft/signedTransfer/POST/implementation.adoc[opts=optional]
+
+
+endif::internal-generation[]
+
+
+[.supportsInterfaceById]
+==== supportsInterfaceById
+    
+`GET /nft/supportsInterface/`
+
+Returns an interface's support status
+
+===== Description 
+
+
+
+
+// markup not found, no include::{specDir}nft/supportsInterface/GET/spec.adoc[opts=optional]
+
+
+
+===== Parameters
+
+
+
+
+
+====== Query Parameters
+
+[cols="2,3,1,1,1"]
+|===         
+|Name| Description| Required| Default| Pattern
+
+| interfaceId 
+| The Id of the interface to check  
+| X 
+| null 
+|  
+
+|===         
+
+
+===== Return Type
+
+<<ApiResponse>>
+
+
+===== Content Type
+
+* application/json
+
+===== Responses
+
+.http response codes
+[cols="2,3,1"]
+|===         
+| Code | Message | Datatype 
+
+
+| 200
+| Successful Query
+|  <<ApiResponse>>
+
+
+| 420
+| Bad Request
+|  <<>>
+
+
+| 428
+| Request Timeout
+|  <<>>
+
+|===         
+
+===== Samples
+
+
+// markup not found, no include::{snippetDir}nft/supportsInterface/GET/http-request.adoc[opts=optional]
+
+
+// markup not found, no include::{snippetDir}nft/supportsInterface/GET/http-response.adoc[opts=optional]
+
+
+
+// file not found, no * wiremock data link :nft/supportsInterface/GET/GET.json[]
+
+
+ifdef::internal-generation[]
+===== Implementation
+
+// markup not found, no include::{specDir}nft/supportsInterface/GET/implementation.adoc[opts=optional]
+
+
+endif::internal-generation[]
+
+
+[.symbol]
+==== symbol
+    
+`GET /nft/symbol`
+
+Returns the token contract's symbol
+
+===== Description 
+
+
+
+
+// markup not found, no include::{specDir}nft/symbol/GET/spec.adoc[opts=optional]
+
+
+
+===== Parameters
+
+
+
+
+
+
+
+===== Return Type
+
+<<ApiResponse>>
+
+
+===== Content Type
+
+* application/json
+
+===== Responses
+
+.http response codes
+[cols="2,3,1"]
+|===         
+| Code | Message | Datatype 
+
+
+| 200
+| Successful query
+|  <<ApiResponse>>
+
+
+| 428
+| Request Timeout
+|  <<>>
+
+|===         
+
+===== Samples
+
+
+// markup not found, no include::{snippetDir}nft/symbol/GET/http-request.adoc[opts=optional]
+
+
+// markup not found, no include::{snippetDir}nft/symbol/GET/http-response.adoc[opts=optional]
+
+
+
+// file not found, no * wiremock data link :nft/symbol/GET/GET.json[]
+
+
+ifdef::internal-generation[]
+===== Implementation
+
+// markup not found, no include::{specDir}nft/symbol/GET/implementation.adoc[opts=optional]
+
+
+endif::internal-generation[]
+
+
+[.tokenByIndex]
+==== tokenByIndex
+    
+`GET /nft/tokenByIndex/`
+
+Returns the token identifier of the `index`-th nft tracked by the contract
+
+===== Description 
+
+
+
+
+// markup not found, no include::{specDir}nft/tokenByIndex/GET/spec.adoc[opts=optional]
+
+
+
+===== Parameters
+
+
+
+
+
+====== Query Parameters
+
+[cols="2,3,1,1,1"]
+|===         
+|Name| Description| Required| Default| Pattern
+
+| index 
+| A counter less than &#x60;totalSupply()&#x60;  
+| X 
+| null 
+|  
+
+|===         
+
+
+===== Return Type
+
+<<ApiResponse>>
+
+
+===== Content Type
+
+* application/json
+
+===== Responses
+
+.http response codes
+[cols="2,3,1"]
+|===         
+| Code | Message | Datatype 
+
+
+| 200
+| Successful Query
+|  <<ApiResponse>>
+
+
+| 420
+| Bad Request
+|  <<>>
+
+
+| 428
+| Request Timeout
+|  <<>>
+
+|===         
+
+===== Samples
+
+
+// markup not found, no include::{snippetDir}nft/tokenByIndex/GET/http-request.adoc[opts=optional]
+
+
+// markup not found, no include::{snippetDir}nft/tokenByIndex/GET/http-response.adoc[opts=optional]
+
+
+
+// file not found, no * wiremock data link :nft/tokenByIndex/GET/GET.json[]
+
+
+ifdef::internal-generation[]
+===== Implementation
+
+// markup not found, no include::{specDir}nft/tokenByIndex/GET/implementation.adoc[opts=optional]
+
+
+endif::internal-generation[]
+
+
+[.tokenOfOwnerByIndex]
+==== tokenOfOwnerByIndex
+    
+`GET /nft/tokenOfOwnerByIndex/`
+
+Returns the token identifier of the `index`-th nft assigned to the `owner`
+
+===== Description 
+
+
+
+
+// markup not found, no include::{specDir}nft/tokenOfOwnerByIndex/GET/spec.adoc[opts=optional]
+
+
+
+===== Parameters
+
+
+
+
+
+====== Query Parameters
+
+[cols="2,3,1,1,1"]
+|===         
+|Name| Description| Required| Default| Pattern
+
+| owner 
+| The address of the owner  
+| X 
+| null 
+|  
+
+| index 
+| The index of the nft assigned to the owner  
+| X 
+| null 
+|  
+
+|===         
+
+
+===== Return Type
+
+<<ApiResponse>>
+
+
+===== Content Type
+
+* application/json
+
+===== Responses
+
+.http response codes
+[cols="2,3,1"]
+|===         
+| Code | Message | Datatype 
+
+
+| 200
+| Successful Query
+|  <<ApiResponse>>
+
+
+| 420
+| Bad Request
+|  <<>>
+
+
+| 428
+| Request Timeout
+|  <<>>
+
+|===         
+
+===== Samples
+
+
+// markup not found, no include::{snippetDir}nft/tokenOfOwnerByIndex/GET/http-request.adoc[opts=optional]
+
+
+// markup not found, no include::{snippetDir}nft/tokenOfOwnerByIndex/GET/http-response.adoc[opts=optional]
+
+
+
+// file not found, no * wiremock data link :nft/tokenOfOwnerByIndex/GET/GET.json[]
+
+
+ifdef::internal-generation[]
+===== Implementation
+
+// markup not found, no include::{specDir}nft/tokenOfOwnerByIndex/GET/implementation.adoc[opts=optional]
+
+
+endif::internal-generation[]
+
+
+[.tokenURIById]
+==== tokenURIById
+    
+`GET /nft/tokenURI/`
+
+Enumerate NFTs assigned to an owner
+
+===== Description 
+
+
+
+
+// markup not found, no include::{specDir}nft/tokenURI/GET/spec.adoc[opts=optional]
+
+
+
+===== Parameters
+
+
+
+
+
+====== Query Parameters
+
+[cols="2,3,1,1,1"]
+|===         
+|Name| Description| Required| Default| Pattern
+
+| tokenId 
+|   
+| X 
+| null 
+|  
+
+|===         
+
+
+===== Return Type
+
+<<ApiResponse>>
+
+
+===== Content Type
+
+* application/json
+
+===== Responses
+
+.http response codes
+[cols="2,3,1"]
+|===         
+| Code | Message | Datatype 
+
+
+| 200
+| Successful Query
+|  <<ApiResponse>>
+
+
+| 420
+| Bad Request
+|  <<>>
+
+
+| 428
+| Request Timeout
+|  <<>>
+
+|===         
+
+===== Samples
+
+
+// markup not found, no include::{snippetDir}nft/tokenURI/GET/http-request.adoc[opts=optional]
+
+
+// markup not found, no include::{snippetDir}nft/tokenURI/GET/http-response.adoc[opts=optional]
+
+
+
+// file not found, no * wiremock data link :nft/tokenURI/GET/GET.json[]
+
+
+ifdef::internal-generation[]
+===== Implementation
+
+// markup not found, no include::{specDir}nft/tokenURI/GET/implementation.adoc[opts=optional]
+
+
+endif::internal-generation[]
+
+
+[.totalSupply]
+==== totalSupply
+    
+`GET /nft/totalSupply`
+
+An API endpoint to get the total supply of tokens in the ERC721 contract
+
+===== Description 
+
+Returns the total supply of Non fungible tokens
+
+
+// markup not found, no include::{specDir}nft/totalSupply/GET/spec.adoc[opts=optional]
+
+
+
+===== Parameters
+
+
+
+
+
+
+
+===== Return Type
+
+<<ApiResponse>>
+
+
+===== Content Type
+
+* application/json
+
+===== Responses
+
+.http response codes
+[cols="2,3,1"]
+|===         
+| Code | Message | Datatype 
+
+
+| 200
+| Successful query
+|  <<ApiResponse>>
+
+
+| 428
+| Request Timeout
+|  <<>>
+
+|===         
+
+===== Samples
+
+
+// markup not found, no include::{snippetDir}nft/totalSupply/GET/http-request.adoc[opts=optional]
+
+
+// markup not found, no include::{snippetDir}nft/totalSupply/GET/http-response.adoc[opts=optional]
+
+
+
+// file not found, no * wiremock data link :nft/totalSupply/GET/GET.json[]
+
+
+ifdef::internal-generation[]
+===== Implementation
+
+// markup not found, no include::{specDir}nft/totalSupply/GET/implementation.adoc[opts=optional]
+
+
+endif::internal-generation[]
+
+
+[.transferFrom]
+==== transferFrom
+    
+`POST /nft/transferFrom/`
+
+Transfer ownership of an NFT without safety checks
+
+===== Description 
+
+Allows Freight Trust to tranfer tokens unsafely -- THE CALLER IS RESPONSIBLE TO CONFIRM THAT `_to` IS CAPABLE OF RECEIVING NFTS OR ELSE THEY MAY BE PERMANENTLY LOST
+
+
+// markup not found, no include::{specDir}nft/transferFrom/POST/spec.adoc[opts=optional]
+
+
+
+===== Parameters
+
+
+===== Body Parameter
+
+[cols="2,3,1,1,1"]
+|===         
+|Name| Description| Required| Default| Pattern
+
+| auth 
+| The Freight Trust signature of the nonce <<Auth>> 
+| X 
+|  
+|  
+
+|===         
+
+
+
+====== Query Parameters
+
+[cols="2,3,1,1,1"]
+|===         
+|Name| Description| Required| Default| Pattern
+
+| from 
+| The sender of the transfer  
+| X 
+| null 
+|  
+
+| to 
+| The recipient of the transfer  
+| X 
+| null 
+|  
+
+| tokenId 
+| The id of the token to be transferred  
+| X 
+| null 
+|  
+
+|===         
+
+
+===== Return Type
+
+<<ApiResponse>>
+
+
+===== Content Type
+
+* application/json
+
+===== Responses
+
+.http response codes
+[cols="2,3,1"]
+|===         
+| Code | Message | Datatype 
+
+
+| 200
+| Successful Transfer
+|  <<ApiResponse>>
+
+
+| 420
+| Bad Request
+|  <<>>
+
+
+| 428
+| Request Timeout
+|  <<>>
+
+|===         
+
+===== Samples
+
+
+// markup not found, no include::{snippetDir}nft/transferFrom/POST/http-request.adoc[opts=optional]
+
+
+// markup not found, no include::{snippetDir}nft/transferFrom/POST/http-response.adoc[opts=optional]
+
+
+
+// file not found, no * wiremock data link :nft/transferFrom/POST/POST.json[]
+
+
+ifdef::internal-generation[]
+===== Implementation
+
+// markup not found, no include::{specDir}nft/transferFrom/POST/implementation.adoc[opts=optional]
+
+
+endif::internal-generation[]
+
+
+[.versionRecord]
+==== versionRecord
+    
+`POST /nft/versionRecord/`
+
+Versions a record for Freight Trust
+
+===== Description 
+
+Allows Freight Trust to version one of the records they own.
+
+
+// markup not found, no include::{specDir}nft/versionRecord/POST/spec.adoc[opts=optional]
+
+
+
+===== Parameters
+
+
+===== Body Parameter
+
+[cols="2,3,1,1,1"]
+|===         
+|Name| Description| Required| Default| Pattern
+
+| auth 
+| The Freight Trust nonce signature to verify this action <<Auth>> 
+| X 
+|  
+|  
+
+|===         
+
+
+
+====== Query Parameters
+
+[cols="2,3,1,1,1"]
+|===         
+|Name| Description| Required| Default| Pattern
+
+| current 
+| The identifying hash of the record  
+| X 
+| null 
+|  
+
+| new 
+| The new identifying hash of the record  
+| X 
+| null 
+|  
+
+|===         
+
+
+===== Return Type
+
+
+
+-
+
+
+===== Responses
+
+.http response codes
+[cols="2,3,1"]
+|===         
+| Code | Message | Datatype 
+
+
+| 200
+| Successful Edit
+|  <<>>
+
+
+| 420
+| Bad Request
+|  <<>>
+
+
+| 428
+| Request Timeout
+|  <<>>
+
+|===         
+
+===== Samples
+
+
+// markup not found, no include::{snippetDir}nft/versionRecord/POST/http-request.adoc[opts=optional]
+
+
+// markup not found, no include::{snippetDir}nft/versionRecord/POST/http-response.adoc[opts=optional]
+
+
+
+// file not found, no * wiremock data link :nft/versionRecord/POST/POST.json[]
+
+
+ifdef::internal-generation[]
+===== Implementation
+
+// markup not found, no include::{specDir}nft/versionRecord/POST/implementation.adoc[opts=optional]
+
+
+endif::internal-generation[]
+
+
+[.versionRecordSigned]
+==== versionRecordSigned
+    
+`POST /nft/versionRecord/signed/`
+
+Versions a record for the owner
+
+===== Description 
+
+Allows Freight Trust to version a record for the owner using the owner's signature.
+
+
+// markup not found, no include::{specDir}nft/versionRecord/signed/POST/spec.adoc[opts=optional]
+
+
+
+===== Parameters
+
+
+===== Body Parameter
+
+[cols="2,3,1,1,1"]
+|===         
+|Name| Description| Required| Default| Pattern
+
+| auth 
+|  <<InlineObject2>> 
+| X 
+|  
+|  
+
+|===         
+
+
+
+====== Query Parameters
+
+[cols="2,3,1,1,1"]
+|===         
+|Name| Description| Required| Default| Pattern
+
+| current 
+| The identifying hash of the record  
+| X 
+| null 
+|  
+
+| new 
+| The new identifying hash of the record  
+| X 
+| null 
+|  
+
+| owner 
+| The owner of the record which will be updated  
+| - 
+| null 
+|  
+
+|===         
+
+
+===== Return Type
+
+
+
+-
+
+
+===== Responses
+
+.http response codes
+[cols="2,3,1"]
+|===         
+| Code | Message | Datatype 
+
+
+| 200
+| Successful Editing
+|  <<>>
+
+
+| 420
+| Bad Request
+|  <<>>
+
+
+| 428
+| Request Timeout
+|  <<>>
+
+|===         
+
+===== Samples
+
+
+// markup not found, no include::{snippetDir}nft/versionRecord/signed/POST/http-request.adoc[opts=optional]
+
+
+// markup not found, no include::{snippetDir}nft/versionRecord/signed/POST/http-response.adoc[opts=optional]
+
+
+
+// file not found, no * wiremock data link :nft/versionRecord/signed/POST/POST.json[]
+
+
+ifdef::internal-generation[]
+===== Implementation
+
+// markup not found, no include::{specDir}nft/versionRecord/signed/POST/implementation.adoc[opts=optional]
+
+
+endif::internal-generation[]
+
+
+[.ProxyAndUpgrade]
+=== ProxyAndUpgrade
+
+
+[.changeController]
+==== changeController
+    
+`POST /proxy/changeController/`
+
+Sets the the new controller address
+
+===== Description 
+
+Sets the new controller address.
+
+
+// markup not found, no include::{specDir}proxy/changeController/POST/spec.adoc[opts=optional]
+
+
+
+===== Parameters
+
+
+===== Body Parameter
+
+[cols="2,3,1,1,1"]
+|===         
+|Name| Description| Required| Default| Pattern
+
+| auth 
+| The Freight Trust signature of the nonce <<Auth>> 
+| X 
+|  
+|  
+
+|===         
+
+
+
+====== Query Parameters
+
+[cols="2,3,1,1,1"]
+|===         
+|Name| Description| Required| Default| Pattern
+
+| newController 
+| The new controller address  
+| X 
+| null 
+|  
+
+|===         
+
+
+===== Return Type
+
+<<ApiResponse>>
+
+
+===== Content Type
+
+* application/xml
+* application/json
+
+===== Responses
+
+.http response codes
+[cols="2,3,1"]
+|===         
+| Code | Message | Datatype 
+
+
+| 200
+| Successfuly Changed
+|  <<ApiResponse>>
+
+
+| 425
+| Invalid Input
+|  <<>>
+
+|===         
+
+===== Samples
+
+
+// markup not found, no include::{snippetDir}proxy/changeController/POST/http-request.adoc[opts=optional]
+
+
+// markup not found, no include::{snippetDir}proxy/changeController/POST/http-response.adoc[opts=optional]
+
+
+
+// file not found, no * wiremock data link :proxy/changeController/POST/POST.json[]
+
+
+ifdef::internal-generation[]
+===== Implementation
+
+// markup not found, no include::{specDir}proxy/changeController/POST/implementation.adoc[opts=optional]
+
+
+endif::internal-generation[]
+
+
+[.changeMaster]
+==== changeMaster
+    
+`POST /proxy/changeMaster/`
+
+Sets the address of Function
+
+===== Description 
+
+Sets address that is delegate called to run a function's logic. This function must be called with an signed nonce from the Freight Trust account in the https body.
+
+
+// markup not found, no include::{specDir}proxy/changeMaster/POST/spec.adoc[opts=optional]
+
+
+
+===== Parameters
+
+
+===== Body Parameter
+
+[cols="2,3,1,1,1"]
+|===         
+|Name| Description| Required| Default| Pattern
+
+| auth 
+| The Freight Trust signature of the nonce <<Auth>> 
+| X 
+|  
+|  
+
+|===         
+
+
+
+====== Query Parameters
+
+[cols="2,3,1,1,1"]
+|===         
+|Name| Description| Required| Default| Pattern
+
+| newMaster 
+| The new master address  
+| X 
+| null 
+|  
+
+|===         
+
+
+===== Return Type
+
+<<ApiResponse>>
+
+
+===== Content Type
+
+* application/xml
+* application/json
+
+===== Responses
+
+.http response codes
+[cols="2,3,1"]
+|===         
+| Code | Message | Datatype 
+
+
+| 200
+| Successfuly Changed
+|  <<ApiResponse>>
+
+
+| 425
+| Invalid Input
+|  <<>>
+
+|===         
+
+===== Samples
+
+
+// markup not found, no include::{snippetDir}proxy/changeMaster/POST/http-request.adoc[opts=optional]
+
+
+// markup not found, no include::{snippetDir}proxy/changeMaster/POST/http-response.adoc[opts=optional]
+
+
+
+// file not found, no * wiremock data link :proxy/changeMaster/POST/POST.json[]
+
+
+ifdef::internal-generation[]
+===== Implementation
+
+// markup not found, no include::{specDir}proxy/changeMaster/POST/implementation.adoc[opts=optional]
+
+
+endif::internal-generation[]
+
+
+[.getControler]
+==== getControler
+    
+`GET /proxy/getControler`
+
+Gets address of the controler Contract
+
+===== Description 
+
+Gets the address of the controler contract.
+
+
+// markup not found, no include::{specDir}proxy/getControler/GET/spec.adoc[opts=optional]
+
+
+
+===== Parameters
+
+
+
+
+
+
+
+===== Return Type
+
+<<ApiResponse>>
+
+
+===== Content Type
+
+* application/xml
+* application/json
+
+===== Responses
+
+.http response codes
+[cols="2,3,1"]
+|===         
+| Code | Message | Datatype 
+
+
+| 200
+| successful operation
+|  <<ApiResponse>>
+
+|===         
+
+===== Samples
+
+
+// markup not found, no include::{snippetDir}proxy/getControler/GET/http-request.adoc[opts=optional]
+
+
+// markup not found, no include::{snippetDir}proxy/getControler/GET/http-response.adoc[opts=optional]
+
+
+
+// file not found, no * wiremock data link :proxy/getControler/GET/GET.json[]
+
+
+ifdef::internal-generation[]
+===== Implementation
+
+// markup not found, no include::{specDir}proxy/getControler/GET/implementation.adoc[opts=optional]
+
+
+endif::internal-generation[]
+
+
+[.getMaster]
+==== getMaster
+    
+`GET /proxy/getMaster`
+
+Gets address of the Master Contract
+
+===== Description 
+
+Gets the address of the master contract.
+
+
+// markup not found, no include::{specDir}proxy/getMaster/GET/spec.adoc[opts=optional]
+
+
+
+===== Parameters
+
+
+
+
+
+
+
+===== Return Type
+
+<<ApiResponse>>
+
+
+===== Content Type
+
+* application/xml
+* application/json
+
+===== Responses
+
+.http response codes
+[cols="2,3,1"]
+|===         
+| Code | Message | Datatype 
+
+
+| 200
+| successful operation
+|  <<ApiResponse>>
+
+|===         
+
+===== Samples
+
+
+// markup not found, no include::{snippetDir}proxy/getMaster/GET/http-request.adoc[opts=optional]
+
+
+// markup not found, no include::{snippetDir}proxy/getMaster/GET/http-response.adoc[opts=optional]
+
+
+
+// file not found, no * wiremock data link :proxy/getMaster/GET/GET.json[]
+
+
+ifdef::internal-generation[]
+===== Implementation
+
+// markup not found, no include::{specDir}proxy/getMaster/GET/implementation.adoc[opts=optional]
+
+
+endif::internal-generation[]
+
+
+[.getTarget]
+==== getTarget
+    
+`GET /proxy/getTarget/`
+
+Gets address of Function
+
+===== Description 
+
+Gets address that is delegate called to run a function's logic.
+
+
+// markup not found, no include::{specDir}proxy/getTarget/GET/spec.adoc[opts=optional]
+
+
+
+===== Parameters
+
+
+
+
+
+====== Query Parameters
+
+[cols="2,3,1,1,1"]
+|===         
+|Name| Description| Required| Default| Pattern
+
+| id 
+| The function selector the return the target of  
+| X 
+| null 
+|  
+
+|===         
+
+
+===== Return Type
+
+<<ApiResponse>>
+
+
+===== Content Type
+
+* application/xml
+* application/json
+
+===== Responses
+
+.http response codes
+[cols="2,3,1"]
+|===         
+| Code | Message | Datatype 
+
+
+| 200
+| successful operation
+|  <<ApiResponse>>
+
+
+| 425
+| Invalid Input
+|  <<>>
+
+|===         
+
+===== Samples
+
+
+// markup not found, no include::{snippetDir}proxy/getTarget/GET/http-request.adoc[opts=optional]
+
+
+// markup not found, no include::{snippetDir}proxy/getTarget/GET/http-response.adoc[opts=optional]
+
+
+
+// file not found, no * wiremock data link :proxy/getTarget/GET/GET.json[]
+
+
+ifdef::internal-generation[]
+===== Implementation
+
+// markup not found, no include::{specDir}proxy/getTarget/GET/implementation.adoc[opts=optional]
+
+
+endif::internal-generation[]
+
+
+[.getUniversalProxy]
+==== getUniversalProxy
+    
+`GET /proxy/getUniversalProxy`
+
+Gets address of the Universal Proxy Contract
+
+===== Description 
+
+Gets the address of the Universal Proxy contract.
+
+
+// markup not found, no include::{specDir}proxy/getUniversalProxy/GET/spec.adoc[opts=optional]
+
+
+
+===== Parameters
+
+
+
+
+
+
+
+===== Return Type
+
+<<ApiResponse>>
+
+
+===== Content Type
+
+* application/xml
+* application/json
+
+===== Responses
+
+.http response codes
+[cols="2,3,1"]
+|===         
+| Code | Message | Datatype 
+
+
+| 200
+| successful operation
+|  <<ApiResponse>>
+
+|===         
+
+===== Samples
+
+
+// markup not found, no include::{snippetDir}proxy/getUniversalProxy/GET/http-request.adoc[opts=optional]
+
+
+// markup not found, no include::{snippetDir}proxy/getUniversalProxy/GET/http-response.adoc[opts=optional]
+
+
+
+// file not found, no * wiremock data link :proxy/getUniversalProxy/GET/GET.json[]
+
+
+ifdef::internal-generation[]
+===== Implementation
+
+// markup not found, no include::{specDir}proxy/getUniversalProxy/GET/implementation.adoc[opts=optional]
+
+
+endif::internal-generation[]
+
+
+[.pause]
+==== pause
+    
+`POST /proxy/pause`
+
+Pauses the execution
+
+===== Description 
+
+Calls the pause method in the universal proxy, blocking any state changes while Freight Trust's Network Operations Group updates.
+
+
+// markup not found, no include::{specDir}proxy/pause/POST/spec.adoc[opts=optional]
+
+
+
+===== Parameters
+
+
+===== Body Parameter
+
+[cols="2,3,1,1,1"]
+|===         
+|Name| Description| Required| Default| Pattern
+
+| auth 
+| The Freight Trust signature of the nonce <<Auth>> 
+| X 
+|  
+|  
+
+|===         
+
+
+
+
+
+===== Return Type
+
+<<ApiResponse>>
+
+
+===== Content Type
+
+* application/xml
+* application/json
+
+===== Responses
+
+.http response codes
+[cols="2,3,1"]
+|===         
+| Code | Message | Datatype 
+
+
+| 200
+| Successfuly Paused
+|  <<ApiResponse>>
+
+
+| 425
+| Invalid Input
+|  <<>>
+
+|===         
+
+===== Samples
+
+
+// markup not found, no include::{snippetDir}proxy/pause/POST/http-request.adoc[opts=optional]
+
+
+// markup not found, no include::{snippetDir}proxy/pause/POST/http-response.adoc[opts=optional]
+
+
+
+// file not found, no * wiremock data link :proxy/pause/POST/POST.json[]
+
+
+ifdef::internal-generation[]
+===== Implementation
+
+// markup not found, no include::{specDir}proxy/pause/POST/implementation.adoc[opts=optional]
+
+
+endif::internal-generation[]
+
+
+[.setTarget]
+==== setTarget
+    
+`POST /proxy/setTarget/`
+
+Sets the address of Function
+
+===== Description 
+
+Sets address that is delegate called to run a function's logic. This function must be called with an signed nonce from the Freight Trust account in the https body.
+
+
+// markup not found, no include::{specDir}proxy/setTarget/POST/spec.adoc[opts=optional]
+
+
+
+===== Parameters
+
+
+===== Body Parameter
+
+[cols="2,3,1,1,1"]
+|===         
+|Name| Description| Required| Default| Pattern
+
+| auth 
+| The Freight Trust signature of the nonce <<Auth>> 
+| X 
+|  
+|  
+
+|===         
+
+
+
+====== Query Parameters
+
+[cols="2,3,1,1,1"]
+|===         
+|Name| Description| Required| Default| Pattern
+
+| id 
+| Function selector whose target to change.  
+| X 
+| null 
+|  
+
+| target 
+| The address to set the function too  
+| X 
+| null 
+|  
+
+|===         
+
+
+===== Return Type
+
+<<ApiResponse>>
+
+
+===== Content Type
+
+* application/xml
+* application/json
+
+===== Responses
+
+.http response codes
+[cols="2,3,1"]
+|===         
+| Code | Message | Datatype 
+
+
+| 200
+| Successfuly Changed
+|  <<ApiResponse>>
+
+
+| 425
+| Invalid Input
+|  <<>>
+
+|===         
+
+===== Samples
+
+
+// markup not found, no include::{snippetDir}proxy/setTarget/POST/http-request.adoc[opts=optional]
+
+
+// markup not found, no include::{snippetDir}proxy/setTarget/POST/http-response.adoc[opts=optional]
+
+
+
+// file not found, no * wiremock data link :proxy/setTarget/POST/POST.json[]
+
+
+ifdef::internal-generation[]
+===== Implementation
+
+// markup not found, no include::{specDir}proxy/setTarget/POST/implementation.adoc[opts=optional]
+
+
+endif::internal-generation[]
+
+
+[#models]
+== Models
+
+
+[#ApiResponse]
+=== _ApiResponse_ 
+
+
+
+[.fields-ApiResponse]
+[cols="2,1,2,4,1"]
+|===         
+| Field Name| Required| Type| Description| Format
+
+| code 
+|  
+| Integer  
+| 
+| int32 
+
+| type 
+|  
+| String  
+| 
+|  
+
+| message 
+|  
+| String  
+| 
+|  
+
+|===
+
+
+[#Auth]
+=== _Auth_ 
+
+
+
+[.fields-Auth]
+[cols="2,1,2,4,1"]
+|===         
+| Field Name| Required| Type| Description| Format
+
+| signature 
+| X 
+| String  
+| 
+|  
+
+|===
+
+
+[#InlineObject]
+=== _InlineObject_ 
+
+
+
+[.fields-InlineObject]
+[cols="2,1,2,4,1"]
+|===         
+| Field Name| Required| Type| Description| Format
+
+| freightTrustAuth 
+|  
+| auth  
+| 
+|  
+
+| senderAuth 
+|  
+| auth  
+| 
+|  
+
+|===
+
+
+[#InlineObject1]
+=== _InlineObject1_ 
+
+
+
+[.fields-InlineObject1]
+[cols="2,1,2,4,1"]
+|===         
+| Field Name| Required| Type| Description| Format
+
+| freightTrustAuth 
+|  
+| auth  
+| 
+|  
+
+| ownerAuth 
+|  
+| auth  
+| 
+|  
+
+| partAuth 
+|  
+| auth  
+| 
+|  
+
+|===
+
+
+[#InlineObject2]
+=== _InlineObject2_ 
+
+
+
+[.fields-InlineObject2]
+[cols="2,1,2,4,1"]
+|===         
+| Field Name| Required| Type| Description| Format
+
+| freightTrustAuth 
+|  
+| auth  
+| 
+|  
+
+| ownerAuth 
+|  
+| auth  
+| 
+|  
+
+|===
+
+
