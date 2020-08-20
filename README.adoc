@@ -1,24 +1,4 @@
-= Freight Trust - TrueNFT dApp API
-corporate@freighttrust.com
-1.0.0
-:toc: left
-:numbered:
-:toclevels: 3
-:source-highlighter: highlightjs
-:keywords: openapi, rest, Freight Trust - TrueNFT dApp API
-:specDir:
-:snippetDir:
-:generator-template: v1 2019-12-20
-:info-url: https://openapi-generator.tech
-:app-name: Freight Trust - TrueNFT dApp API
-
-
-
-== TrueNFT
-
-____
-a B2B NFT Protocol
-____
+= TrueNFT - B2B NFT Protocol
 
 * link:#truenft[TrueNFT]
 ** link:#overview[Overview]
@@ -31,9 +11,19 @@ ____
 ** link:#roadmap[Roadmap]
 ** link:#license[License]
 
-____
-a B2B NFT Protocol
-____
+
+corporate@freighttrust.com
+1.0.0
+:toc: left
+:numbered:
+:toclevels: 3
+:source-highlighter: highlightjs
+:keywords: openapi, rest, Freight Trust - TrueNFT dApp API
+:specDir:
+:snippetDir:
+:generator-template: v1 2019-12-20
+:info-url: https://openapi-generator.tech
+:app-name: Freight Trust - TrueNFT dApp API
 
 === Overview
 
