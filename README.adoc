@@ -1,17 +1,5 @@
 = TrueNFT - B2B NFT Protocol
 
-* link:#truenft[TrueNFT]
-** link:#overview[Overview]
-*** link:#truenft-protocol-diagram[TrueNFT Protocol Diagram]
-** link:#valid-server-setup[Valid Server Setup]
-** link:#security---development[Security & Development]
-*** link:#api-contract-testing[API Contract Testing]
-** link:#usage[Usage]
-** link:#deployments[Deployments]
-** link:#roadmap[Roadmap]
-** link:#license[License]
-
-
 corporate@freighttrust.com
 1.0.0
 :toc: left
