@@ -1,6 +1,6 @@
 {
   "name": "@fr8/protocol",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "EDI X12/EDIFACT NFT Protocol for Supply Chain",
   "main": "app.js",
   "scripts": {
