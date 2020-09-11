@@ -1,28 +1,15 @@
 = TrueNFT - B2B NFT Protocol
 
-corporate@freighttrust.com
-1.0.0
-:toc: left
-:numbered:
-:toclevels: 3
-:source-highlighter: highlightjs
-:keywords: openapi, rest, Freight Trust - TrueNFT dApp API
-:specDir:
-:snippetDir:
-:generator-template: v1 2019-12-20
-:info-url: https://openapi-generator.tech
-:app-name: Freight Trust - TrueNFT dApp API
 
 === Overview
 
-TrueNFT enables B2B Messages to be tokenized either through EDI or XML
-Mappings and Data Ingestion
+TrueNFT enables B2B Messages to be tokenized either through EDI or XML Mappings and Data Ingestion
 
 ==== TrueNFT Protocol Diagram
 
 === Valid Server Setup
 
-[arabic]
+
 . Deploy the NFT and Master Proxy contracts
 . Deploy the Universal Proxy contract with the Master Proxy's address
 and an admin address (this should be a human account) as input
@@ -117,20 +104,10 @@ Returns the current message Freight Trust needs to sign to verify their next pos
 
 ===== Description
 
-
-
-
 // markup not found, no include::{specDir}getNonce/GET/spec.adoc[opts=optional]
 
 
-
 ===== Parameters
-
-
-
-
-
-
 
 ===== Return Type
 

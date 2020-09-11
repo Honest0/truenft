@@ -1,0 +1,2088 @@
+{
+	"info": {
+		"_postman_id": "ca1b8db6-e175-497e-8e24-fb7127b366f8",
+		"name": "Freight Trust Non Fungible Documents of Trade",
+		"description": " FT-This is the api reference for the Freight Trust dApp which allows recording, transfering and signing of documents of trade.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "nft",
+			"item": [
+				{
+					"name": "Returns the token contract's name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "bf6f41ee-030a-48df-9f62-4e6d7cace850",
+								"exec": [
+									"pm.test(\"Returns the right name\", function () {",
+									"    response = pm.response.json();",
+									"    pm.expect(response[\"name\"]).to.eql(\"Documents of Trade\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/nft/name",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"nft",
+								"name"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Returns the token contract's symbol",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b78f2fed-6aff-4652-8c48-8afa8775fe4b",
+								"exec": [
+									"pm.test(\"Returns the right symbol\", function () {",
+									"    response = pm.response.json();",
+									"    pm.expect(response[\"symbol\"]).to.eql(\"DOT\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/nft/symbol",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"nft",
+								"symbol"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "An API endpoint to get the total supply of tokens in the ERC721 contract",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0627712c-6c9d-4d2f-9566-2697026a62cc",
+								"exec": [
+									"pm.test(\"Returns the right type\", function () {",
+									"    response = pm.response.json();",
+									"    pm.expect(uintVerify(response[\"totalSupply\"])).to.eql(true);",
+									"});",
+									"",
+									"function uintVerify(proposed){",
+									"  proposed = parseInt(proposed, 10);",
+									"  return ((proposed >= 0) && (proposed < 115792089237316195423570985008687907853269984665640564039457584007913129639935))",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/nft/totalSupply",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"nft",
+								"totalSupply"
+							]
+						},
+						"description": "Returns the total supply of Non fungible tokens"
+					},
+					"response": []
+				},
+				{
+					"name": "Returns the Token URI",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1748a75c-ece9-4e68-90bb-e083761e72d9",
+								"exec": [
+									"function bytesVerify(proposed, bytes){ //proposed is the string to be checked, bytes is the byte size of the encoded data",
+									"  return ((typeof proposed == \"string\") && (proposed.length == 2*bytes+2) && isHexStrict(proposed))",
+									"}",
+									"",
+									"function isHexStrict(proposed){//I wrote a clone of web3.isHexStrict, so we don't have to run a node to test code",
+									"  proposed = proposed.toLowerCase()",
+									"  flag = (proposed.slice(0,2) == \"0x\")",
+									"  for(i = 2;  i < proposed.length; i ++){",
+									"    test = proposed.charAt(i)",
+									"    flag = flag && (test <= '9' || ((test>='a')&&(test<='f')))",
+									"  }",
+									"  return flag",
+									"}",
+									"",
+									"pm.test(\"Rejects Invalid Data Types\", function () {",
+									"    if(bytesVerify(pm.variables.get(\"tokenId\"), 32)){",
+									"        pm.expect(pm.response.code).to.be.oneOf([200, 425]);",
+									"    }else{",
+									"        pm.expect(pm.response.code).to.be.oneOf([400, 425]);",
+									"    }",
+									"});",
+									"",
+									"pm.test(\"Returns the Right Type\", function () {",
+									"    if(responseCode.code == 200){",
+									"        response = pm.response.json();",
+									"        pm.expect(typeof response[\"tokenURI\"]).to.eql(\"string\");",
+									"    } else if (responseCode.code == 400) {",
+									"        pm.response.to.have.body(\"Invalid Input\")",
+									"    }  ",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/nft/tokenURI/?tokenId={{tokenId}}",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"nft",
+								"tokenURI",
+								""
+							],
+							"query": [
+								{
+									"key": "tokenId",
+									"value": "{{tokenId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Returns an interface's support status",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4faa90cf-c670-4cfc-8fb6-bc08edc96cc9",
+								"exec": [
+									"function bytesVerify(proposed, bytes){ //proposed is the string to be checked, bytes is the byte size of the encoded data",
+									"  return ((typeof proposed == \"string\") && (proposed.length == 2*bytes+2) && isHexStrict(proposed))",
+									"}",
+									"function isHexStrict(proposed){//I wrote a clone of web3.isHexStrict, so we don't have to run a node to test code",
+									"  proposed = proposed.toLowerCase()",
+									"  flag = (proposed.slice(0,2) == \"0x\")",
+									"  for(i = 2;  i < proposed.length; i ++){",
+									"    test = proposed.charAt(i)",
+									"    flag = flag && (test <= '9' || ((test>='a')&&(test<='f')))",
+									"  }",
+									"  return flag",
+									"}",
+									"",
+									"pm.test(\"Rejects Invalid Data Types\", function () {",
+									"    if(bytesVerify(pm.variables.get(\"interfaceId\"), 4)){",
+									"        pm.response.to.have.status(200);",
+									"    }else{",
+									"        pm.expect(pm.response.code).to.be.oneOf([400, 425]);",
+									"    }",
+									"});",
+									"",
+									"pm.test(\"Returns the Right Type\", function () {",
+									"    if(responseCode.code == 200){",
+									"        response = pm.response.json();",
+									"        pm.expect(typeof response[\"supported\"]).to.eql(\"boolean\");",
+									"    } else if (responseCode.code == 400) {",
+									"        pm.response.to.have.body(\"Invalid Input\")",
+									"    }  ",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/nft/supportsInterface/?interfaceId={{interfaceId}}",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"nft",
+								"supportsInterface",
+								""
+							],
+							"query": [
+								{
+									"key": "interfaceId",
+									"value": "{{interfaceId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Returns the token identifier of the `index`-th nft tracked by the contract",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "51ee46bc-e712-4829-8759-5e906bc1e184",
+								"exec": [
+									"function bytesVerify(proposed, bytes){ //proposed is the string to be checked, bytes is the byte size of the encoded data",
+									"  return ((typeof proposed == \"string\") && (proposed.length == 2*bytes+2) && isHexStrict(proposed))",
+									"}",
+									"",
+									"function isHexStrict(proposed){//I wrote a clone of web3.isHexStrict, so we don't have to run a node to test code",
+									"  proposed = proposed.toLowerCase()",
+									"  flag = (proposed.slice(0,2) == \"0x\")",
+									"  for(i = 2;  i < proposed.length; i ++){",
+									"    test = proposed.charAt(i)",
+									"    flag = flag && (test <= '9' || ((test>='a')&&(test<='f')))",
+									"  }",
+									"  return flag",
+									"}",
+									"",
+									"pm.test(\"Rejects Invalid Data Types\", function () {",
+									"    if(bytesVerify(pm.variables.get(\"index\"), 32)) {",
+									"        pm.expect(pm.response.code).to.be.oneOf([200, 425]);",
+									"    }else{",
+									"        pm.expect(pm.response.code).to.be.oneOf([400, 425]);",
+									"    }",
+									"});",
+									"",
+									"pm.test(\"Returns the Right Type\", function () {",
+									"    if(responseCode.code == 200){",
+									"        response = pm.response.json();",
+									"        pm.expect(uintVerify(response[\"token\"])).to.eql(true);",
+									"    } else if (responseCode.code == 400) {",
+									"        pm.response.to.have.body(\"Invalid Input\")",
+									"    }  ",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/nft/tokenByIndex/?index={{index}}",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"nft",
+								"tokenByIndex",
+								""
+							],
+							"query": [
+								{
+									"key": "index",
+									"value": "{{index}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Returns the token identifier of the `index`-th nft assigned to the `owner`",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e5aeffcb-1856-433f-884a-5b728847817c",
+								"exec": [
+									"function bytesVerify(proposed, bytes){ //proposed is the string to be checked, bytes is the byte size of the encoded data",
+									"  return ((typeof proposed == \"string\") && (proposed.length == 2*bytes+2) && isHexStrict(proposed))",
+									"}",
+									"function isHexStrict(proposed){//I wrote a clone of web3.isHexStrict, so we don't have to run a node to test code",
+									"  proposed = proposed.toLowerCase()",
+									"  flag = (proposed.slice(0,2) == \"0x\")",
+									"  for(i = 2;  i < proposed.length; i ++){",
+									"    test = proposed.charAt(i)",
+									"    flag = flag && (test <= '9' || ((test>='a')&&(test<='f')))",
+									"  }",
+									"  return flag",
+									"}",
+									"function uintVerify(proposed){",
+									"  proposed = parseInt(proposed, 10);",
+									"  return ((proposed >= 0) && (proposed < 115792089237316195423570985008687907853269984665642564239457584207913129639935))",
+									"}",
+									"",
+									"pm.test(\"Rejects Invalid Data Types\", function () {",
+									"    if(uintVerify(pm.variables.get(\"index\"))){",
+									"        if(bytesVerify(pm.variables.get(\"owner\"), 20)){",
+									"          pm.expect(pm.response.code).to.be.oneOf([200, 425]);",
+									"        }",
+									"        else{",
+									"          pm.expect(pm.response.code).to.be.oneOf([400, 425]);  ",
+									"        }",
+									"    }else{",
+									"        pm.expect(pm.response.code).to.be.oneOf([400, 425]);",
+									"    }",
+									"});",
+									"",
+									"pm.test(\"Returns the Right Type\", function () {",
+									"    if(responseCode.code == 200){",
+									"        response = pm.response.json();",
+									"        pm.expect(uintVerify(response[\"token\"])).to.eql(true);",
+									"    } else if (responseCode.code == 400) {",
+									"        pm.response.to.have.body(\"Invalid Input\")",
+									"    }  ",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/nft/tokenOfOwnerByIndex/?owner={{owner}}&index={{index}}",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"nft",
+								"tokenOfOwnerByIndex",
+								""
+							],
+							"query": [
+								{
+									"key": "owner",
+									"value": "{{owner}}"
+								},
+								{
+									"key": "index",
+									"value": "{{index}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Count all NFTs assigned to an owner",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8ebc58a4-93fb-45a0-9171-9e110a10b3c2",
+								"exec": [
+									"function bytesVerify(proposed, bytes){ //proposed is the string to be checked, bytes is the byte size of the encoded data",
+									"  return ((typeof proposed == \"string\") && (proposed.length == 2*bytes+2) && isHexStrict(proposed))",
+									"}",
+									"function isHexStrict(proposed){//I wrote a clone of web3.isHexStrict, so we don't have to run a node to test code",
+									"  proposed = proposed.toLowerCase()",
+									"  flag = (proposed.slice(0,2) == \"0x\")",
+									"  for(i = 2;  i < proposed.length; i ++){",
+									"    test = proposed.charAt(i)",
+									"    flag = flag && (test <= '9' || ((test>='a')&&(test<='f')))",
+									"  }",
+									"  return flag",
+									"}",
+									"function uintVerify(proposed){",
+									"  proposed = parseInt(proposed, 10);",
+									"  return ((proposed >= 0) && (proposed < 115792089237316195423570985008687907853269984665642564239457584207913129639935))",
+									"}",
+									"",
+									"pm.test(\"Rejects Invalid Data Types\", function () {",
+									"    if(bytesVerify(pm.variables.get(\"owner\"), 20)) {",
+									"        pm.expect(pm.response.code).to.be.oneOf([200, 425]);",
+									"    } else {",
+									"        pm.expect(pm.response.code).to.be.oneOf([400, 425]);",
+									"    }",
+									"});",
+									"",
+									"pm.test(\"Returns the Right Type\", function () {",
+									"    if(responseCode.code == 200){",
+									"        response = pm.response.json();",
+									"        pm.expect(uintVerify(response[\"balance\"])).to.eql(true);",
+									"    } else if (responseCode.code == 400) {",
+									"        pm.response.to.have.body(\"Invalid Input\")",
+									"    }  ",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/nft/balanceOf/?owner={{owner}}",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"nft",
+								"balanceOf",
+								""
+							],
+							"query": [
+								{
+									"key": "owner",
+									"value": "{{owner}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find the owner of an NFT",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0e82e5df-7d60-4bbf-8e8f-9d42cbc99ecc",
+								"exec": [
+									"function bytesVerify(proposed, bytes){ //proposed is the string to be checked, bytes is the byte size of the encoded data",
+									"  return ((typeof proposed == \"string\") && (proposed.length == 2*bytes+2) && isHexStrict(proposed))",
+									"}",
+									"function isHexStrict(proposed){//I wrote a clone of web3.isHexStrict, so we don't have to run a node to test code",
+									"  proposed = proposed.toLowerCase()",
+									"  flag = (proposed.slice(0,2) == \"0x\")",
+									"  for(i = 2;  i < proposed.length; i ++){",
+									"    test = proposed.charAt(i)",
+									"    flag = flag && (test <= '9' || ((test>='a')&&(test<='f')))",
+									"  }",
+									"  return flag",
+									"}",
+									"function uintVerify(proposed){",
+									"  proposed = parseInt(proposed, 10);",
+									"  return ((proposed >= 0) && (proposed < 115792089237316195423570985008687907853269984665642564239457584207913129639935))",
+									"}",
+									"",
+									"pm.test(\"Rejects Invalid Data Types\", function () {",
+									"    if(uintVerify(pm.variables.get(\"tokenId\"))){",
+									"        pm.expect(pm.response.code).to.be.oneOf([200, 425]);",
+									"    } else{",
+									"        pm.expect(pm.response.code).to.be.oneOf([400, 425]);",
+									"    }",
+									"});",
+									"",
+									"pm.test(\"Returns the Right Type\", function () {",
+									"    if(responseCode.code == 200){",
+									"        response = pm.response.json();",
+									"        pm.expect(typeof bytesVerify(response[\"owner\"], 20)).to.eql(\"boolean\");",
+									"    } else if (responseCode.code == 400) {",
+									"        pm.response.to.have.body(\"Invalid Input\")",
+									"    }  ",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/nft/ownerOf/?tokenId={{tokenId}}",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"nft",
+								"ownerOf",
+								""
+							],
+							"query": [
+								{
+									"key": "tokenId",
+									"value": "{{tokenId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Transfers the ownership of an NFT from one address to another address",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d3caac1e-32db-4ab8-b1d0-00e99a95e147",
+								"exec": [
+									"function bytesVerify(proposed, bytes){ //proposed is the string to be checked, bytes is the byte size of the encoded data\",",
+									"\t return ((typeof proposed == \"string\") && (proposed.length == 2*bytes+2) && isHexStrict(proposed))",
+									"}",
+									"function isHexStrict(proposed){//I wrote a clone of web3.isHexStrict, so we don't have to run a node to test code\",",
+									"    proposed = proposed.toLowerCase()",
+									"\tflag = (proposed.slice(0,2) == \"0x\")",
+									"\tfor(i = 2;  i < proposed.length; i ++) {",
+									"\t\ttest = proposed.charAt(i)",
+									"\t\tflag = flag && (test <= '9' || ((test>='a')&&(test<='f')))",
+									"\t}",
+									"    return flag",
+									"}",
+									"function authVerify(authArray) {",
+									"\tif((authArray.length != 4) ||",
+									"\t\t(!bytesVerify(authArray[0], 32)) ||",
+									"\t\t(!bytesVerify(authArray[1], 1)) ||",
+									"\t\t(!bytesVerify(authArray[2], 32)) ||",
+									"\t\t(!bytesVerify(authArray[3], 32)))",
+									"\t{",
+									"\t\treturn false;",
+									"\t}",
+									"\telse {",
+									"\t    return true",
+									"\t}",
+									"}",
+									"",
+									"pm.test(\"Rejects Invalid Data Types\", function () {",
+									"\tlet auth = [pm.variables.get(\"hash\"), pm.variables.get(\"v\"), pm.variables.get(\"r\") , pm.variables.get(\"s\")];",
+									"\t\t\t\t\t\t\t\t\t ",
+									"\tif(bytesVerify(pm.variables.get(\"from\"),20) && (bytesVerify(pm.variables.get(\"to\"),20)) && bytesVerify(pm.variables.get(\"tokenId\"), 32) && authVerify(auth)){",
+									"\t\tpm.expect(pm.response.code).to.be.oneOf([200,425]);",
+									"\t}",
+									"\telse {",
+									"\t\tpm.expect(pm.response.code).to.be.oneOf([400,425]);",
+									"\t}",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"auth\" : { \n  \t\"sig\": \"{{sig}}\"\n  }\n}",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/nft/safeTransferFrom/?from={{from}}&to={{to}}&tokenId={{tokenId}}&extraData={{extraData}}",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"nft",
+								"safeTransferFrom",
+								""
+							],
+							"query": [
+								{
+									"key": "from",
+									"value": "{{from}}"
+								},
+								{
+									"key": "to",
+									"value": "{{to}}"
+								},
+								{
+									"key": "tokenId",
+									"value": "{{tokenId}}"
+								},
+								{
+									"key": "extraData",
+									"value": "{{extraData}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Transfer ownership of an NFT without safety checks",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "27aa8573-45e2-4ccb-99ac-83705eac7dc7",
+								"exec": [
+									"function bytesVerify(proposed, bytes){ //proposed is the string to be checked, bytes is the byte size of the encoded data",
+									"  return ((typeof proposed == \"string\") && (proposed.length == 2*bytes+2) && isHexStrict(proposed))",
+									"}",
+									"function isHexStrict(proposed){//I wrote a clone of web3.isHexStrict, so we don't have to run a node to test code",
+									"  proposed = proposed.toLowerCase()",
+									"  flag = (proposed.slice(0,2) == \"0x\")",
+									"  for(i = 2;  i < proposed.length; i ++){",
+									"    test = proposed.charAt(i)",
+									"    flag = flag && (test <= '9' || ((test>='a')&&(test<='f')))",
+									"  }",
+									"  return flag",
+									"}",
+									"function authVerify(authArray){",
+									"  if((authArray.length != 4) ||",
+									"      (!bytesVerify(authArray[0], 32)) ||",
+									"      (!bytesVerify(authArray[1], 1)) ||",
+									"      (!bytesVerify(authArray[2], 32)) ||",
+									"      (!bytesVerify(authArray[3], 32)) )",
+									"    {",
+									"      return false;",
+									"    }",
+									"    else{return true}",
+									"}",
+									"",
+									"",
+									"pm.test(\"Rejects Invalid Data Types\", function () {",
+									"    let auth = [pm.variables.get(\"hash\"), pm.variables.get(\"v\"), pm.variables.get(\"r\") , pm.variables.get(\"s\")];",
+									"    ",
+									"    if(bytesVerify(pm.variables.get(\"from\"),20) && (bytesVerify(pm.variables.get(\"to\"),20)) && bytesVerify(pm.variables.get(\"tokenId\"), 32) && authVerify(auth)){",
+									"       ",
+									"        pm.expect(pm.response.code).to.be.oneOf([200,425]);",
+									"    }",
+									"    else{",
+									"        pm.expect(pm.response.code).to.be.oneOf([400,425]);",
+									"    }",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"auth\" : { \n  \t\"sig\": \"{{sig}}\"\n  }\n}",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/nft/transferFrom/?from={{from}}&to={{to}}&tokenId={{tokenId}}",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"nft",
+								"transferFrom",
+								""
+							],
+							"query": [
+								{
+									"key": "from",
+									"value": "{{from}}"
+								},
+								{
+									"key": "to",
+									"value": "{{to}}"
+								},
+								{
+									"key": "tokenId",
+									"value": "{{tokenId}}"
+								}
+							]
+						},
+						"description": "Allows Freight Trust to tranfer tokens unsafely -- THE CALLER IS RESPONSIBLE TO CONFIRM THAT `_to` IS CAPABLE OF RECEIVING NFTS OR ELSE THEY MAY BE PERMANENTLY LOST"
+					},
+					"response": []
+				},
+				{
+					"name": "Change or reaffirm the approved address for an NFT",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e01c6a75-2c9e-4b22-b87e-9e7d6c3abf78",
+								"exec": [
+									"function bytesVerify(proposed, bytes){ //proposed is the string to be checked, bytes is the byte size of the encoded data",
+									"  return ((typeof proposed == \"string\") && (proposed.length == 2*bytes+2) && isHexStrict(proposed))",
+									"}",
+									"function isHexStrict(proposed){//I wrote a clone of web3.isHexStrict, so we don't have to run a node to test code",
+									"  proposed = proposed.toLowerCase()",
+									"  flag = (proposed.slice(0,2) == \"0x\")",
+									"  for(i = 2;  i < proposed.length; i ++){",
+									"    test = proposed.charAt(i)",
+									"    flag = flag && (test <= '9' || ((test>='a')&&(test<='f')))",
+									"  }",
+									"  return flag",
+									"}",
+									"function authVerify(authArray){",
+									"  if((authArray.length != 4) ||",
+									"      (!bytesVerify(authArray[0], 32)) ||",
+									"      (!bytesVerify(authArray[1], 1)) ||",
+									"      (!bytesVerify(authArray[2], 32)) ||",
+									"      (!bytesVerify(authArray[3], 32)) )",
+									"    {",
+									"      return false;",
+									"    }",
+									"    else{return true}",
+									"}",
+									"",
+									"",
+									"pm.test(\"Rejects Invalid Data Types\", function () {",
+									"    let auth = [pm.variables.get(\"hash\"), pm.variables.get(\"v\"), pm.variables.get(\"r\") , pm.variables.get(\"s\")];",
+									"    ",
+									"    if(bytesVerify(pm.variables.get(\"approved\"),20) && bytesVerify(pm.variables.get(\"tokenId\"), 32) && authVerify(auth)){",
+									"       ",
+									"        pm.expect(pm.response.code).to.be.oneOf([200,425]);",
+									"    }",
+									"    else{",
+									"        pm.expect(pm.response.code).to.be.oneOf([400,425]);",
+									"    }",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"auth\" : { \n  \t\"sig\": \"{{sig}}\"\n  }\n}",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/nft/approve/?approved={{approved}}&tokenId={{tokenId}}",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"nft",
+								"approve",
+								""
+							],
+							"query": [
+								{
+									"key": "approved",
+									"value": "{{approved}}"
+								},
+								{
+									"key": "tokenId",
+									"value": "{{tokenId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Allows Freight Trust to issue univeral approval",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "45939c68-0ffd-4ca7-8316-e54f1cea543d",
+								"exec": [
+									"function bytesVerify(proposed, bytes){ //proposed is the string to be checked, bytes is the byte size of the encoded data",
+									"  return ((typeof proposed == \"string\") && (proposed.length == 2*bytes+2) && isHexStrict(proposed))",
+									"}",
+									"function isHexStrict(proposed){//I wrote a clone of web3.isHexStrict, so we don't have to run a node to test code",
+									"  proposed = proposed.toLowerCase()",
+									"  flag = (proposed.slice(0,2) == \"0x\")",
+									"  for(i = 2;  i < proposed.length; i ++){",
+									"    test = proposed.charAt(i)",
+									"    flag = flag && (test <= '9' || ((test>='a')&&(test<='f')))",
+									"  }",
+									"  return flag",
+									"}",
+									"",
+									"function authVerify(authArray){",
+									"  if((authArray.length != 4) ||",
+									"      (!bytesVerify(authArray[0], 32)) ||",
+									"      (!bytesVerify(authArray[1], 1)) ||",
+									"      (!bytesVerify(authArray[2], 32)) ||",
+									"      (!bytesVerify(authArray[3], 32)) )",
+									"    {",
+									"      return false;",
+									"    }",
+									"    else{return true}",
+									"}",
+									"",
+									"",
+									"pm.test(\"Rejects Invalid Data Types\", function () {",
+									"    let auth = [pm.variables.get(\"hash\"), pm.variables.get(\"v\"), pm.variables.get(\"r\") , pm.variables.get(\"s\")];",
+									"    ",
+									"    if((typeof pm.variables.get(\"status\") == \"boolean\") && bytesVerify(pm.variables.get(\"operator\"),20)  && authVerify(auth)){",
+									"       ",
+									"        pm.expect(pm.response.code).to.be.oneOf([200,425]);",
+									"    }",
+									"    else{",
+									"        pm.expect(pm.response.code).to.be.oneOf([400,425]);",
+									"    }",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"auth\" : { \n  \t\"sig\": \"{{sig}}\"\n  }\n}",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/nft/setApprovalForAll/?operator={{operator}}&status={{status}}",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"nft",
+								"setApprovalForAll",
+								""
+							],
+							"query": [
+								{
+									"key": "operator",
+									"value": "{{operator}}"
+								},
+								{
+									"key": "status",
+									"value": "{{status}}"
+								}
+							]
+						},
+						"description": "Enable or disable approval for a third party (`operator`) to manage all of Freight Trust's assets"
+					},
+					"response": []
+				},
+				{
+					"name": "Get the approved address for a single NFT",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d8799fcc-031b-4eb8-96ff-17682139178b",
+								"exec": [
+									"function bytesVerify(proposed, bytes){ //proposed is the string to be checked, bytes is the byte size of the encoded data",
+									"  return ((typeof proposed == \"string\") && (proposed.length == 2*bytes+2) && isHexStrict(proposed))",
+									"}",
+									"function isHexStrict(proposed){//I wrote a clone of web3.isHexStrict, so we don't have to run a node to test code",
+									"  proposed = proposed.toLowerCase()",
+									"  flag = (proposed.slice(0,2) == \"0x\")",
+									"  for(i = 2;  i < proposed.length; i ++){",
+									"    test = proposed.charAt(i)",
+									"    flag = flag && (test <= '9' || ((test>='a')&&(test<='f')))",
+									"  }",
+									"  return flag",
+									"}",
+									"function uintVerify(proposed){",
+									"  proposed = parseInt(proposed, 10);",
+									"  return ((proposed >= 0) && (proposed < 115792089237316195423570985008687907853269984665642564239457584207913129639935))",
+									"}",
+									"",
+									"pm.test(\"Rejects Invalid Data Types\", function () {",
+									"    if(uintVerify(pm.variables.get(\"tokenId\"))){",
+									"        pm.expect(pm.response.code).to.be.oneOf([200,425]);",
+									"    }else{",
+									"        pm.expect(pm.response.code).to.be.oneOf([400,425]);",
+									"    }",
+									"});",
+									"",
+									"pm.test(\"Returns the Right Type\", function () {",
+									"    if(responseCode.code == 200){",
+									"        response = pm.response.json();",
+									"        pm.expect(typeof bytesVerify(response[\"approved\"], 20)).to.eql(\"boolean\");",
+									"    } else if (responseCode.code == 400) {",
+									"        pm.response.to.have.body(\"Invalid Input\")",
+									"    }  ",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/nft/getApproved/?tokenId={{tokenId}}",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"nft",
+								"getApproved",
+								""
+							],
+							"query": [
+								{
+									"key": "tokenId",
+									"value": "{{tokenId}}"
+								}
+							]
+						},
+						"description": "The approved address for this NFT, or the zero address if there is none"
+					},
+					"response": []
+				},
+				{
+					"name": "Query if an address is an authorized operator for another address",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "02e63601-ec86-425f-a112-240534d3e34e",
+								"exec": [
+									"function bytesVerify(proposed, bytes){ //proposed is the string to be checked, bytes is the byte size of the encoded data",
+									"  return ((typeof proposed == \"string\") && (proposed.length == 2*bytes+2) && isHexStrict(proposed))",
+									"}",
+									"function isHexStrict(proposed){//I wrote a clone of web3.isHexStrict, so we don't have to run a node to test code",
+									"  proposed = proposed.toLowerCase()",
+									"  flag = (proposed.slice(0,2) == \"0x\")",
+									"  for(i = 2;  i < proposed.length; i ++){",
+									"    test = proposed.charAt(i)",
+									"    flag = flag && (test <= '9' || ((test>='a')&&(test<='f')))",
+									"  }",
+									"  return flag",
+									"}",
+									"function uintVerify(proposed){",
+									"  proposed = parseInt(proposed, 10);",
+									"  return ((proposed >= 0) && (proposed < 115792089237316195423570985008687907853269984665642564239457584207913129639935))",
+									"}",
+									"",
+									"pm.test(\"Rejects Invalid Data Types\", function () {",
+									"    if(bytesVerify(pm.variables.get(\"operator\"),20)){",
+									"        if(bytesVerify(pm.variables.get(\"owner\"),20)){",
+									"          pm.response.to.have.status(200);",
+									"        }",
+									"        else{",
+									"          pm.expect(pm.response.code).to.be.oneOf([400, 425])  ",
+									"        }",
+									"    }else{",
+									"        pm.expect(pm.response.code).to.be.oneOf([400, 425])",
+									"    }",
+									"});",
+									"",
+									"pm.test(\"Returns the Right Type\", function () {",
+									"    if(responseCode.code == 200){",
+									"        response = pm.response.json();",
+									"        pm.expect(typeof response[\"isApprovedForAll\"]).to.eql(\"boolean\");",
+									"    } else if (responseCode.code == 400) {",
+									"        pm.response.to.have.body(\"Invalid Input\")",
+									"    }  ",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/nft/isApprovedForAll/?owner={{owner}}&operator={{operator}}",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"nft",
+								"isApprovedForAll",
+								""
+							],
+							"query": [
+								{
+									"key": "owner",
+									"value": "{{owner}}"
+								},
+								{
+									"key": "operator",
+									"value": "{{operator}}"
+								}
+							]
+						},
+						"description": "True if `operator` is an approved operator for `owner`, false otherwise"
+					},
+					"response": []
+				},
+				{
+					"name": "Signed Transfer",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "303cccd6-892d-4716-b52c-c21d0e8aca64",
+								"exec": [
+									"function bytesVerify(proposed, bytes){ //proposed is the string to be checked, bytes is the byte size of the encoded data",
+									"  return ((typeof proposed == \"string\") && (proposed.length == 2*bytes+2) && isHexStrict(proposed))",
+									"}",
+									"function isHexStrict(proposed){//I wrote a clone of web3.isHexStrict, so we don't have to run a node to test code",
+									"  proposed = proposed.toLowerCase()",
+									"  flag = (proposed.slice(0,2) == \"0x\")",
+									"  for(i = 2;  i < proposed.length; i ++){",
+									"    test = proposed.charAt(i)",
+									"    flag = flag && (test <= '9' || ((test>='a')&&(test<='f')))",
+									"  }",
+									"  return flag",
+									"}",
+									"function authVerify(authArray){",
+									"  if((authArray.length != 4) ||",
+									"      (!bytesVerify(authArray[0], 32)) ||",
+									"      (!bytesVerify(authArray[1], 1)) ||",
+									"      (!bytesVerify(authArray[2], 32)) ||",
+									"      (!bytesVerify(authArray[3], 32)) )",
+									"    {",
+									"      return false;",
+									"    }",
+									"    else{return true}",
+									"}",
+									"",
+									"",
+									"pm.test(\"Rejects Invalid Data Types\", function () {",
+									"    let authBA = [pm.variables.get(\"hash\"), pm.variables.get(\"v\"), pm.variables.get(\"r\") , pm.variables.get(\"s\")];",
+									"    let authS = [pm.variables.get(\"hash1\"), pm.variables.get(\"v1\"), pm.variables.get(\"r1\") , pm.variables.get(\"s1\")]",
+									"    ",
+									"    if(bytesVerify(pm.variables.get(\"from\"),20) && (bytesVerify(pm.variables.get(\"to\"),20)) && bytesVerify(pm.variables.get(\"tokenId\"), 32) && authVerify(authBA) && authVerify(authS)){",
+									"       ",
+									"        extraData = pm.variables.get(\"data\")",
+									"        if((extraData.length%2 === 0) && bytesVerify(extraData, extraData.length/2 - 1)){",
+									"          pm.expect(pm.response.code).to.be.oneOf([200,425]);",
+									"        }",
+									"        else{",
+									"          pm.expect(pm.response.code).to.be.oneOf([400,425]);",
+									"        }",
+									"    }",
+									"    else{",
+									"        pm.expect(pm.response.code).to.be.oneOf([400,425]);",
+									"    }",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"auth\" : {\n  \t\"blockArrayAuth\" : {\n  \t\t\"sig\": \"{{sig}}\"\n  \t\t\n  \t}, \"senderAuth\" : {\n  \t\t\"sig\": \"{{sig1}}\"\n  \t}\n  }\n}",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/nft/signedTransfer/?from={{from}}&to={{to}}&tokenId={{tokenId}}&data={{data}}",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"nft",
+								"signedTransfer",
+								""
+							],
+							"query": [
+								{
+									"key": "from",
+									"value": "{{from}}"
+								},
+								{
+									"key": "to",
+									"value": "{{to}}"
+								},
+								{
+									"key": "tokenId",
+									"value": "{{tokenId}}"
+								},
+								{
+									"key": "data",
+									"value": "{{data}}"
+								}
+							]
+						},
+						"description": "Allows Freight Trust to sign and transfer a ERC721 token on the behalf of its holder"
+					},
+					"response": []
+				},
+				{
+					"name": "Creates a new record",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "df10df1d-f4ff-4407-82f3-3ceecbcc4390",
+								"exec": [
+									"function bytesVerify(proposed, bytes){ //proposed is the string to be checked, bytes is the byte size of the encoded data",
+									"  return ((typeof proposed == \"string\") && (proposed.length == 2*bytes+2) && isHexStrict(proposed))",
+									"}",
+									"function isHexStrict(proposed){//I wrote a clone of web3.isHexStrict, so we don't have to run a node to test code",
+									"  proposed = proposed.toLowerCase()",
+									"  flag = (proposed.slice(0,2) == \"0x\")",
+									"  for(i = 2;  i < proposed.length; i ++){",
+									"    test = proposed.charAt(i)",
+									"    flag = flag && (test <= '9' || ((test>='a')&&(test<='f')))",
+									"  }",
+									"  return flag",
+									"}",
+									"",
+									"",
+									"function authVerify(authArray){",
+									"  if((authArray.length != 4) ||",
+									"      (!bytesVerify(authArray[0], 32)) ||",
+									"      (!bytesVerify(authArray[1], 1)) ||",
+									"      (!bytesVerify(authArray[2], 32)) ||",
+									"      (!bytesVerify(authArray[3], 32)) )",
+									"    {",
+									"      return false;",
+									"    }",
+									"    else{return true}",
+									"}",
+									"",
+									"",
+									"pm.test(\"Rejects Invalid Data Types\", function () {",
+									"    let authBA = [pm.variables.get(\"hash\"), pm.variables.get(\"v\"), pm.variables.get(\"r\") , pm.variables.get(\"s\")];",
+									"    let authOW = [pm.variables.get(\"hash1\"), pm.variables.get(\"v1\"), pm.variables.get(\"r1\") , pm.variables.get(\"s1\")];",
+									"    let authP = [pm.variables.get(\"hash2\"), pm.variables.get(\"v2\"), pm.variables.get(\"r2\") , pm.variables.get(\"s2\")];",
+									"    ",
+									"    if(bytesVerify(pm.variables.get(\"recordID\"),32) && (bytesVerify(pm.variables.get(\"owner\"),20)) && bytesVerify(pm.variables.get(\"participant\"), 20) && authVerify(authBA) && authVerify(authOW) && authVerify(authP)){",
+									"       ",
+									"         pm.expect(pm.response.code).to.be.oneOf([200,425]);",
+									"    }",
+									"    else{",
+									"        pm.expect(pm.response.code).to.be.oneOf([400,425]);",
+									"    }",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"auth\" : {\n  \t\"blockArrayAuth\" : {\n  \t\t\"sig\": \"{{sig}}\"\n  \t}, \n  \t\"ownerAuth\" : {\n  \t\t\"sig\": \"{{sig1}}\"\n  \t}, \"partAuth\" : {\n  \t\t\"sig\": \"{{sig2}}\"\n  \t}\n  }\n}",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/nft/createRecord/?recordID={{recordID}}&owner={{owner}}&participant={{participant}}",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"nft",
+								"createRecord",
+								""
+							],
+							"query": [
+								{
+									"key": "recordID",
+									"value": "{{recordID}}"
+								},
+								{
+									"key": "owner",
+									"value": "{{owner}}"
+								},
+								{
+									"key": "participant",
+									"value": "{{participant}}"
+								}
+							]
+						},
+						"description": "Allows Freight Trust to create a record with the signature of the owner and of the participant."
+					},
+					"response": []
+				},
+				{
+					"name": "Versions a record for Freight Trust",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "98119639-11d2-4898-903c-10ed4be2948b",
+								"exec": [
+									"function bytesVerify(proposed, bytes){ //proposed is the string to be checked, bytes is the byte size of the encoded data",
+									"  return ((typeof proposed == \"string\") && (proposed.length == 2*bytes+2) && isHexStrict(proposed))",
+									"}",
+									"function isHexStrict(proposed){//I wrote a clone of web3.isHexStrict, so we don't have to run a node to test code",
+									"  proposed = proposed.toLowerCase()",
+									"  flag = (proposed.slice(0,2) == \"0x\")",
+									"  for(i = 2;  i < proposed.length; i ++){",
+									"    test = proposed.charAt(i)",
+									"    flag = flag && (test <= '9' || ((test>='a')&&(test<='f')))",
+									"  }",
+									"  return flag",
+									"}",
+									"function authVerify(authArray){",
+									"  if((authArray.length != 4) ||",
+									"      (!bytesVerify(authArray[0], 32)) ||",
+									"      (!bytesVerify(authArray[1], 1)) ||",
+									"      (!bytesVerify(authArray[2], 32)) ||",
+									"      (!bytesVerify(authArray[3], 32)) )",
+									"    {",
+									"      return false;",
+									"    }",
+									"    else{return true}",
+									"}",
+									"",
+									"",
+									"pm.test(\"Rejects Invalid Data Types\", function () {",
+									"    let auth = [pm.variables.get(\"hash\"), pm.variables.get(\"v\"), pm.variables.get(\"r\") , pm.variables.get(\"s\")];",
+									"    ",
+									"    if(bytesVerify(pm.variables.get(\"currentHash\"),32) && bytesVerify(pm.variables.get(\"newHash\"),32) && authVerify(auth)){",
+									"       ",
+									"        pm.expect(pm.response.code).to.be.oneOf([200,425]);",
+									"    }",
+									"    else{",
+									"        pm.expect(pm.response.code).to.be.oneOf([400,425]);",
+									"    }",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"auth\" : { \n  \t\"sig\": \"{{sig}}\"\n  }\n}",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/nft/versionRecord/?currentHash={{currentHash}}&newHash={{newHash}}",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"nft",
+								"versionRecord",
+								""
+							],
+							"query": [
+								{
+									"key": "currentHash",
+									"value": "{{currentHash}}"
+								},
+								{
+									"key": "newHash",
+									"value": "{{newHash}}"
+								}
+							]
+						},
+						"description": "Allows Freight Trust to version one of the records they own."
+					},
+					"response": []
+				},
+				{
+					"name": "Versions a record for the owner",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8f2e0b3c-e837-48b7-98f4-01a8d30d8ebf",
+								"exec": [
+									"function bytesVerify(proposed, bytes){ //proposed is the string to be checked, bytes is the byte size of the encoded data",
+									"  return ((typeof proposed == \"string\") && (proposed.length == 2*bytes+2) && isHexStrict(proposed))",
+									"}",
+									"function isHexStrict(proposed){//I wrote a clone of web3.isHexStrict, so we don't have to run a node to test code",
+									"  proposed = proposed.toLowerCase()",
+									"  flag = (proposed.slice(0,2) == \"0x\")",
+									"  for(i = 2;  i < proposed.length; i ++){",
+									"    test = proposed.charAt(i)",
+									"    flag = flag && (test <= '9' || ((test>='a')&&(test<='f')))",
+									"  }",
+									"  return flag",
+									"}",
+									"function authVerify(authArray){",
+									"  if((authArray.length != 4) ||",
+									"      (!bytesVerify(authArray[0], 32)) ||",
+									"      (!bytesVerify(authArray[1], 1)) ||",
+									"      (!bytesVerify(authArray[2], 32)) ||",
+									"      (!bytesVerify(authArray[3], 32)) )",
+									"    {",
+									"      return false;",
+									"    }",
+									"    else{return true}",
+									"}",
+									"",
+									"",
+									"pm.test(\"Rejects Invalid Data Types\", function () {",
+									"    let authBA = [pm.variables.get(\"hash\"), pm.variables.get(\"v\"), pm.variables.get(\"r\") , pm.variables.get(\"s\")];",
+									"    ",
+									"    if(bytesVerify(pm.variables.get(\"currentHash\"),32) && bytesVerify(pm.variables.get(\"newHash\"),32) && bytesVerify(pm.variables.get(\"owner\"),20) && authVerify(authBA)){",
+									"       ",
+									"        pm.expect(pm.response.code).to.be.oneOf([200,425]);",
+									"    }",
+									"    else{",
+									"        pm.expect(pm.response.code).to.be.oneOf([400,425]);",
+									"    }",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"auth\" : {\n  \t\"blockArrayAuth\" : {\n  \t\t\"sig\": \"{{sig}}\"\n  \t}, \"ownerAuth\" : {\n  \t\t\"sig\": \"{{sig1}}\"\n  \t\t\n  \t}\n  }\n}",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/nft/versionRecord/signed/?currentHash={{currentHash}}&newHash={{newHash}}&owner={{owner}}",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"nft",
+								"versionRecord",
+								"signed",
+								""
+							],
+							"query": [
+								{
+									"key": "currentHash",
+									"value": "{{currentHash}}"
+								},
+								{
+									"key": "newHash",
+									"value": "{{newHash}}"
+								},
+								{
+									"key": "owner",
+									"value": "{{owner}}"
+								}
+							]
+						},
+						"description": "Allows Freight Trust to version a record for the owner using the owner's signature."
+					},
+					"response": []
+				}
+			],
+			"description": "Folder for nft",
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "proxy",
+			"item": [
+				{
+					"name": "Gets address of Function",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "fb82baa5-f926-4da9-9bc4-87ed3f029075",
+								"type": "text/javascript",
+								"exec": [
+									"function bytesVerify(proposed, bytes){ //proposed is the string to be checked, bytes is the byte size of the encoded data",
+									"  return ((typeof proposed == \"string\") && (proposed.length == 2*bytes+2) && isHexStrict(proposed))",
+									"}",
+									"function isHexStrict(proposed){//I wrote a clone of web3.isHexStrict, so we don't have to run a node to test code",
+									"  proposed = proposed.toLowerCase()",
+									"  flag = (proposed.slice(0,2) == \"0x\")",
+									"  for(i = 2;  i < proposed.length; i ++){",
+									"    test = proposed.charAt(i)",
+									"    flag = flag && (test <= '9' || ((test>='a')&&(test<='f')))",
+									"  }",
+									"  return flag",
+									"}",
+									"",
+									"",
+									"pm.test(\"Rejects Invalid Data Types\", function () {",
+									"    if(bytesVerify(pm.variables.get(\"id\"), 4)){",
+									"        pm.response.to.have.status(200);",
+									"    }else{",
+									"        pm.response.to.have.status(400);",
+									"    }",
+									"});",
+									"pm.test(\"Returns Valid Data Type\", function () {",
+									"    if(responseCode.code == 200){",
+									"        response = pm.response.json();",
+									"        pm.expect(bytesVerify(response[\"target\"], 20)).to.eql(true);",
+									"    }else{",
+									"        pm.response.to.have.body(\"Invalid Input\")",
+									"    }",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/xml, application/json"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/proxy/getTarget/?id={{id}}",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"proxy",
+								"getTarget",
+								""
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "{{id}}"
+								}
+							]
+						},
+						"description": "Gets address that is delegate called to run a function's logic."
+					},
+					"response": []
+				},
+				{
+					"name": "Gets address of the Master Contract",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2bdc49de-ebef-4313-9501-9e5b572d8af5",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"pm.test(\"Returns Valid Data Type\", function () {",
+									"    if(responseCode.code == 200){",
+									"        response = pm.response.json();",
+									"        pm.expect(bytesVerify(response[\"master\"], 20)).to.eql(true);",
+									"    }else{",
+									"        pm.response.to.have.body(\"Invalid Input\")",
+									"    }",
+									"});",
+									"",
+									"function bytesVerify(proposed, bytes){ //proposed is the string to be checked, bytes is the byte size of the encoded data",
+									"  return ((typeof proposed == \"string\") && (proposed.length == 2*bytes+2) && isHexStrict(proposed))",
+									"}",
+									"function isHexStrict(proposed){//I wrote a clone of web3.isHexStrict, so we don't have to run a node to test code",
+									"  proposed = proposed.toLowerCase()",
+									"  flag = (proposed.slice(0,2) == \"0x\")",
+									"  for(i = 2;  i < proposed.length; i ++){",
+									"    test = proposed.charAt(i)",
+									"    flag = flag && (test <= '9' || ((test>='a')&&(test<='f')))",
+									"  }",
+									"  return flag",
+									"}"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/xml, application/json"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/proxy/getMaster",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"proxy",
+								"getMaster"
+							]
+						},
+						"description": "Gets the address of the master contract."
+					},
+					"response": []
+				},
+				{
+					"name": "Gets address of the controller Contract",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "374c925e-dcc6-4a03-bd0c-2ef8c7add1c1",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"pm.test(\"Returns Valid Data Type\", function () {",
+									"    if(responseCode.code == 200){",
+									"        response = pm.response.json();",
+									"        pm.expect(bytesVerify(response[\"controller\"], 20)).to.eql(true);",
+									"    }else{",
+									"        pm.response.to.have.body(\"Invalid Input\")",
+									"    }",
+									"});",
+									"",
+									"function bytesVerify(proposed, bytes){ //proposed is the string to be checked, bytes is the byte size of the encoded data",
+									"  return ((typeof proposed == \"string\") && (proposed.length == 2*bytes+2) && isHexStrict(proposed))",
+									"}",
+									"function isHexStrict(proposed){//I wrote a clone of web3.isHexStrict, so we don't have to run a node to test code",
+									"  proposed = proposed.toLowerCase()",
+									"  flag = (proposed.slice(0,2) == \"0x\")",
+									"  for(i = 2;  i < proposed.length; i ++){",
+									"    test = proposed.charAt(i)",
+									"    flag = flag && (test <= '9' || ((test>='a')&&(test<='f')))",
+									"  }",
+									"  return flag",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/xml, application/json"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/proxy/getController",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"proxy",
+								"getController"
+							]
+						},
+						"description": "Gets the address of the controler contract."
+					},
+					"response": []
+				},
+				{
+					"name": "Gets address of the Universal Proxy Contract",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3ff9092f-30b9-498c-9204-35f39279fa4f",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"pm.test(\"Returns Valid Data Type\", function () {",
+									"    if(responseCode.code == 200){",
+									"        response = pm.response.json();",
+									"        pm.expect(bytesVerify(response[\"universalProxy\"], 20)).to.eql(true);",
+									"    }else{",
+									"        pm.response.to.have.body(\"Invalid Input\")",
+									"    }",
+									"});",
+									"",
+									"function bytesVerify(proposed, bytes){ //proposed is the string to be checked, bytes is the byte size of the encoded data",
+									"  return ((typeof proposed == \"string\") && (proposed.length == 2*bytes+2) && isHexStrict(proposed))",
+									"}",
+									"function isHexStrict(proposed){//I wrote a clone of web3.isHexStrict, so we don't have to run a node to test code",
+									"  proposed = proposed.toLowerCase()",
+									"  flag = (proposed.slice(0,2) == \"0x\")",
+									"  for(i = 2;  i < proposed.length; i ++){",
+									"    test = proposed.charAt(i)",
+									"    flag = flag && (test <= '9' || ((test>='a')&&(test<='f')))",
+									"  }",
+									"  return flag",
+									"}"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/xml, application/json"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/proxy/getUniversalProxy",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"proxy",
+								"getUniversalProxy"
+							]
+						},
+						"description": "Gets the address of the Universal Proxy contract."
+					},
+					"response": []
+				},
+				{
+					"name": "Sets the address of Function",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "cc698b8b-ee1b-4abe-9e22-3318c8511576",
+								"exec": [
+									"function bytesVerify(proposed, bytes){ //proposed is the string to be checked, bytes is the byte size of the encoded data",
+									"  return ((typeof proposed == \"string\") && (proposed.length == 2*bytes+2) && isHexStrict(proposed))",
+									"}",
+									"function isHexStrict(proposed){//I wrote a clone of web3.isHexStrict, so we don't have to run a node to test code",
+									"  proposed = proposed.toLowerCase()",
+									"  flag = (proposed.slice(0,2) == \"0x\")",
+									"  for(i = 2;  i < proposed.length; i ++){",
+									"    test = proposed.charAt(i)",
+									"    flag = flag && (test <= '9' || ((test>='a')&&(test<='f')))",
+									"  }",
+									"  return flag",
+									"}",
+									"function authVerify(authArray, res){",
+									"  if((authArray.length != 4) ||",
+									"      (!bytesVerify(authArray[0], 32)) ||",
+									"      (!bytesVerify(authArray[1], 1)) ||",
+									"      (!bytesVerify(authArray[2], 32)) ||",
+									"      (!bytesVerify(authArray[3], 32)) )",
+									"    {",
+									"      return false;",
+									"    }",
+									"    else{return true}",
+									"}",
+									"",
+									"",
+									"pm.test(\"Rejects Invalid Data Types\", function () {",
+									"    if (!bytesVerify(pm.iterationData.get(\"id\"), 4) ||",
+									"        !bytesVerify(pm.iterationData.get(\"target\"), 20)) {",
+									"        pm.expect(pm.response.code).to.be.oneOf([400, 425])  ",
+									"    }",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"auth\" : { \n  \t\"sig\": \"{{sig}}\"\n  }\n}",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/proxy/setTarget/?id={{id}}&target={{target}}",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"proxy",
+								"setTarget",
+								""
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "{{id}}"
+								},
+								{
+									"key": "target",
+									"value": "{{target}}"
+								}
+							]
+						},
+						"description": "Sets address that is delegate called to run a function's logic. This function must be called with an signed nonce from the Freight Trust account in the https body."
+					},
+					"response": []
+				},
+				{
+					"name": "Sets the new Master Address",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2d1533c4-4ab0-4f4e-a3bb-ee5558726526",
+								"exec": [
+									"function bytesVerify(proposed, bytes){ //proposed is the string to be checked, bytes is the byte size of the encoded data",
+									"  return ((typeof proposed == \"string\") && (proposed.length == 2*bytes+2) && isHexStrict(proposed))",
+									"}",
+									"",
+									"function isHexStrict(proposed){//I wrote a clone of web3.isHexStrict, so we don't have to run a node to test code",
+									"  proposed = proposed.toLowerCase()",
+									"  flag = (proposed.slice(0,2) == \"0x\")",
+									"  for(i = 2;  i < proposed.length; i ++){",
+									"    test = proposed.charAt(i)",
+									"    flag = flag && (test <= '9' || ((test>='a')&&(test<='f')))",
+									"  }",
+									"  return flag",
+									"}",
+									"",
+									"pm.test(\"Rejects Invalid Data Types\", function () {",
+									"    if(!bytesVerify(pm.iterationData.get(\"newMaster\"), 20)){",
+									"        pm.expect(pm.response.code).to.be.oneOf([400, 425]);    ",
+									"    }",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"auth\" : { \n  \t\"sig\": \"{{sig}}\"\n  }\n}",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/proxy/changeMaster/?newMaster={{newMaster}}",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"proxy",
+								"changeMaster",
+								""
+							],
+							"query": [
+								{
+									"key": "newMaster",
+									"value": "{{newMaster}}"
+								}
+							]
+						},
+						"description": "Sets address that is delegate called to run a function's logic. This function must be called with an signed nonce from the Freight Trust account in the https body."
+					},
+					"response": []
+				},
+				{
+					"name": "Sets the the new controller address",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f194fb88-7a59-4bc2-bd9b-8c1589b1dba6",
+								"exec": [
+									"function bytesVerify(proposed, bytes){ //proposed is the string to be checked, bytes is the byte size of the encoded data",
+									"  return ((typeof proposed == \"string\") && (proposed.length == 2*bytes+2) && isHexStrict(proposed))",
+									"}",
+									"function isHexStrict(proposed){//I wrote a clone of web3.isHexStrict, so we don't have to run a node to test code",
+									"  proposed = proposed.toLowerCase()",
+									"  flag = (proposed.slice(0,2) == \"0x\")",
+									"  for(i = 2;  i < proposed.length; i ++){",
+									"    test = proposed.charAt(i)",
+									"    flag = flag && (test <= '9' || ((test>='a')&&(test<='f')))",
+									"  }",
+									"  return flag",
+									"}",
+									"",
+									"",
+									"pm.test(\"Rejects Invalid Data Types\", function () {",
+									"    if(!bytesVerify(pm.iterationData.get(\"newController\"), 20)){",
+									"        pm.expect(pm.response.code).to.be.oneOf([400, 425]);",
+									"    }",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"auth\" : { \n  \t\"sig\": \"{{sig}}\"\n  }\n}",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/proxy/changeController/?newController={{newController}}",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"proxy",
+								"changeController",
+								""
+							],
+							"query": [
+								{
+									"key": "newController",
+									"value": "{{newController}}"
+								}
+							]
+						},
+						"description": "Sets the new controller address."
+					},
+					"response": []
+				},
+				{
+					"name": "Pauses the execution",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9d38f501-f49f-402a-86eb-30b45704590e",
+								"exec": [
+									"function bytesVerify(proposed, bytes){ //proposed is the string to be checked, bytes is the byte size of the encoded data",
+									"  return ((typeof proposed == \"string\") && (proposed.length == 2*bytes+2) && isHexStrict(proposed))",
+									"}",
+									"",
+									"function isHexStrict(proposed){//I wrote a clone of web3.isHexStrict, so we don't have to run a node to test code",
+									"  proposed = proposed.toLowerCase()",
+									"  flag = (proposed.slice(0,2) == \"0x\")",
+									"  for(i = 2;  i < proposed.length; i ++){",
+									"    test = proposed.charAt(i)",
+									"    flag = flag && (test <= '9' || ((test>='a')&&(test<='f')))",
+									"  }",
+									"  return flag",
+									"}",
+									"",
+									"pm.test(\"Rejects Invalid Data Types\", function () {",
+									"    if (!bytesVerify(pm.variables.get('sig'), 65)) {",
+									"        pm.response.to.have.status(400);",
+									"    }",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "d6fd7a0c-8d82-4ac3-8f6d-ab37a72b9248",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/xml, application/json",
+								"disabled": true
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"auth\" : { \n  \t\"sig\": \"{{sig}}\"\n  }\n}",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/proxy/pause",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"proxy",
+								"pause"
+							]
+						},
+						"description": "Calls the pause method in the universal proxy, blocking any state changes while Blockarray updates."
+					},
+					"response": []
+				}
+			],
+			"description": "Folder for proxy",
+			"protocolProfileBehavior": {}
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "2c1ff5a6-03d5-4b64-a66a-78a9e1f6bc75",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "e8e7271f-69b2-4a4e-81a7-32e2988786bf",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

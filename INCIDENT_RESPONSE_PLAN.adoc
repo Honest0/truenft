@@ -1,10 +1,4 @@
 = Service Level Objectives and Continuity
-:idprefix:
-:idseparator: -
-:!example-caption:
-:!table-caption:
-:page-pagination:
-
 
 == Incident Response Plan
 
