@@ -1,11 +1,9 @@
-test:
-	cd ethereum; ../node_modules/.bin/truffle compile --all; ../node_modules/.bin/truffle test
+define npm_script_targets
+TARGETS := $(shell node -e 'for (var k in require("./package.json").scripts) {console.log(k.replace(/:/g, "-"));}')
+$$(TARGETS):
+	npm run $(subst -,:,$(MAKECMDGOALS))
 
-start_console:
-	truffle develop
+.PHONY: $$(TARGETS)
+endef
 
-compile:
-	npx saddle compile
-
-saddle:
-	 npx saddle compile && npx saddle test
+$(eval $(call npm_script_targets))
