@@ -1,6 +1,6 @@
 {
   "name": "@fr8/truenft-contracts",
-  "version": "1.0.0",
+  "version": "1.1.0-0",
   "description": "truenft protocol",
   "main": "truffle.js",
   "directories": {
