@@ -18,6 +18,9 @@
   "devDependencies": {
     "truffle": "^4.1.13"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "@truffle/hdwallet-provider": "^1.1.0"
   }
