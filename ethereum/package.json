@@ -10,12 +10,15 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "npm install truffle@4.1.13",
-     "compile": "./node_modules/.bin/truffle compile",
+    "compile": "./node_modules/.bin/truffle compile",
     "e2e": "npm install truffle@4.1.13 && ./node_modules/.bin/truffle compile "
   },
   "author": "SEE CONTRIBUTORS",
   "license": "MPL-2.0",
   "devDependencies": {
     "truffle": "^4.1.13"
+  },
+  "dependencies": {
+    "@truffle/hdwallet-provider": "^1.1.0"
   }
 }
