@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/freight-trust/instruments.git"
+    "url": "git+https://github.com/freight-trust/truenft.git"
   },
   "author": "sam@freighttrust.com <sam@freighttrust.com>",
   "license": "MPL-2.0",
